@@ -1,10 +1,6 @@
 <template>
   <Page class="Home">
     
-    <!-- <Form>
-      <FormField id="test" :valid="valid" @validate="handleValidation" />
-      <RadioImageInput id="radio" :options="options" />
-    </Form> -->
     <div class="Home__Wrapper">
       <div class="Home--left">
         <Title>
@@ -29,18 +25,6 @@
 
       <img class="Home--right" src="../assets/home.jpg" width="640" />
     </div>
-    <!-- <div>
-      
-      <Button :line="true">Line</Button>
-      <Button :ghost="true">
-        <SvgIcon icon="icon_arrow_previous" />
-        <span>Vorige</span>
-      </Button>
-      <Button :disabled="true">
-        <span>Volgende</span>
-        <SvgIcon icon="icon_arrow_next" />
-      </Button>
-    </div> -->
 
     <template slot="footer">
       <Copyright />
@@ -59,43 +43,12 @@ import Copyright from '@/components/Copyright.vue'
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/common/SvgIcon.vue'
 
-// import Form from '@/components/common/Form.vue'
-// import FormField from '@/components/common/FormField.vue'
-// import RadioImageInput from '@/components/form/RadioImageInput.vue'
-
 @Component({
   components: {
     Page, Button, SvgIcon, Copyright, Title, BodyText
-    // Form, FormField, RadioImageInput,
   }
 })
-export default class Home extends Vue {
-
-  private valid: boolean|null = null;
-
-  private options = [
-    {
-      label: 'Houten palen',
-      value: 'one'
-    },
-    {
-      label: 'two',
-      value: 'two'
-    }
-  ]
-
-  handleValidation(value: string|number|boolean|Array<string>) {
-    value = value + ''; // Hack: force into a string
-    
-    console.log(value)
-
-    if (value.length > 10) {
-      this.valid = true
-    } else {
-      this.valid = false
-    }
-  }
-}
+export default class Home extends Vue {}
 </script>
 
 <style lang="scss">
