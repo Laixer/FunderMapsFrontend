@@ -6,28 +6,36 @@
       {{ label }}
     </label>
 
-    <textarea
-      v-if="type === 'textarea'"
-      :id="id"
-      :value="fieldValue" 
-      :type="type"
-      :placeholder="placeholder"
-      :autocomplete="autocomplete"
-      :disabled="isDisabled"
-      class="FormField__Field"
-      @input="handleInput"
-      @blur="handleBlur" />
-    <input 
-      v-else
-      :id="id"
-      :value="fieldValue" 
-      :type="type"
-      :placeholder="placeholder"
-      :autocomplete="autocomplete"
-      :disabled="isDisabled"
-      class="FormField__Field"
-      @input="handleInput"
-      @blur="handleBlur" />
+    <div class="FormField__Wrapper">
+      <textarea
+        v-if="type === 'textarea'"
+        :id="id"
+        :value="fieldValue" 
+        :type="type"
+        :placeholder="placeholder"
+        :autocomplete="autocomplete ? autocomplete: 'off'"
+        :disabled="isDisabled"
+        :rows="rows"
+        class="FormField__Field"
+        @input="handleInput"
+        @blur="handleBlur" />
+      <input 
+        v-else
+        :id="id"
+        :value="fieldValue" 
+        :type="type"
+        :placeholder="placeholder"
+        :autocomplete="autocomplete ? autocomplete: 'off'"
+        :disabled="isDisabled"
+        class="FormField__Field"
+        @input="handleInput"
+        @blur="handleBlur" />
+
+      <SvgIcon 
+        v-if="validationIcon" 
+        :icon="validationIcon" 
+        class="FormField__Icon" />
+    </div>
 
     <span v-if="error" class="FormField__Feedback">
       {{ error }}
@@ -112,6 +120,10 @@ export default class FormField extends Vue {
    */
   @Prop({ default: () => [] }) readonly options!: Array<IOption>;
 
+  /**
+   * The select type can support one or multiple answers
+   */
+  @Prop({ default: false }) readonly multiple!: boolean;
 
   /******************************************
    * State props
@@ -125,7 +137,7 @@ export default class FormField extends Vue {
   /**
    * Disables the browser's auto complete function
    */
-  @Prop({ default: false }) readonly autocomplete!: boolean;
+  @Prop({ default: false }) readonly autocomplete!: boolean|string;
 
 
 
@@ -146,8 +158,9 @@ export default class FormField extends Vue {
   /**
    * The bound field value
    */
-  private fieldValue: string|boolean|number|Array<string> = ''
+  private fieldValue: string|boolean|number|Array<string|boolean|number> = ''
 
+  
   /******************************************
    * Computed
    */
@@ -187,6 +200,18 @@ export default class FormField extends Vue {
   }
 
   /**
+   * Returns the icon name based on the validation status
+   *  Returns false if validation hasn't occurred yet
+   */
+  get validationIcon(): string|false {
+    if (this.hasBeenValidated) {
+      return this.isValid ? 'icon_check' : 'icon_error'
+    }
+
+    return false
+  }
+
+  /**
    * List of css classes
    */
   get fieldClasses(): Record<string, boolean> {
@@ -202,13 +227,23 @@ export default class FormField extends Vue {
     // return classes
   }
 
+  /**
+   * The checkbox type automatically supports multiple values, the select by default does not
+   */
+  get supportsMultiple(): boolean {
+    return this.type === 'checkbox' || (this.type === 'select' && this.multiple)
+  }
 
   /******************************************
    * Watchers
    */
   @Watch('value')
   valueChanged(newValue: string|boolean|number|Array<string>) {
-    this.fieldValue = newValue
+    if (!Array.isArray(newValue) && this.supportsMultiple) {
+      this.fieldValue = newValue === '' ? [] : [ newValue ]
+    } else {
+      this.fieldValue = newValue
+    }
   }
 
 
@@ -217,7 +252,12 @@ export default class FormField extends Vue {
    */
 
   created() {
-    this.fieldValue = this.value
+
+    if (!Array.isArray(this.value) && this.supportsMultiple) {
+      this.fieldValue = this.value === '' ? [] : [ this.value ]
+    } else {
+      this.fieldValue = this.value
+    }
     
     // If contained within a Form component, register the form field
     if (this.registerFormField) {
@@ -249,10 +289,26 @@ export default class FormField extends Vue {
   /**
    * Handle input changes
    */
-  handleInput(e: Event ) {
+  handleInput( e: Event ) {
     
     const target = e.target as HTMLInputElement
-    this.fieldValue = target.value
+
+    if (this.supportsMultiple) {
+
+      if (Array.isArray(this.fieldValue)) {
+        const index = this.fieldValue.indexOf(target.value)
+        if (index > -1) {
+          this.fieldValue.splice(index, 1)
+        } else {
+          this.fieldValue.push(target.value)
+        }
+      } else {
+        this.fieldValue = [target.value]
+      }
+
+    } else {
+      this.fieldValue = target.value
+    }
 
     if (this.hasBeenInteractedWith || this.type === 'select' || this.type === 'radio' || this.type === 'checkbox') {
       this.validate()
@@ -291,6 +347,71 @@ export default class FormField extends Vue {
 </script>
 
 <style lang="scss">
+
+.FormField {
+
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+
+  &__Label {
+    font-size: 18px;
+    line-height: 21px;
+    letter-spacing: -0.3px;
+    color: #77808D;
+    margin-bottom: 9px;
+  }
+
+  &__Field {
+    width: 100%;
+    color: #202122;
+    border-radius: 4px;
+    border: 2px solid #D4DAF0;
+    font-size: 16px;
+    line-height: 19px;
+    outline: none;
+    padding: 13px 15px 14px;
+    transition: border-color 0.2s ease-in-out;
+
+    &::placeholder {
+      color: #77808D;
+    }
+    
+    &:focus {
+      border-color: $PRIMARY_COLOR;
+    }
+  }
+
+  &__Wrapper {
+    position: relative;
+  }
+  
+  &__Icon {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &--valid &__Field {
+    border-color: #00C95D;
+    padding-right: 45px;
+  }
+  &--invalid &__Field {
+    border-color: #FF3B30;
+    padding-right: 45px;
+  }
+  &--valid &__Icon, &--invalid &__Icon {
+    color: #00C95D;
+    opacity: 1;
+  }
+  &--invalid &__Icon {
+    color: #FF3B30;
+  }
+}
+
 // .FormField {
 //   font-size: 16px;
 //   position: relative;

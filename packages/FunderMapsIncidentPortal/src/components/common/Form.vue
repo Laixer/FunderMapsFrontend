@@ -1,5 +1,5 @@
 <template>
-  <form class="Form" @submit.prevent="handleSubmit" >
+  <form class="Form" @submit.prevent="handleSubmit" :autocomplete="autocomplete ? 'on': 'off'" >
     <slot />
 
     <!-- Required to allow the form to be submitted programmatically -->
@@ -27,6 +27,11 @@ export default class Form extends Vue {
    * Whether the form is busy - meaning the fields are disabled
    */
   @Prop({ default: false }) readonly busy!: boolean;
+
+  /**
+   *  Disables the browser's auto complete function
+   */
+  @Prop({ default: false }) readonly autocomplete!: boolean;
 
   /**
    * The list of registered (connected) form fields. Fields contained withing the form are automatically connected

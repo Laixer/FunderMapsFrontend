@@ -1,5 +1,5 @@
 <template>
-  <Page :step="1" :steps="9" class="Address">
+  <Page :step="1" :steps="8" class="Address">
     
     <div class="Address__Wrapper">
       <div class="Address--left">
@@ -31,8 +31,6 @@ import { Component, Vue } from 'vue-property-decorator'
 
 import Page from '@/components/layout/Page.vue'
 import Title from '@/components/Title.vue'
-import BodyText from '@/components/BodyText.vue'
-import Copyright from '@/components/Copyright.vue'
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/common/SvgIcon.vue'
 
@@ -42,7 +40,7 @@ import FormField from '@/components/common/FormField.vue'
 
 @Component({
   components: {
-    Page, Button, SvgIcon, Copyright, Title, BodyText,
+    Page, Button, SvgIcon, Title,
     Form, FormField
   }
 })
@@ -54,15 +52,7 @@ export default class Address extends Vue {
    * 
    */
   handleValidation(value: string|number|boolean|Array<string>) {
-    value = value + ''; // Hack: force into a string
-    
-    console.log(value)
-
-    if (value.trim().length > 1) {
-      this.valid = true
-    } else {
-      this.valid = false
-    }
+    this.valid = ((value + '').trim().length > 1)
   }
 
   handleNavigate() {

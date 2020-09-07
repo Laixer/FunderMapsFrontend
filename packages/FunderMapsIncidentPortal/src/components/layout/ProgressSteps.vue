@@ -2,9 +2,9 @@
   <aside class="ProgressSteps">
     <div class="ProgressSteps__Indicator" :style="{ top: indicatorOffset }"></div>
     <span class="ProgressSteps__Finished" v-for="index in finishedSteps" :key="`${index}_finished`">
-      <SvgIcon icon="icon_check" />
+      <SvgIcon icon="icon_circle_check" />
     </span>
-    <span class="ProgressSteps__Current">
+    <span v-if="!isDone" class="ProgressSteps__Current">
       <span>{{ step }}</span>
     </span>
     <span class="ProgressSteps__Future" v-for="(step, index) in futureSteps" :key="`${index}_future`">
@@ -52,7 +52,14 @@ export default class ProgressSteps extends Vue {
    * The future steps (numbers)
    */
   get futureSteps(): number[] {
-    return this.range((this.steps - this.step), this.step + 1)
+    return this.range((this.steps - Math.min(this.steps, this.step)), this.step + 1)
+  }
+
+  /**
+   * When the current step is beyond the maximum steps we can take we're done.
+   */
+  get isDone(): boolean {
+    return this.steps < this.step
   }
 
   /**

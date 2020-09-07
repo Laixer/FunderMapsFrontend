@@ -8,17 +8,20 @@
 
         <input 
           :id="id + ' ' + index" 
-          type="radio"
+          type="checkbox"
           :name="id"
           :value="option.value" 
           :disabled="isDisabled"
-
+          :checked="isChecked(option.value)"
           @input="handleInput"
           @blur="handleBlur" />
 
         <label 
           :for="id + ' ' + index"
           class="CheckboxInput__Label">
+          <span class="CheckboxInput__Checkbox">
+            <SvgIcon icon="icon_check" />
+          </span>
           <span>{{ option.label }}</span>
         </label>
       </div>
@@ -33,8 +36,13 @@
 <script lang="ts">
 import { Prop, Component } from 'vue-property-decorator';
 import FormField from '@/components/common/FormField.vue'
+import SvgIcon from '@/components/common/SvgIcon.vue'
 
-@Component
+@Component({
+  components: {
+    SvgIcon
+  }
+})
 export default class CheckboxInput extends FormField {
   
   /**
@@ -52,6 +60,13 @@ export default class CheckboxInput extends FormField {
       'CheckboxInput--valid': this.hasBeenValidated ? this.isValid : false,
       'CheckboxInput--invalid': this.hasBeenValidated ? !this.isValid : false,
     }
+  }
+
+  /**
+   * Whether the value is checked
+   */
+  isChecked(value: string): boolean {
+    return Array.isArray(this.value) && this.value.includes(value)
   }
 }
 </script>
@@ -92,34 +107,33 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
     border-radius: 4px;
 
     cursor: pointer;
+    user-select: none;
 
     transition: all .3s ease-in-out;
 
     padding-left: 45px; // space for the marker
 
-    &:before {
-      content: '';
-      position: absolute;
-      left: 15px;
-      width: 24px;
-      height: 24px;
-      border: 2px solid #D4DAF0;
-      border-radius: 50%;
-      transition: all .3s ease-in-out;
-    }
-    &:after {
-      content: '';
-      position: absolute;
-      left: 21px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      transition: all .3s ease-in-out;
-      background-color: transparent;
-    }
-
     &:hover {
       border-color: $PRIMARY_COLOR;
+    }
+  }
+
+  &__Checkbox {
+    content: '';
+    position: absolute;
+    left: 15px;
+    width: 24px;
+    height: 24px;
+    border: 2px solid #D4DAF0;
+    transition: all .3s ease-in-out;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .SvgIcon {
+      font-size: 12px;
+      color: white;
     }
   }
 
@@ -130,13 +144,10 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
     background-color: rgba(156, 178, 255, 0.1); // TODO: Use color adjust
     border-color: $PRIMARY_COLOR;
     color: #202122;
-
-    &:before {
-      border-color: $PRIMARY_COLOR;
-    }
-    &:after {
-      background-color: $PRIMARY_COLOR;
-    }
+  }
+  input:checked + &__Label &__Checkbox {
+    border-color: $PRIMARY_COLOR;
+    background: $PRIMARY_COLOR
   }
 }
 </style>

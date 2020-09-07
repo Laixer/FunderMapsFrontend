@@ -45,7 +45,7 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  transition: all .2s ease-in-out;
+  transition: color .2s ease-in-out, background-color .2s ease-in-out;
   display: inline-flex;
   align-items: center;
 

@@ -1,5 +1,5 @@
 <template>
-  <Page :step="step" :steps="9" class="Questions">
+  <Page :step="step" :steps="8" class="Questions">
     
     <component v-bind:is="currentQuestionComponent" @validity="handleValidity"></component>
 
@@ -27,11 +27,13 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
 import QuestionOne from '@/components/questions/QuestionOne.vue'
 import QuestionTwo from '@/components/questions/QuestionTwo.vue'
 import QuestionThree from '@/components/questions/QuestionThree.vue'
+import QuestionFour from '@/components/questions/QuestionFour.vue'
+import QuestionFive from '@/components/questions/QuestionFive.vue'
 
 @Component({
   components: {
     Page, Button, SvgIcon,
-    QuestionOne, QuestionTwo, QuestionThree
+    QuestionOne, QuestionTwo, QuestionThree, QuestionFour, QuestionFive
   }
 })
 export default class Questions extends Vue {
@@ -52,6 +54,10 @@ export default class Questions extends Vue {
         return 'QuestionTwo'
       case 4:
         return 'QuestionThree'
+      case 5:
+        return 'QuestionFour'
+      case 6: 
+        return 'QuestionFive'
     }
 
     return 'QuestionOne'

@@ -12,7 +12,7 @@
           :name="id"
           :value="option.value" 
           :disabled="isDisabled"
-
+          :checked="option.value === value"
           @input="handleInput"
           @blur="handleBlur" />
 
@@ -92,6 +92,7 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
     border-radius: 4px;
 
     cursor: pointer;
+    user-select: none;
 
     transition: all .3s ease-in-out;
 
