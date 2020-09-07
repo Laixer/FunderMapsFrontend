@@ -1,4 +1,4 @@
-# fundermapsloketfrontend
+# FunderMapsIncidentPortal
 
 ## Project setup
 ```
