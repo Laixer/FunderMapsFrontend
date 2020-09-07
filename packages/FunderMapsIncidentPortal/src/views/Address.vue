@@ -8,7 +8,6 @@
         </Title>
         
         <Form>
-
           <FormField label="Zoek het adres" id="address" :valid="valid" @validate="handleValidation" />
         </Form>
 

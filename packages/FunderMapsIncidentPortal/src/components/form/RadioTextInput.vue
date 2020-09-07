@@ -31,7 +31,7 @@
 
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator';
+import { Prop, Component } from 'vue-property-decorator';
 import SvgIcon from '@/components/common/SvgIcon.vue'
 import FormField from '@/components/common/FormField.vue'
 
@@ -42,6 +42,11 @@ import FormField from '@/components/common/FormField.vue'
 })
 export default class RadioTextInput extends FormField {
   
+  /**
+   * The type of form field
+   */
+  @Prop({ default: 'radio' }) readonly type!: string;
+
   /**
    * List of css classes
    */

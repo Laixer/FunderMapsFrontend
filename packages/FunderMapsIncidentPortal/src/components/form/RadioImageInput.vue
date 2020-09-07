@@ -12,14 +12,14 @@
           :name="id"
           :value="option.value" 
           :disabled="isDisabled"
-
+          :checked="option.value === value"
           @input="handleInput"
           @blur="handleBlur" />
 
         <label 
           :for="id + ' ' + index"
           class="RadioImageInput__Label">
-          <SvgIcon icon="options/type_hout" />
+          <SvgIcon :icon="option.image" />
           <SvgIcon class="SvgIcon--selected" icon="icon_selected" />
           <span>{{ option.label }}</span>
         </label>
@@ -33,7 +33,7 @@
 
 
 <script lang="ts">
-import { Component } from 'vue-property-decorator';
+import { Prop, Component } from 'vue-property-decorator';
 import SvgIcon from '@/components/common/SvgIcon.vue'
 import FormField from '@/components/common/FormField.vue'
 
@@ -43,7 +43,11 @@ import FormField from '@/components/common/FormField.vue'
   }
 })
 export default class RadioImageInput extends FormField {
-  
+  /**
+   * The type of form field
+   */
+  @Prop({ default: 'radio' }) readonly type!: string;
+
   /**
    * List of css classes
    */
@@ -66,6 +70,7 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
 
   &__Wrapper {
     display: flex;
+    justify-content: center;
   }
   &__Field {
     margin-right: 20px;

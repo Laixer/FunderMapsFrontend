@@ -1,48 +1,88 @@
 <template>
-  <div> Questions </div>
+  <Page :step="step" :steps="9" class="Questions">
+    
+    <component v-bind:is="currentQuestionComponent" @validity="handleValidity"></component>
 
-    <!-- <Form>
-      <FormField id="test" :valid="valid" @validate="handleValidation" />
-      <RadioImageInput id="radio" :options="options" />
-    </Form> -->
-
+    <template slot="footer">
+      <Button :ghost="true" @click="handleNavigate">
+        <SvgIcon icon="icon_arrow_previous" />
+        <span>Vorige</span>
+      </Button>      
+      <Button :disabled="!valid"  @click="handleNavigate">
+        <span>Volgende</span>
+        <SvgIcon icon="icon_arrow_next" />
+      </Button>
+    </template>
+  
+  </Page>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
 
+import Page from '@/components/layout/Page.vue'
+import Button from '@/components/Button.vue'
+import SvgIcon from '@/components/common/SvgIcon.vue'
 
-// import Form from '@/components/common/Form.vue'
-// import FormField from '@/components/common/FormField.vue'
-// import RadioImageInput from '@/components/form/RadioImageInput.vue'
+import QuestionOne from '@/components/questions/QuestionOne.vue'
 
-export default {
-  // private valid: boolean|null = null;
+@Component({
+  components: {
+    Page, Button, SvgIcon,
+    QuestionOne
+  }
+})
+export default class Questions extends Vue {
 
-  // private options = [
-  //   {
-  //     label: 'Houten palen',
-  //     value: 'one'
-  //   },
-  //   {
-  //     label: 'two',
-  //     value: 'two'
-  //   }
-  // ]
+  private currentQuestionComponent = 'QuestionOne'
 
-  // handleValidation(value: string|number|boolean|Array<string>) {
-  //   value = value + ''; // Hack: force into a string
-    
-  //   console.log(value)
+  private valid = false
 
-  //   if (value.length > 10) {
-  //     this.valid = true
-  //   } else {
-  //     this.valid = false
-  //   }
-  // }
+  get step(): number {
+    return 1 + parseInt(this.$route.params.question, 10)
+  }
+
+  /**
+   * 
+   */
+  handleValidity(valid: boolean) {
+    console.log("hello?", valid)
+    this.valid = valid
+  }
+
+  handleNavigate() {
+    if (this.valid) {
+      this.$router.push({
+        name: 'Questions',
+        params: {
+          question: this.step + 1 + ''
+        }
+      })
+    }
+  }
 }
 </script>
 
-<style>
+<style lang="scss">
+.Questions {
+  &__Wrapper {
+    display: flex;
+    max-width: 100%;
+    justify-content: space-between;
 
+    img {
+      max-width: 640px;
+    }
+  }
+  &--left {
+    max-width: calc(100% - 720px);
+
+    .Title, .BodyText {
+      margin-bottom: 26px;
+    }
+    .Button {
+      margin-top: 24px;
+    }
+  }
+}
 </style>

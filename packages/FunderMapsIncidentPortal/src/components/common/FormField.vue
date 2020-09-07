@@ -253,9 +253,8 @@ export default class FormField extends Vue {
     
     const target = e.target as HTMLInputElement
     this.fieldValue = target.value
-    console.log(this.fieldValue)
 
-    if (this.hasBeenInteractedWith || this.type === 'select') {
+    if (this.hasBeenInteractedWith || this.type === 'select' || this.type === 'radio' || this.type === 'checkbox') {
       this.validate()
     }
     this.$emit('input', this.fieldValue)
