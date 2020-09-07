@@ -35,10 +35,10 @@ export default class Title extends Vue {
   
   h1 {
     font-size: 24px;
-    // line-height: 1.25;
-    line-height: 25px;
+    line-height: 1.25;
     padding: 0;
     margin: 0;
+    font-weight: bold;
   }
 
   &--center {
@@ -48,6 +48,7 @@ export default class Title extends Vue {
     margin: 0;
     padding: 0;
     font-size: 14px;
+    line-height: 32px;
   }
 }
 

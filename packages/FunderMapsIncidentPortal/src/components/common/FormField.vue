@@ -190,7 +190,7 @@ export default class FormField extends Vue {
    * List of css classes
    */
   get fieldClasses(): Record<string, boolean> {
-    let classes = {
+    return {
       'FormField--disabled': this.isDisabled,
       'FormField--busy': this.isBusy,
       'FormField--valid': this.hasBeenValidated ? this.isValid : false,
@@ -199,8 +199,7 @@ export default class FormField extends Vue {
     // TODO: Avoid TypeScript 'any' error
     // const type = `FormField--${this.type}`
     // classes[`FormField--${this.type}`] = true
-
-    return classes
+    // return classes
   }
 
 

@@ -5,10 +5,10 @@
       <SvgIcon icon="icon_check" />
     </span>
     <span class="ProgressSteps__Current">
-      {{ step }}
+      <span>{{ step }}</span>
     </span>
     <span class="ProgressSteps__Future" v-for="(step, index) in futureSteps" :key="`${index}_future`">
-      {{ step }}
+      <span>{{ step }}</span>
     </span>
   </aside>
 </template>
@@ -104,6 +104,12 @@ export default class ProgressSteps extends Vue {
     }
   }
 
+  &__Current, &__Future {
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
   &__Current {
     background: #00C95D;
     color: white;
@@ -111,6 +117,7 @@ export default class ProgressSteps extends Vue {
   &__Finished {
     fill: #D4DAF0;
     font-size: 24px;
+    line-height: 24px;
   }
   &__Future {
     color: rgba(119, 128, 141, 0.5);

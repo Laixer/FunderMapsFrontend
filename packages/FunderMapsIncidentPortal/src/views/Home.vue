@@ -7,7 +7,7 @@
           Wat doen we?
         </Title>
 
-        <BodyText>
+        <BodyText :bold="true">
           Stichting Kennis Centrum Aanpak Funderingsproblematiek (KCAF) is een stichting met als doelstelling het verzamelen, ontwikkelen en ontsluiten van kennis rond de aanpak en preventie van funderingsproblemen. 
         </BodyText>
 
@@ -49,9 +49,7 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
   }
 })
 export default class Home extends Vue {
-  handleNavigate() {
-    console.log("hi")
-    
+  handleNavigate() {    
     this.$router.push({
       name: 'Address'
     })
@@ -79,6 +77,11 @@ export default class Home extends Vue {
     .Button {
       margin-top: 24px;
     }
+  }
+
+  // Align Copyright to the start
+  .Footer {
+    justify-content: start;
   }
 }
 </style>

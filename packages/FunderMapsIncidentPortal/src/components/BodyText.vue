@@ -1,5 +1,5 @@
 <template>
-  <p class="BodyText" :class="{ 'BodyText--center': center }">
+  <p class="BodyText" :class="{ 'BodyText--center': center, 'BodyText--bold': bold }">
     <slot>{{ text }}</slot>
   </p>
 </template>
@@ -17,6 +17,11 @@ export default class BodyText extends Vue {
    * Whether to center the text
    */
   @Prop({ default: false }) readonly center!: boolean;
+
+  /**
+   * Whether to make the text bold
+   */
+  @Prop({ default: false }) readonly bold!: boolean;
 }
 </script>
 
@@ -32,6 +37,9 @@ export default class BodyText extends Vue {
 
   &--center {
     text-align: center;
+  }
+  &--bold {
+    font-weight: bold;
   }
 }
 

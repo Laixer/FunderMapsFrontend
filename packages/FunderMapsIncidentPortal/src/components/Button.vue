@@ -74,17 +74,20 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
     &:hover {
       background: $PRIMARY_COLOR;
       color: white;
-      border-color: $PRIMARY_COLOR;
+      border: none;
+      padding: 15px 27px 16px;
     }
     &:active {
       background: $active;
       color: white;
-      border-color: $active
+      border: none;
+      padding: 15px 27px 16px;
     }
     &[disabled] {
       background: $disabled;
       color: white;
-      border-color: $disabled;
+      border: none;
+      padding: 15px 27px 16px;
     }
   }
 
