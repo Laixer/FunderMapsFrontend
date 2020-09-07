@@ -347,6 +347,7 @@ export default class FormField extends Vue {
 </script>
 
 <style lang="scss">
+$disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
 
 .FormField {
 
@@ -367,6 +368,7 @@ export default class FormField extends Vue {
     color: #202122;
     border-radius: 4px;
     border: 2px solid #D4DAF0;
+    background: white;
     font-size: 16px;
     line-height: 19px;
     outline: none;
@@ -409,6 +411,10 @@ export default class FormField extends Vue {
   }
   &--invalid &__Icon {
     color: #FF3B30;
+  }
+  &--disabled &__Field {
+    background: rgba(119, 128, 141, 0.2);
+    cursor: not-allowed;
   }
 }
 

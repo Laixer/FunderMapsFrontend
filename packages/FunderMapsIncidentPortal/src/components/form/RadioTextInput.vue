@@ -59,6 +59,7 @@ export default class RadioTextInput extends FormField {
 <style lang="scss">
 
 $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
 
 .RadioTextInput {  
 
@@ -87,9 +88,10 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
     line-height: 19px;
     letter-spacing: -0.3px;
 
-    color: $unselected;
+    color: $unselectedText;
     border: 2px solid $unselected;
     border-radius: 4px;
+    background: white;
 
     cursor: pointer;
     user-select: none;

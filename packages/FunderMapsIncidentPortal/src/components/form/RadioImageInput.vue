@@ -65,6 +65,8 @@ export default class RadioImageInput extends FormField {
 <style lang="scss">
 
 $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
+$unselectedSvg: adjust-color($PRIMARY_COLOR, $red: 176, $green: 131, $blue: -15);
 
 .RadioImageInput {  
 
@@ -93,9 +95,10 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
     line-height: 19px;
     letter-spacing: -0.3px;
 
-    color: $unselected;
+    color: $unselectedText;
     border: 2px solid $unselected;
     border-radius: 4px;
+    background: white;
 
     cursor: pointer;
     user-select: none;
@@ -110,6 +113,7 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
       font-size: 106px;
       padding-top: 20px;
       padding-bottom: 13px;
+      color: $unselectedSvg;
     }
 
     .SvgIcon.SvgIcon--selected {
@@ -132,6 +136,9 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
 
     .SvgIcon--selected {
       opacity: 1;
+    }
+    .SvgIcon:not(.SvgIcon--selected) {
+      color: $PRIMARY_COLOR;
     }
   }
 }

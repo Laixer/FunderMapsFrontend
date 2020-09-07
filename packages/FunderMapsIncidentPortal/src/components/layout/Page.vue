@@ -53,8 +53,6 @@ export default class Page extends Vue {
     max-width: 100%;
   }
   &__Main {
-    
-
     &--sidebar {
       border-left: 1px solid #D4DAF0;
       max-width: calc(100% - 80px);
@@ -62,6 +60,7 @@ export default class Page extends Vue {
   }
   &__Content {
     padding: 50px 80px;
+    background: #F2F5FF;
   }
 }
 </style>
