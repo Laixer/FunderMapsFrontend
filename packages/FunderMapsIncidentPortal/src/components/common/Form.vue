@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="handleSubmit" >
+  <form class="Form" @submit.prevent="handleSubmit" >
     <slot />
 
     <!-- Required to allow the form to be submitted programmatically -->

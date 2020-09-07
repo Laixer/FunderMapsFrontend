@@ -4,7 +4,7 @@
     <component v-bind:is="currentQuestionComponent" @validity="handleValidity"></component>
 
     <template slot="footer">
-      <Button :ghost="true" @click="handleNavigate">
+      <Button :ghost="true" @click="handleNavigateBack">
         <SvgIcon icon="icon_arrow_previous" />
         <span>Vorige</span>
       </Button>      
@@ -25,16 +25,17 @@ import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/common/SvgIcon.vue'
 
 import QuestionOne from '@/components/questions/QuestionOne.vue'
+import QuestionTwo from '@/components/questions/QuestionTwo.vue'
 
 @Component({
   components: {
     Page, Button, SvgIcon,
-    QuestionOne
+    QuestionOne, QuestionTwo
   }
 })
 export default class Questions extends Vue {
 
-  private currentQuestionComponent = 'QuestionOne'
+  
 
   private valid = false
 
@@ -42,23 +43,53 @@ export default class Questions extends Vue {
     return 1 + parseInt(this.$route.params.question, 10)
   }
 
+  get currentQuestionComponent(): string {
+    switch(this.step) {
+      case 2:
+        return 'QuestionOne'
+      case 3: 
+        return 'QuestionTwo'
+    }
+
+    return 'QuestionOne'
+  } 
+
   /**
    * 
    */
   handleValidity(valid: boolean) {
-    console.log("hello?", valid)
     this.valid = valid
   }
 
+  /**
+   * Handle navigation forward
+   */
   handleNavigate() {
     if (this.valid) {
-      this.$router.push({
-        name: 'Questions',
-        params: {
-          question: this.step + 1 + ''
-        }
-      })
+      const to = this.step === 6 
+        ? { name: 'Upload' } 
+        : { name: 'Questions',
+            params: {
+              question: '' + this.step
+            }
+          }
+
+      this.$router.push(to)
     }
+  }
+
+  /**
+   * Handle navigation backward
+   */
+  handleNavigateBack() {
+    const to = this.step === 2 
+      ? { name: 'Address' }
+      : { name: 'Questions',
+          params: {
+            question: '' + (this.step - 2)
+          }
+        }
+    this.$router.push(to)
   }
 }
 </script>

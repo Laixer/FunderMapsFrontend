@@ -2,7 +2,7 @@
 <svg width="109px" height="103px" viewBox="0 0 109 103" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <title>Icon Huurder</title>
     <g id="homepage" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
-        <g id="3" transform="translate(-1125.000000, -366.000000)" stroke="#D4DAF0" stroke-width="4">
+        <g id="3" transform="translate(-1125.000000, -366.000000)" stroke="currentColor" stroke-width="4">
             <g id="Huurder" transform="translate(1090.000000, 345.000000)">
                 <g id="Icon-Huurder" transform="translate(37.000000, 23.000000)">
                     <path d="M35.3,85.5633333 L21.3,85.5633333 C17.4340068,85.5633333 14.3,82.4293266 14.3,78.5633333 L14.3,43.5633333" id="Path"></path>

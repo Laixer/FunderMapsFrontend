@@ -33,7 +33,7 @@ const routes: Array<RouteConfig> = [
     component: Questions
   },
   {
-    path: '/rapport',
+    path: '/upload',
     name: 'Upload',
     component: Upload
   },
