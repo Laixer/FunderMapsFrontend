@@ -1,5 +1,5 @@
 <template>
-  <div class="Button" :class="{ 'Button--wide': wide, 'Button--ghost': ghost, 'Button--line': line }"><slot /></div>
+  <div class="Button" :class="{ 'Button--wide': wide, 'Button--ghost': ghost, 'Button--line': line }" @click="handleClick"><slot /></div>
 </template>
 
 <script lang="ts">
@@ -20,6 +20,12 @@ export default class Button extends Vue {
    */
   @Prop({ default: false }) readonly wide!: boolean;
 
+  /**
+   * Pass on the click event
+   */
+  handleClick(e: Event) {
+    this.$emit('click', e)
+  }
 }
 </script>
 

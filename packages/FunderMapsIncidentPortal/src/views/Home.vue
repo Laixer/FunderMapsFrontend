@@ -16,7 +16,7 @@
         </BodyText>
 
         <div>
-          <Button>
+          <Button @click="handleNavigate">
             <span>Melding maken</span>
             <SvgIcon icon="icon_arrow_next" />
           </Button>
@@ -48,7 +48,15 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
     Page, Button, SvgIcon, Copyright, Title, BodyText
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  handleNavigate() {
+    console.log("hi")
+    
+    this.$router.push({
+      name: 'Address'
+    })
+  }
+}
 </script>
 
 <style lang="scss">
