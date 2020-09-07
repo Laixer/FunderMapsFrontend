@@ -6,7 +6,19 @@
       {{ label }}
     </label>
 
+    <textarea
+      v-if="type === 'textarea'"
+      :id="id"
+      :value="fieldValue" 
+      :type="type"
+      :placeholder="placeholder"
+      :autocomplete="autocomplete"
+      :disabled="isDisabled"
+      class="FormField__Field"
+      @input="handleInput"
+      @blur="handleBlur" />
     <input 
+      v-else
       :id="id"
       :value="fieldValue" 
       :type="type"
@@ -178,12 +190,17 @@ export default class FormField extends Vue {
    * List of css classes
    */
   get fieldClasses(): Record<string, boolean> {
-    return {
+    let classes = {
       'FormField--disabled': this.isDisabled,
       'FormField--busy': this.isBusy,
       'FormField--valid': this.hasBeenValidated ? this.isValid : false,
-      'FormField--invalid': this.hasBeenValidated ? !this.isValid : false,
+      'FormField--invalid': this.hasBeenValidated ? !this.isValid : false
     }
+    // TODO: Avoid TypeScript 'any' error
+    // const type = `FormField--${this.type}`
+    // classes[`FormField--${this.type}`] = true
+
+    return classes
   }
 
 

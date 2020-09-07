@@ -1,13 +1,7 @@
-<template>
-  <div>Home</div>
-</template>
+<script lang="ts">
+import { Component } from 'vue-property-decorator';
+import FormField from '@/components/common/FormField.vue'
 
-<script>
-export default {
-
-}
+@Component
+export default class TextInput extends FormField {}
 </script>
-
-<style>
-
-</style>
