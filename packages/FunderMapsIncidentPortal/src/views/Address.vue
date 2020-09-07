@@ -7,8 +7,8 @@
           Melding maken voor het adres:
         </Title>
         
-        <Form>
-          <FormField label="Zoek het adres" id="address" :valid="valid" @validate="handleValidation" />
+        <Form :busy="busy">
+          <FormField v-model="address" label="Zoek het adres" id="address" :valid="valid" @validate="handleValidation" />
         </Form>
 
       </div>
@@ -17,7 +17,7 @@
     </div>
 
     <template slot="footer">
-      <Button :disabled="!valid" :line="true" @click="handleNavigate">
+      <Button :disabled="!valid || busy" :line="true" @click="handleNavigate">
         <span>Volgende</span>
         <SvgIcon icon="icon_arrow_next" />
       </Button>
@@ -48,8 +48,12 @@ export default class Address extends Vue {
 
   private valid: boolean|null = null;
 
+  private address = '';
+
+  private busy = false;
+
   /**
-   * 
+   * TODO: A strong longer than 1 character will do...
    */
   handleValidation(value: string|number|boolean|Array<string>) {
     this.valid = ((value + '').trim().length > 1)
@@ -57,12 +61,24 @@ export default class Address extends Vue {
 
   handleNavigate() {
     if (this.valid) {
-      this.$router.push({
-        name: 'Questions',
-        params: {
-          question: '1'
-        }
-      })
+      
+      // TODO: Busy animation in button?
+      this.busy = true;
+
+      // TODO: Replace with API call...
+      setTimeout(() => {
+        console.log(this.address)
+
+        this.busy = false
+
+        this.$router.push({
+          name: 'Questions',
+          params: {
+            question: '1'
+          }
+        })
+
+      }, 600)
     }
   }
 }
