@@ -44,7 +44,7 @@ import Form from '@/components/common/Form.vue'
 import FormField from '@/components/common/FormField.vue'
 import TextArea from '@/components/form/TextArea.vue'
 
-import isEmail from 'validator/es/lib/isEmail' 
+import * as EmailValidator from 'email-validator';
 
 @Component({
   components: {
@@ -85,7 +85,7 @@ export default class Profile extends Vue {
   }
   handleEmailValidation(value: string|number|boolean|Array<string>) {
     value = (value + '').trim(); // Hack: force into a string
-    this.emailValid = value.length < 255 && isEmail(value); // TODO: Wat is het limiet? 
+    this.emailValid = value.length < 255 && EmailValidator.validate(value); // TODO: Wat is het limiet? 
   }
   handleTelefoonValidation(value: string|number|boolean|Array<string>) {
     value = (value + '').trim(); // Hack: force into a string
