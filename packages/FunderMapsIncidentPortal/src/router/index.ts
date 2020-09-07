@@ -1,23 +1,52 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
-import Home from '../views/Home.vue'
+
+
+// route level code-splitting
+// this generates a separate chunk (about.[hash].js) 
+// which is lazy-loaded when the route is visited.
+// multiple routes are combined by using the same chunk name.
+const Home = () => import(/* webpackChunkName: "start" */ '../views/Home.vue')
+const Address = () => import(/* webpackChunkName: "start" */ '../views/Address.vue')
+const Questions = () => import(/* webpackChunkName: "questions" */ '../views/Questions.vue')
+const Upload = () => import(/* webpackChunkName: "finish" */ '../views/Upload.vue')
+const Profile = () => import(/* webpackChunkName: "finish" */ '../views/Profile.vue')
+const Finish = () => import(/* webpackChunkName: "finish" */ '../views/Finish.vue')
+
 
 Vue.use(VueRouter)
 
-  const routes: Array<RouteConfig> = [
+const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
+    path: '/adres',
+    name: 'Address',
+    component: Address
+  },
+  {
+    path: '/vragen/:question',
+    name: 'Questions',
+    component: Questions
+  },
+  {
+    path: '/rapport',
+    name: 'Upload',
+    component: Upload
+  },
+  {
+    path: '/profiel',
+    name: 'Profile',
+    component: Profile
+  },
+  {
+    path: '/klaar',
+    name: 'Finish',
+    component: Finish
+  },
 ]
 
 const router = new VueRouter({
