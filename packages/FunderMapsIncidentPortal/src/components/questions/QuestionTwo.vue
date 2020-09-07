@@ -102,15 +102,12 @@ export default class QuestionTwo extends Vue {
    * 
    */
   handleVrijstaandValidation(value: string|number|boolean|Array<string>) {
-    value = value + ''; // Hack: force into a string
     this.vrijstaandValid = value !== ''
   }
   handleEigendomValidation(value: string|number|boolean|Array<string>) {
-    value = value + ''; // Hack: force into a string
     this.eigendomValid = value !== ''
   }
   handleBurenValidation(value: string|number|boolean|Array<string>) {
-    value = value + ''; // Hack: force into a string
     this.burenValid = value !== ''
   }
 }

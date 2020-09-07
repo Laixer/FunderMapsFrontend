@@ -32,14 +32,9 @@
 
 <script lang="ts">
 import { Prop, Component } from 'vue-property-decorator';
-import SvgIcon from '@/components/common/SvgIcon.vue'
 import FormField from '@/components/common/FormField.vue'
 
-@Component({
-  components: {
-    SvgIcon
-  }
-})
+@Component
 export default class RadioTextInput extends FormField {
   
   /**
@@ -63,32 +58,29 @@ export default class RadioTextInput extends FormField {
 
 <style lang="scss">
 
-// TODO: Fix sizing
-// TODO: Add checkbox svg 
-
 $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
 
 .RadioTextInput {  
 
   &__Wrapper {
     display: flex;
+    flex-wrap: wrap;
   }
   &__Field {
     margin-right: 20px;
+    margin-bottom: 15px;
 
-    &:last-child {
+    &:nth-child(2n) {
       margin-right: 0;
     }
   }
 
   &__Label {
-    // TODO: fix sizing
-    width: 180px;
-    height: 180px;
+    width: 550px;
+    height: 55px;
     position: relative;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
 
     font-size: 18px;
@@ -99,7 +91,32 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
     border: 2px solid $unselected;
     border-radius: 4px;
 
+    cursor: pointer;
+
     transition: all .3s ease-in-out;
+
+    padding-left: 45px; // space for the marker
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      width: 24px;
+      height: 24px;
+      border: 2px solid #D4DAF0;
+      border-radius: 50%;
+      transition: all .3s ease-in-out;
+    }
+    &:after {
+      content: '';
+      position: absolute;
+      left: 21px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transition: all .3s ease-in-out;
+      background-color: transparent;
+    }
 
     &:hover {
       border-color: $PRIMARY_COLOR;
@@ -109,12 +126,16 @@ $unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $al
   input {
     display: none;
   }
-  input[type="radio"]:checked + &__Label {
-    color: $PRIMARY_COLOR;
+  input:checked + &__Label {
+    background-color: rgba(156, 178, 255, 0.1); // TODO: Use color adjust
     border-color: $PRIMARY_COLOR;
+    color: #202122;
 
-    .SvgIcon--selected {
-      opacity: 1;
+    &:before {
+      border-color: $PRIMARY_COLOR;
+    }
+    &:after {
+      background-color: $PRIMARY_COLOR;
     }
   }
 }

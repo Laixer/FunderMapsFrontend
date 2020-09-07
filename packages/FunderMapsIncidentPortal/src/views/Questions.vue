@@ -26,11 +26,12 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
 
 import QuestionOne from '@/components/questions/QuestionOne.vue'
 import QuestionTwo from '@/components/questions/QuestionTwo.vue'
+import QuestionThree from '@/components/questions/QuestionThree.vue'
 
 @Component({
   components: {
     Page, Button, SvgIcon,
-    QuestionOne, QuestionTwo
+    QuestionOne, QuestionTwo, QuestionThree
   }
 })
 export default class Questions extends Vue {
@@ -49,6 +50,8 @@ export default class Questions extends Vue {
         return 'QuestionOne'
       case 3: 
         return 'QuestionTwo'
+      case 4:
+        return 'QuestionThree'
     }
 
     return 'QuestionOne'

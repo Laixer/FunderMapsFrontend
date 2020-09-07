@@ -65,13 +65,7 @@ export default class QuestionOne extends Vue {
    * 
    */
   handleValidation(value: string|number|boolean|Array<string>) {
-    value = value + ''; // Hack: force into a string
-    
-    if (value !== '') {
-      this.valid = true
-    } else {
-      this.valid = false
-    }
+    this.valid = value !== ''
   }
 }
 </script>
