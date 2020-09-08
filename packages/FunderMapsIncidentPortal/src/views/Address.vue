@@ -7,13 +7,18 @@
       </Title>
       
       <Form :busy="busy">
-        <FormField v-model="address" label="Zoek het adres" id="address" :valid="valid" @validate="handleValidation" />
+        <GeoCoder 
+          :novalidate="true" 
+          v-model="address" 
+          label="Zoek het adres" 
+          id="address" 
+          :valid="valid" 
+          @coordinates="handleCoordinates" />
       </Form>
-      <!-- Replace with Mapbox / Google Map + position without borders: remove padding from wrapper + apply to left -->
       
     </div>
     <div class="MapBox__Wrapper">
-      <MapBox :accessToken="token" :mapStyle="style" />
+      <MapBox :accessToken="token" :mapStyle="style" @load="handleMapbox" />
     </div>
 
     <template slot="footer">
@@ -35,7 +40,7 @@ import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/common/SvgIcon.vue'
 
 import Form from '@/components/common/Form.vue'
-import FormField from '@/components/common/FormField.vue'
+import GeoCoder from '@/components/form/GeoCoder.vue'
 
 import MapBox from '@/components/common/MapBox.vue'
 
@@ -43,7 +48,7 @@ import MapBox from '@/components/common/MapBox.vue'
 @Component({
   components: {
     Page, Button, SvgIcon, Title,
-    Form, FormField,
+    Form, GeoCoder,
     MapBox
   }
 })
@@ -55,20 +60,17 @@ export default class Address extends Vue {
 
   private busy = false;
 
+  private map: any;
+
+  // TODO: Replace with mapbox wrapper component that inserts a pin
   private token = process.env.VUE_APP_MAPBOX_TOKEN;
   private style = process.env.VUE_APP_MAPBOX_STYLE;
 
 
-  /**
-   * TODO: A string longer than 1 character will do...
-   */
-  handleValidation(value: string|number|boolean|Array<string>) {
-    this.valid = ((value + '').trim().length > 1)
-  }
-
   handleNavigate() {
     if (! this.valid) return
-    
+
+    // TODO: Also store user input, not just the address reference id
     this.$store.commit('updateState', {
       prop: 'Address',
       value: this.address
@@ -80,6 +82,22 @@ export default class Address extends Vue {
         question: '1'
       }
     })
+  }
+
+  handleMapbox({ map }: Record<string, any>) {
+    this.map = map
+  }
+
+  handleCoordinates(coordinates: Array<number>) {
+    if (this.map) {
+      
+      this.valid = true
+
+      this.map.flyTo({
+        center: coordinates,
+        zoom: 15
+      })
+    }
   }
 
 }

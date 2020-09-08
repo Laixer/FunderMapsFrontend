@@ -38,7 +38,7 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
 import FormField from '@/components/common/FormField.vue'
 
 @Component({
-  components: {
+  components: { 
     SvgIcon
   }
 })

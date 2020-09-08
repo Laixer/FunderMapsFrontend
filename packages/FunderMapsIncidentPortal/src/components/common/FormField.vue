@@ -153,12 +153,12 @@ export default class FormField extends Vue {
   /**
    * Indicates whether the user has interacted with this field.
    */
-  private hasBeenInteractedWith = false;
+  protected hasBeenInteractedWith = false;
 
   /**
    * The bound field value
    */
-  private fieldValue: string|boolean|number|Array<string|boolean|number> = ''
+  protected fieldValue: string|boolean|number|Array<string|boolean|number> = ''
 
   
   /******************************************
@@ -418,46 +418,4 @@ $disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alph
   }
 }
 
-// .FormField {
-//   font-size: 16px;
-//   position: relative;
-
-//   input {
-//     color: rgba(53, 64, 82, 0.5);
-//   }
-//   input:disabled {
-//     color: #495057 !important
-//   }
-
-//   label, legend {
-//     color: #7F8FA4;
-//     text-transform: uppercase;
-//     padding-bottom: 0;
-//   }
-
-//   .invalid-feedback {
-//     position: absolute;
-//     top: -1.75rem;
-//     text-align: right;
-//   }
-
-//   &--choice {
-//     height: 33px;
-
-//     .custom-control-input:checked ~ .custom-control-label::before {
-//       border-color: transparent;
-//       background-color: transparent;
-//     }
-//     .custom-radio.check .custom-control-input:checked ~ .custom-control-label::after {
-//       background-color: white;
-//       // background-image: url('../../../assets/icons/Check-icon.svg');
-//       background-size: cover;
-//     }
-//     .custom-radio.none .custom-control-input:checked ~ .custom-control-label::after {
-//       background-color: white;
-//       // background-image: url('../../../assets/icons/None-icon.svg');
-//       background-size: cover;
-//     }
-//   }
-// }
 </style>
