@@ -72,6 +72,8 @@ export default class Address extends Vue {
     this.addressLabel = this.$store.state['AddressLabel']
     this.address = this.$store.state['Address']
     this.addressCoordinates = this.$store.state['AddressCoordinates']
+
+    this.valid = (this.address !== '')
   }
 
   handleNavigate() {
