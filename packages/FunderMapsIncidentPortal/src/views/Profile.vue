@@ -98,7 +98,7 @@ export default class Profile extends Vue {
   }
   handleEmailValidation(value: string|number|boolean|Array<string>) {
     value = (value + '').trim(); // Hack: force into a string
-    this.emailValid = value.length < 255 && EmailValidator.validate(value); // TODO: Wat is het limiet? 
+    this.emailValid = value.length < 255 && (value.length === 0 || EmailValidator.validate(value)); // TODO: Wat is het limiet? 
   }
   handleTelefoonValidation(value: string|number|boolean|Array<string>) {
     value = (value + '').trim(); // Hack: force into a string
