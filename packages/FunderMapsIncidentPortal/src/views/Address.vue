@@ -60,27 +60,27 @@ export default class Address extends Vue {
   }
 
   handleNavigate() {
-    if (this.valid) {
+    if (! this.valid || !this.busy) return
       
-      // TODO: Busy animation in button?
-      this.busy = true;
+    // TODO: Busy animation in button?
+    this.busy = true;
 
-      // TODO: Replace with API call...
-      setTimeout(() => {
-        console.log(this.address)
+    // TODO: Replace with API call...
+    setTimeout(() => {
+      console.log(this.address)
 
-        this.busy = false
+      this.busy = false
 
-        this.$router.push({
-          name: 'Questions',
-          params: {
-            question: '1'
-          }
-        })
+      this.$router.push({
+        name: 'Questions',
+        params: {
+          question: '1'
+        }
+      })
 
-      }, 600)
-    }
+    }, 600)
   }
+
 }
 </script>
 

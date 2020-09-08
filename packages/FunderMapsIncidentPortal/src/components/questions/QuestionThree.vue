@@ -5,13 +5,13 @@
     </Title>
     
     <Form>
-      <RadioTextInput id="type" :options="options" :valid="valid" @validate="handleValidation" />
+      <RadioTextInput :value="value" id="type" :options="options" :valid="valid" @validate="handleValidation" @input="handleInput" />
     </Form>
   </div>
 </template>
 
 <script lang="ts">
-import { Watch, Component, Vue } from 'vue-property-decorator'
+import { Prop, Watch, Component, Vue } from 'vue-property-decorator'
 
 import Title from '@/components/Title.vue'
 
@@ -27,8 +27,20 @@ import { IOption } from '@/components/common/IOption'
 })
 export default class QuestionThree extends Vue {
 
+
+  /**
+   * The form field value
+   */
+  @Prop({ default: '' }) value !: string;
+
+  /**
+   * The validity status
+   */
   private valid: boolean|null = false;
 
+  /**
+   * The form field options
+   */
   private options: Array<IOption> = [
     {
       label: 'Verkeerd gefundeerd bij de bouw',
@@ -76,20 +88,36 @@ export default class QuestionThree extends Vue {
     }
   ]
 
+  /**
+   * Pass on changes in the validity status
+   */
   @Watch('valid')
   validChange(newValue: boolean) {
     this.$emit('validity', newValue)
   }
 
+  /**
+   * Pass on the initial validity status
+   */
   created() {
+    if (this.value) {
+      this.handleValidation(this.value)
+    }
     this.$emit('validity', this.valid)
   }
 
   /**
-   * 
+   * Handle the form validation
    */
   handleValidation(value: string|number|boolean|Array<string>) {
     this.valid = value !== ''
+  }
+
+  /**
+   * Pass on the input event
+   */
+  handleInput(value: string|number|boolean|Array<string>) {
+    this.$emit('input', value)
   }
 }
 </script>

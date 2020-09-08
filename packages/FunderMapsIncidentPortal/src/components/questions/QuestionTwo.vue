@@ -5,26 +5,26 @@
         <Title :center="true">
           Is het een vrijstaand pand of onderdeel van een (bouw)blok?
         </Title>
-        <RadioImageInput id="vrijstaand" :options="vrijstaandOptions" :valid="vrijstaandValid" @validate="handleVrijstaandValidation" />
+        <RadioImageInput :value="vrijstaandValue" id="vrijstaand" :options="vrijstaandOptions" :valid="vrijstaandValid" @validate="handleVrijstaandValidation" @input="handleVrijstaandInput" />
       </div>
       <div class="QuestionTwo--two">
         <Title :center="true">
           Bent u eigenaar of huurder van de woning?
         </Title>
-        <RadioImageInput id="eigendom" :options="eigendomOptions" :valid="eigendomValid" @validate="handleEigendomValidation" />
+        <RadioImageInput :value="eigendomValue" id="eigendom" :options="eigendomOptions" :valid="eigendomValid" @validate="handleEigendomValidation" @input="handleEigendomInput" />
       </div>
       <div class="QuestionTwo--three">
         <Title :center="true">
           Is bij een van uw directe buren funderingsherstel uitgevoerd?
         </Title>
-        <RadioImageInput id="buren" :options="burenOptions" :valid="burenValid" @validate="handleBurenValidation" />
+        <RadioImageInput :value="burenValue" id="buren" :options="burenOptions" :valid="burenValid" @validate="handleBurenValidation" @input="handleBurenInput" />
       </div>
     </Form>
   </div>
 </template>
 
 <script lang="ts">
-import { Watch, Component, Vue } from 'vue-property-decorator'
+import { Prop, Watch, Component, Vue } from 'vue-property-decorator'
 
 import Title from '@/components/Title.vue'
 
@@ -40,10 +40,28 @@ import { IOption } from '@/components/common/IOption'
 })
 export default class QuestionTwo extends Vue {
 
+  /**
+   * The form field value
+   */
+  @Prop({ default: '' }) value !: Record<string, string>;
+
+  /**
+   * Form values proxy
+   */
+  private vrijstaandValue = ''
+  private eigendomValue = ''
+  private burenValue = ''
+
+  /**
+   * The validity status
+   */
   private vrijstaandValid: boolean|null = false;
   private eigendomValid: boolean|null = false;
   private burenValid: boolean|null = false;
   
+  /**
+   * The form field options
+   */
   private vrijstaandOptions: Array<IOption> = [
     {
       label: 'Vrijstaand',
@@ -81,6 +99,9 @@ export default class QuestionTwo extends Vue {
     }
   ]
 
+  /**
+   * Pass on changes in the validity status
+   */
   @Watch('vrijstaandValid')
   vrijstaandValidChange() {
     this.$emit('validity', (this.vrijstaandValid && this.eigendomValid && this.burenValid ))
@@ -94,12 +115,38 @@ export default class QuestionTwo extends Vue {
     this.$emit('validity', (this.vrijstaandValid && this.eigendomValid && this.burenValid ))
   }
 
+  /**
+   * Handle changes to the value prop
+   */
+  @Watch('value') 
+  valueChange() {
+    this.vrijstaandValue = this.value['vrijstaand'] || ''
+    this.eigendomValue = this.value['eigendom'] || ''
+    this.burenValue = this.value['buren'] || ''
+  }
+
+  /**
+   * Pass on the initial validity status
+   */
   created() {
+    this.vrijstaandValue = this.value['vrijstaand'] || ''
+    this.eigendomValue = this.value['eigendom'] || ''
+    this.burenValue = this.value['buren'] || ''
+    
+    if (this.vrijstaandValue) {
+      this.handleVrijstaandValidation(this.vrijstaandValue)
+    }
+    if (this.eigendomValue) {
+      this.handleEigendomValidation(this.eigendomValue)
+    }
+    if (this.burenValue) {
+      this.handleBurenValidation(this.burenValue)
+    }
     this.$emit('validity', (this.vrijstaandValid && this.eigendomValid && this.burenValid ))
   }
 
   /**
-   * 
+   * No requirements
    */
   handleVrijstaandValidation(value: string|number|boolean|Array<string>) {
     this.vrijstaandValid = value !== ''
@@ -110,6 +157,32 @@ export default class QuestionTwo extends Vue {
   handleBurenValidation(value: string|number|boolean|Array<string>) {
     this.burenValid = value !== ''
   }
+
+  /**
+   * Pass on the input event
+   */
+  handleVrijstaandInput(value: string|number|boolean|Array<string>) {
+    this.$emit('input', {
+      'vrijstaand': value,
+      'eigendom': this.eigendomValue,
+      'buren': this.burenValue
+    })
+  }
+  handleEigendomInput(value: string|number|boolean|Array<string>) {
+    this.$emit('input', {
+      'vrijstaand': this.vrijstaandValue,
+      'eigendom': value,
+      'buren': this.burenValue
+    })
+  }
+  handleBurenInput(value: string|number|boolean|Array<string>) {
+    this.$emit('input', {
+      'vrijstaand': this.vrijstaandValue,
+      'eigendom': this.eigendomValue,
+      'buren': value
+    })
+  }
+
 }
 </script>
 

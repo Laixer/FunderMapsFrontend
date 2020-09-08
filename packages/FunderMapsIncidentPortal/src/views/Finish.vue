@@ -56,7 +56,7 @@ export default class Finish extends Vue {}
 .Finish {
   &__Wrapper {
     max-width: 550px;
-    margin: auto;
+    margin: 0 auto;
   }
 
   .Title, .BodyText {

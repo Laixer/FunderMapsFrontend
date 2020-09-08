@@ -5,13 +5,13 @@
     </Title>
     
     <Form>
-      <CheckboxInput id="omgeving" :options="options" :valid="valid" @validate="handleValidation" />
+      <CheckboxInput :value="value" id="omgeving" :options="options" :valid="valid" @validate="handleValidation" @input="handleInput" />
     </Form>
   </div>
 </template>
 
 <script lang="ts">
-import { Watch, Component, Vue } from 'vue-property-decorator'
+import { Prop, Watch, Component, Vue } from 'vue-property-decorator'
 
 import Title from '@/components/Title.vue'
 
@@ -27,8 +27,19 @@ import { IOption } from '@/components/common/IOption'
 })
 export default class QuestionFive extends Vue {
 
+  /**
+   * The form field value
+   */
+  @Prop({ default: '' }) value !: string;
+
+  /**
+   * The validity status
+   */
   private valid: boolean|null = true;
 
+  /**
+   * The form field options
+   */
   private options: Array<IOption> = [
     {
       label: 'Er is sprake van bodemdaling tuin/erf',
@@ -77,12 +88,21 @@ export default class QuestionFive extends Vue {
     },
   ]
 
+  /**
+   * Pass on changes in the validity status
+   */
   @Watch('valid')
   validChange(newValue: boolean) {
     this.$emit('validity', newValue)
   }
 
+  /**
+   * Pass on the initial validity status
+   */
   created() {
+    if (this.value) {
+      this.handleValidation() // this.value
+    }
     this.$emit('validity', this.valid)
   }
 
@@ -91,6 +111,13 @@ export default class QuestionFive extends Vue {
    */
   handleValidation() {
     this.valid = true
+  }
+
+  /**
+   * Pass on the input event
+   */
+  handleInput(value: string|number|boolean|Array<string>) {
+    this.$emit('input', value)
   }
 }
 </script>

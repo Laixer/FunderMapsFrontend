@@ -1,7 +1,7 @@
 <template>
   <Page :step="step" :steps="8" class="Questions">
     
-    <component v-bind:is="currentQuestionComponent" @validity="handleValidity"></component>
+    <component v-bind:is="currentQuestionComponent" :busy="busy" v-model="fieldData" @validity="handleValidity"></component>
 
     <template slot="footer">
       <Button :ghost="true" @click="handleNavigateBack">
@@ -39,13 +39,42 @@ import QuestionFive from '@/components/questions/QuestionFive.vue'
 export default class Questions extends Vue {
 
   
-
+  /**
+   * Whether all inputs are valid
+   */
   private valid = false
 
+  /**
+   * Indicates the form is being submitted
+   */
+  private busy = false
+
+  /**
+   * The data for all questions
+   */
+  // private questionData !: Record<string,string|Array<string>>
+  private questionData: Record<string,string|Array<string>|Record<string, string>> = {
+    'QuestionOne': '',
+    'QuestionTwo': {
+      'vrijstaand': '',
+      'eigendom': '',
+      'buren': ''
+    },
+    'QuestionThree': '',
+    'QuestionFour': [],
+    'QuestionFive': [],
+  }
+
+  /**
+   * The current step is based on the question number from the route
+   */
   get step(): number {
     return 1 + parseInt(this.$route.params.question, 10)
   }
 
+  /**
+   * The question component is loaded based on the question number from the route
+   */
   get currentQuestionComponent(): string {
     switch(this.step) {
       case 2:
@@ -64,7 +93,17 @@ export default class Questions extends Vue {
   } 
 
   /**
-   * 
+   * The v-model connection between question data & question components
+   */
+  get fieldData(): string|Array<string>|Record<string, string> {
+    return this.questionData[this.currentQuestionComponent]
+  }
+  set fieldData(value: string|Array<string>|Record<string, string>) {
+    this.questionData[this.currentQuestionComponent] = value
+  }
+
+  /**
+   * Register changes in the form validity
    */
   handleValidity(valid: boolean) {
     this.valid = valid
@@ -74,7 +113,15 @@ export default class Questions extends Vue {
    * Handle navigation forward
    */
   handleNavigate() {
-    if (this.valid) {
+    if (! this.valid || !this.busy) return
+
+    // TODO: Busy animation in button?
+    this.busy = true;
+
+    // TODO: Replace with API call...
+    setTimeout(() => {
+      this.busy = false
+
       const to = this.step === 6 
         ? { name: 'Upload' } 
         : { name: 'Questions',
@@ -84,13 +131,16 @@ export default class Questions extends Vue {
           }
 
       this.$router.push(to)
-    }
+    }, 600)
+  
   }
 
   /**
    * Handle navigation backward
    */
   handleNavigateBack() {
+    if (this.busy) return
+
     const to = this.step === 2 
       ? { name: 'Address' }
       : { name: 'Questions',
@@ -102,27 +152,3 @@ export default class Questions extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.Questions {
-  &__Wrapper {
-    display: flex;
-    max-width: 100%;
-    justify-content: space-between;
-
-    img {
-      max-width: 640px;
-    }
-  }
-  &--left {
-    max-width: calc(100% - 720px);
-
-    .Title, .BodyText {
-      margin-bottom: 26px;
-    }
-    .Button {
-      margin-top: 24px;
-    }
-  }
-}
-</style>
