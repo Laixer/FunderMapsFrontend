@@ -7,7 +7,7 @@
       </Title>
       
       <Form>
-        <UploadArea />
+        <UploadArea @progress="handleUploadProgress" />
 
         <!-- <FormField label="Implement upload" id="upload" :valid="valid" @validate="handleValidation" /> -->
       </Form>
@@ -15,11 +15,11 @@
     </div>
 
     <template slot="footer">
-      <Button :ghost="true" @click="handleNavigateBack">
+      <Button :disabled="busy" :ghost="true" @click="handleNavigateBack">
         <SvgIcon icon="icon_arrow_previous" />
         <span>Vorige</span>
       </Button>      
-      <Button :disabled="!valid"  @click="handleNavigate">
+      <Button :disabled="busy"  @click="handleNavigate">
         <span>Volgende</span>
         <SvgIcon icon="icon_arrow_next" />
       </Button>
@@ -49,30 +49,35 @@ import UploadArea from '@/components/common/UploadArea.vue'
 })
 export default class Upload extends Vue {
 
-  private valid: boolean|null = true;
+  /**
+   * Busy means an upload is not finished yet
+   */
+  private busy = false;
 
   /**
-   * 
+   * Keep track of when an upload is ongoing
    */
-  handleValidation(value: string|number|boolean|Array<string>) {
-    this.valid = true
+  handleUploadProgress(status: string) {
+    this.busy = status !== 'finished'
   }
 
   /**
    * Handle navigation forward
    */
   handleNavigate() {
-    if (this.valid) {
-      this.$router.push({ 
-        name: 'Profile'
-      })
-    }
+    if (this.busy) return 
+
+    this.$router.push({ 
+      name: 'Profile'
+    })
   }
 
   /**
    * Handle navigation backward
    */
   handleNavigateBack() {
+    if (this.busy) return 
+
     this.$router.push({ 
       name: 'Questions',
       params: {
