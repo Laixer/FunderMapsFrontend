@@ -9,7 +9,7 @@
     <div class="FormField__Wrapper">
       <input 
         :id="id"
-        :value="addressLabel" 
+        :value="fieldValue" 
         :type="type"
         :placeholder="placeholder"
         :autocomplete="autocomplete ? autocomplete: 'off'"
@@ -46,8 +46,6 @@ import { ISuggestion } from './ISuggestion'
 @Component
 export default class GeoCoder extends FormField {
 
-  // TODO: Turn into prop
-  private addressLabel = ''
 
   private suggestions: Array<ISuggestion> = []
 
@@ -81,17 +79,18 @@ export default class GeoCoder extends FormField {
         coordinates: [5.023806, 52.080801]
       },
     ]
+
+    this.fieldValue = target.value
   }
 
   handleSelect( suggestion: ISuggestion ) {
     
-    this.addressLabel = suggestion.label
     this.suggestions = []
 
-    this.fieldValue = suggestion.value
+    this.fieldValue = suggestion.label 
     
     this.$emit('coordinates', suggestion.coordinates)
-    this.$emit('input', suggestion.value)
+    this.$emit('suggestion', suggestion)
   }
 }
 </script>

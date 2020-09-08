@@ -9,11 +9,11 @@
       <Form :busy="busy">
         <GeoCoder 
           :novalidate="true" 
-          v-model="address" 
+          v-model="addressLabel" 
           label="Zoek het adres" 
           id="address" 
           :valid="valid" 
-          @coordinates="handleCoordinates" />
+          @suggestion="handleSuggestion" />
       </Form>
       
     </div>
@@ -43,6 +43,7 @@ import Form from '@/components/common/Form.vue'
 import GeoCoder from '@/components/form/GeoCoder.vue'
 
 import MapBox from '@/components/common/MapBox.vue'
+import { ISuggestion } from '@/components/form/ISuggestion'
 
 
 @Component({
@@ -56,24 +57,37 @@ export default class Address extends Vue {
 
   private valid: boolean|null = null;
 
+  private addressLabel = '';
   private address = '';
+  private addressCoordinates: Array<number>|null = null
 
   private busy = false;
 
   private map: any;
 
-  // TODO: Replace with mapbox wrapper component that inserts a pin
   private token = process.env.VUE_APP_MAPBOX_TOKEN;
   private style = process.env.VUE_APP_MAPBOX_STYLE;
 
+  created() {
+    this.addressLabel = this.$store.state['AddressLabel']
+    this.address = this.$store.state['Address']
+    this.addressCoordinates = this.$store.state['AddressCoordinates']
+  }
 
   handleNavigate() {
     if (! this.valid) return
 
-    // TODO: Also store user input, not just the address reference id
     this.$store.commit('updateState', {
       prop: 'Address',
       value: this.address
+    })
+    this.$store.commit('updateState', {
+      prop: 'AddressLabel',
+      value: this.addressLabel
+    })
+    this.$store.commit('updateState', {
+      prop: 'AddressCoordinates',
+      value: this.addressCoordinates
     })
 
     this.$router.push({
@@ -86,13 +100,23 @@ export default class Address extends Vue {
 
   handleMapbox({ map }: Record<string, any>) {
     this.map = map
+    if (this.addressCoordinates !== null) {
+      console.log(this.addressCoordinates)
+      this.handleCoordinates(this.addressCoordinates)
+    }
+  }
+
+  handleSuggestion(suggestion: ISuggestion) {
+    this.valid = true
+
+    this.handleCoordinates(suggestion.coordinates)
+    this.addressLabel = suggestion.label
+    this.address = suggestion.value
+    this.addressCoordinates = suggestion.coordinates
   }
 
   handleCoordinates(coordinates: Array<number>) {
     if (this.map) {
-      
-      this.valid = true
-
       this.map.flyTo({
         center: coordinates,
         zoom: 15

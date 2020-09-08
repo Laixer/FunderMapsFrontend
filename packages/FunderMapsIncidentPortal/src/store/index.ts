@@ -13,6 +13,8 @@ export default new Vuex.Store({
     "PhoneNumber": "06360557722",
     "FoundationType": 5,
     "Address": "gfm-00000163c7e04fa9a562688df1e077b9",
+    "AddressLabel": "",  // Not part of the API, but available as input field
+    "AddressCoordinates": null, // Not part of the API, but available as input field
     "FoundationDamageCharacteristics": [
       1,
       3
@@ -37,8 +39,13 @@ export default new Vuex.Store({
     getIndicentRequestBody(state) {
       const request = Object.assign(state)
       request.Name = `${state.FirstName} ${state.LastName}`
+
       delete request.FirstName
       delete request.LastName
+
+      delete request.AddressLabel
+      delete request.AddressCoordinates
+
       return request
     }
   },
@@ -46,7 +53,7 @@ export default new Vuex.Store({
     /**
      * TODO: fix this...
      */
-    updateState(state: Record<string, string|number|Array<string|number>>, { prop, value }: Record<string, string|number|Array<string|number>>) {
+    updateState(state: Record<string, string|number|null|Array<string|number>>, { prop, value }: Record<string, string|number|Array<string|number>>) {
       state[prop+''] = value
     },
   },
