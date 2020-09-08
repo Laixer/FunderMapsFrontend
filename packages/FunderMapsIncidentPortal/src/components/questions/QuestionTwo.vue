@@ -64,7 +64,7 @@ export default class QuestionTwo extends Vue {
    */
   private vrijstaandOptions: Array<IOption> = [
     {
-      label: 'ChainedBuilding',
+      label: 'Vrijstaand',
       value: 'ChainedBuilding',
       image: 'options/vrijstaand_vrijstaand'
     },
