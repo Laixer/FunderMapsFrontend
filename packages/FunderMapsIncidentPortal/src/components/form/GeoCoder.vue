@@ -21,13 +21,14 @@
       <SvgIcon 
         :icon="fieldIcon" 
         class="FormField__Icon" />
-    </div>
-    <div v-if="suggestions.length !== 0" class="GeoCoder__Suggestions">
-      <div class="Suggestion" v-for="suggestion in suggestions" :key="suggestion.value" @click="handleSelect(suggestion)">
-        <SvgIcon 
-          icon="icon_location" 
-          class="Suggestion__Icon" />
-        <span>{{ suggestion.label }}</span>
+
+      <div v-if="suggestions.length !== 0" class="GeoCoder__Suggestions">
+        <div class="Suggestion" v-for="suggestion in suggestions" :key="suggestion.value" @click="handleSelect(suggestion)">
+          <SvgIcon 
+            icon="icon_location" 
+            class="Suggestion__Icon" />
+          <span>{{ suggestion.label }}</span>
+        </div>
       </div>
     </div>
 
@@ -97,6 +98,7 @@ export default class GeoCoder extends FormField {
 
 <style lang="scss">
 .GeoCoder {
+  position: relative;
 
   .FormField__Field {
     padding-right: 45px;
@@ -124,6 +126,12 @@ export default class GeoCoder extends FormField {
   overflow: hidden;
   background: white;
   margin-top: -4px;
+
+  @media only screen and (max-width: $BREAKPOINT) {
+    position: absolute;
+    top: 56px;
+    z-index: 9999
+  }
 
   .Suggestion {
     display: block;
