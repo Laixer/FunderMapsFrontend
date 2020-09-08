@@ -121,8 +121,8 @@ export default class QuestionTwo extends Vue {
   @Watch('value') 
   valueChange() {
     this.vrijstaandValue = this.value['vrijstaand'] || ''
-    this.eigendomValue = this.value['eigendom'] || ''
-    this.burenValue = this.value['buren'] || ''
+    this.eigendomValue = this.value['Owner'] || ''
+    this.burenValue = this.value['NeighborRecovery'] || ''
   }
 
   /**
@@ -130,8 +130,8 @@ export default class QuestionTwo extends Vue {
    */
   created() {
     this.vrijstaandValue = this.value['vrijstaand'] || ''
-    this.eigendomValue = this.value['eigendom'] || ''
-    this.burenValue = this.value['buren'] || ''
+    this.eigendomValue = this.value['Owner'] || ''
+    this.burenValue = this.value['NeighborRecovery'] || ''
     
     if (this.vrijstaandValue) {
       this.handleVrijstaandValidation(this.vrijstaandValue)
@@ -164,22 +164,22 @@ export default class QuestionTwo extends Vue {
   handleVrijstaandInput(value: string|number|boolean|Array<string>) {
     this.$emit('input', {
       'vrijstaand': value,
-      'eigendom': this.eigendomValue,
-      'buren': this.burenValue
+      'Owner': this.eigendomValue,
+      'NeighborRecovery': this.burenValue
     })
   }
   handleEigendomInput(value: string|number|boolean|Array<string>) {
     this.$emit('input', {
       'vrijstaand': this.vrijstaandValue,
-      'eigendom': value,
-      'buren': this.burenValue
+      'Owner': value,
+      'NeighborRecovery': this.burenValue
     })
   }
   handleBurenInput(value: string|number|boolean|Array<string>) {
     this.$emit('input', {
       'vrijstaand': this.vrijstaandValue,
-      'eigendom': this.eigendomValue,
-      'buren': value
+      'Owner': this.eigendomValue,
+      'NeighborRecovery': value
     })
   }
 

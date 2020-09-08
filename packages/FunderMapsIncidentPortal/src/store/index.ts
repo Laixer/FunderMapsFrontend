@@ -5,8 +5,38 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    "Name": "",
+    "FirstName": "", // Not part of the API, but available as input field
+    "LastName": "", // Not part of the API, but available as input field
+    "ClientId": 3,
+    "Email": "",
+    "PhoneNumber": "06360557722",
+    "FoundationType": 5,
+    "Address": "gfm-00000163c7e04fa9a562688df1e077b9",
+    "FoundationDamageCharacteristics": [
+      1,
+      3
+    ],
+    "EnvironmentDamageCharacteristics": [
+      1
+    ],
+    "Owner": "",
+    "FoundationRecovery": "",
+    "NeighborRecovery": "",
+    "FoundationDamageCause": 6,
+    "DocumentFile": [
+      "https://somefile.ext"
+    ],
+    "Note": "",
+    "InternalNote": ""
   },
   mutations: {
+    /**
+     * TODO: fix this...
+     */
+    updateState(state: Record<string, string|number|Array<string|number>>, { prop, value }: Record<string, string|number|Array<string|number>>) {
+      state[prop+''] = value
+    },
   },
   actions: {
   },

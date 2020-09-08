@@ -8,12 +8,12 @@
       
       <Form :busy="busy">
         <div class="Form__Row">
-          <FormField v-model="voornaam" label="Voornaam" id="voornaam" autocomplete="given-name" :valid="voornaamValid" @validate="handleVoornaamValidation" />
-          <FormField v-model="achternaam" label="Achternaam" id="achternaam" autocomplete="family-name" :valid="achternaamValid" @validate="handleAchternaamValidation" />
+          <FormField v-model="questionData.FirstName" label="Voornaam" id="voornaam" autocomplete="given-name" :valid="voornaamValid" @validate="handleVoornaamValidation" />
+          <FormField v-model="questionData.LastName" label="Achternaam" id="achternaam" autocomplete="family-name" :valid="achternaamValid" @validate="handleAchternaamValidation" />
         </div>
-        <FormField v-model="email" label="E-mail" id="email" type="email" autocomplete="email" :valid="emailValid" @validate="handleEmailValidation" />
-        <FormField v-model="telefoon" label="Telefoonnummer" id="telefoon" type="tel" autocomplete="tel" placeholder="+31" :valid="telefoonValid" @validate="handleTelefoonValidation" />
-        <TextArea v-model="toelichting" label="Toelichting" placeholder="Korte beschrijving" id="toelichting" :valid="toelichtingValid" @validate="handleToelichtingValidation" :rows="4" />
+        <FormField v-model="questionData.Email" label="E-mail" id="email" type="email" autocomplete="email" :valid="emailValid" @validate="handleEmailValidation" />
+        <FormField v-model="questionData.PhoneNumber" label="Telefoonnummer" id="telefoon" type="tel" autocomplete="tel" placeholder="+31" :valid="telefoonValid" @validate="handleTelefoonValidation" />
+        <TextArea v-model="questionData.Note" label="Toelichting" placeholder="Korte beschrijving" id="toelichting" :valid="toelichtingValid" @validate="handleToelichtingValidation" :rows="4" />
       </Form>
 
     </div>
@@ -52,17 +52,22 @@ import * as EmailValidator from 'email-validator';
   }
 })
 export default class Profile extends Vue {
-
+  
+  /**
+   * Indicates the form is being submitted
+   */
   private busy = false
 
   /**
    * Field values
    */
-  private voornaam = ''
-  private achternaam = ''
-  private email = ''
-  private telefoon = ''
-  private toelichting = ''
+  private questionData: Record<string,string> = {
+    'FirstName': '',
+    'LastName': '',
+    'Email': '',
+    'PhoneNumber': '',
+    'Note': ''
+  }
 
   /**
    * Validation state
@@ -82,6 +87,15 @@ export default class Profile extends Vue {
       && this.emailValid 
       && this.telefoonValid 
       && this.toelichtingValid
+  }
+
+  /**
+   * Load the previously stored profile data from the store
+   */
+  created() {
+    Object.keys(this.questionData).forEach(key => {
+      this.questionData[key] = this.$store.state[key]
+    })
   }
 
   /**
@@ -117,6 +131,8 @@ export default class Profile extends Vue {
     // TODO: Busy animation in button?
     this.busy = true;
 
+    this.storeData()
+
     // TODO: Replace with API call...
     setTimeout(() => {
       
@@ -135,9 +151,34 @@ export default class Profile extends Vue {
   handleNavigateBack() {
     if (this.busy) return
 
+    this.storeData()
+
     this.$router.push({ 
       name: 'Upload'
     })
+  }
+
+  /**
+   * Go over the profile fields, and save only those fields that have valid input
+   */
+  storeData() {
+    const validators = {
+      'FirstName': this.voornaamValid,
+      'LastName': this.achternaamValid,
+      'Email': this.emailValid,
+      'PhoneNumber': this.telefoonValid,
+      'Note': this.toelichtingValid
+    }
+
+    Object
+      .entries(validators)
+      .filter((entry) => entry[1])
+      .forEach((entry) => {
+        this.$store.commit('updateState', {
+          prop: entry[0],
+          value: this.questionData[entry[0]]
+        })
+      })
   }
 }
 </script>

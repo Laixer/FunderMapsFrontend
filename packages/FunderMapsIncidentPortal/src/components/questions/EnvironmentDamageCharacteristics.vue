@@ -1,5 +1,5 @@
 <template>
-  <div class="QuestionFive">
+  <div class="EnvironmentDamageCharacteristics">
     <Title :center="true" subtitle="Meerdere opties mogelijk">
       Herkent u minstens één van de volgende punten in de omgeving van de woning? 
     </Title>
@@ -25,7 +25,7 @@ import { IOption } from '@/components/common/IOption'
     Title, Form, CheckboxInput
   }
 })
-export default class QuestionFive extends Vue {
+export default class EnvironmentDamageCharacteristics extends Vue {
 
   /**
    * The form field value
@@ -123,7 +123,7 @@ export default class QuestionFive extends Vue {
 </script>
 
 <style lang="scss">
-.QuestionFive {
+.EnvironmentDamageCharacteristics {
   .Title {
     margin-bottom: 21px;
   }

@@ -1,5 +1,5 @@
 <template>
-  <div class="QuestionFour">
+  <div class="FoundationDamageCharacteristics">
     <Title :center="true" subtitle="Meerdere opties mogelijk">
       Herkent u minstens één van de volgende punten aan de woning? 
     </Title>
@@ -25,7 +25,7 @@ import { IOption } from '@/components/common/IOption'
     Title, Form, CheckboxInput
   }
 })
-export default class QuestionFour extends Vue {
+export default class FoundationDamageCharacteristics extends Vue {
 
   /**
    * The form field value
@@ -106,7 +106,7 @@ export default class QuestionFour extends Vue {
 </script>
 
 <style lang="scss">
-.QuestionFour {
+.FoundationDamageCharacteristics {
   .Title {
     margin-bottom: 21px;
   }

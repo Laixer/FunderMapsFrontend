@@ -24,16 +24,16 @@ import Page from '@/components/layout/Page.vue'
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/common/SvgIcon.vue'
 
-import QuestionOne from '@/components/questions/QuestionOne.vue'
+import FoundationType from '@/components/questions/FoundationType.vue'
 import QuestionTwo from '@/components/questions/QuestionTwo.vue'
-import QuestionThree from '@/components/questions/QuestionThree.vue'
-import QuestionFour from '@/components/questions/QuestionFour.vue'
-import QuestionFive from '@/components/questions/QuestionFive.vue'
+import FoundationDamageCause from '@/components/questions/FoundationDamageCause.vue'
+import FoundationDamageCharacteristics from '@/components/questions/FoundationDamageCharacteristics.vue'
+import EnvironmentDamageCharacteristics from '@/components/questions/EnvironmentDamageCharacteristics.vue'
 
 @Component({
   components: {
     Page, Button, SvgIcon,
-    QuestionOne, QuestionTwo, QuestionThree, QuestionFour, QuestionFive
+    FoundationType, QuestionTwo, FoundationDamageCause, FoundationDamageCharacteristics, EnvironmentDamageCharacteristics
   }
 })
 export default class Questions extends Vue {
@@ -54,15 +54,15 @@ export default class Questions extends Vue {
    */
   // private questionData !: Record<string,string|Array<string>>
   private questionData: Record<string,string|Array<string>|Record<string, string>> = {
-    'QuestionOne': '',
+    'FoundationType': '',
     'QuestionTwo': {
       'vrijstaand': '',
-      'eigendom': '',
-      'buren': ''
+      'Owner': '',
+      'NeighborRecovery': ''
     },
-    'QuestionThree': '',
-    'QuestionFour': [],
-    'QuestionFive': [],
+    'FoundationDamageCause': '',
+    'FoundationDamageCharacteristics': [],
+    'EnvironmentDamageCharacteristics': [],
   }
 
   /**
@@ -78,18 +78,18 @@ export default class Questions extends Vue {
   get currentQuestionComponent(): string {
     switch(this.step) {
       case 2:
-        return 'QuestionOne'
+        return 'FoundationType'
       case 3: 
         return 'QuestionTwo'
       case 4:
-        return 'QuestionThree'
+        return 'FoundationDamageCause'
       case 5:
-        return 'QuestionFour'
+        return 'FoundationDamageCharacteristics'
       case 6: 
-        return 'QuestionFive'
+        return 'EnvironmentDamageCharacteristics'
     }
 
-    return 'QuestionOne'
+    return 'FoundationType'
   } 
 
   /**
@@ -103,6 +103,24 @@ export default class Questions extends Vue {
   }
 
   /**
+   * Load all question data at creation
+   */
+  created() {
+
+    Object.keys(this.questionData).forEach(key => {
+      if (key === 'QuestionTwo') {
+        this.questionData[key] = {
+          'vrijstaand': this.$store.state['vrijstaand'],
+          'Owner': this.$store.state['Owner'],
+          'NeighborRecovery': this.$store.state['NeighborRecovery']
+        }
+      } else {
+        this.questionData[key] = this.$store.state[key]
+      }
+    })
+  }
+
+  /**
    * Register changes in the form validity
    */
   handleValidity(valid: boolean) {
@@ -113,33 +131,29 @@ export default class Questions extends Vue {
    * Handle navigation forward
    */
   handleNavigate() {
-    if (! this.valid || this.busy) return
+    if (! this.valid) return
 
-    // TODO: Busy animation in button?
-    this.busy = true;
+    this.storeData()
 
-    // TODO: Replace with API call...
-    setTimeout(() => {
-      this.busy = false
-
-      const to = this.step === 6 
-        ? { name: 'Upload' } 
-        : { name: 'Questions',
-            params: {
-              question: '' + this.step
-            }
+    const to = this.step === 6 
+      ? { name: 'Upload' } 
+      : { name: 'Questions',
+          params: {
+            question: '' + this.step
           }
+        }
 
-      this.$router.push(to)
-    }, 600)
-  
+    this.$router.push(to)
   }
 
   /**
    * Handle navigation backward
    */
   handleNavigateBack() {
-    if (this.busy) return
+
+    if (this.valid) {
+      this.storeData()
+    }
 
     const to = this.step === 2 
       ? { name: 'Address' }
@@ -149,6 +163,29 @@ export default class Questions extends Vue {
           }
         }
     this.$router.push(to)
+  }
+
+  /**
+   * Store the question data in vuex
+   */
+  storeData() {
+    const question = this.currentQuestionComponent
+
+    if (question === 'QuestionTwo') {
+      Object
+        .entries(this.questionData['QuestionTwo'])
+        .forEach((entry) => {
+        this.$store.commit('updateState', {
+          prop: entry[0],
+          value: entry[1]
+        })
+      })
+    } else {
+      this.$store.commit('updateState', {
+        prop: question,
+        value: this.questionData[question]
+      })
+    }
   }
 }
 </script>

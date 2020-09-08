@@ -1,11 +1,11 @@
 <template>
-  <div class="QuestionOne">
+  <div class="FoundationDamageCause">
     <Title :center="true">
-      Op welke type fundering is de woning gebouwd?
+      Wat veroorzaakt de schade aan de woning?
     </Title>
     
     <Form>
-      <RadioImageInput :value="value" id="type" :options="options" :valid="valid" @validate="handleValidation" @input="handleInput" />
+      <RadioTextInput :value="value" id="type" :options="options" :valid="valid" @validate="handleValidation" @input="handleInput" />
     </Form>
   </div>
 </template>
@@ -16,16 +16,17 @@ import { Prop, Watch, Component, Vue } from 'vue-property-decorator'
 import Title from '@/components/Title.vue'
 
 import Form from '@/components/common/Form.vue'
-import RadioImageInput from '@/components/form/RadioImageInput.vue'
+import RadioTextInput from '@/components/form/RadioTextInput.vue'
 
 import { IOption } from '@/components/common/IOption'
 
 @Component({
   components: {
-    Title, Form, RadioImageInput
+    Title, Form, RadioTextInput
   }
 })
-export default class QuestionOne extends Vue {
+export default class FoundationDamageCause extends Vue {
+
 
   /**
    * The form field value
@@ -42,24 +43,48 @@ export default class QuestionOne extends Vue {
    */
   private options: Array<IOption> = [
     {
-      label: 'Houten palen',
-      value: 'hout',
-      image: 'options/type_hout'
+      label: 'Verkeerd gefundeerd bij de bouw',
+      value: 'hout'
     },
     {
-      label: 'Ondiep op staal',
-      value: 'staal',
-      image: 'options/type_staal'
+      label: 'Beschadiging van de fundering door (planten)wortels',
+      value: 'beton'
     },
     {
-      label: 'Betonnen palen',
-      value: 'beton',
-      image: 'options/type_beton'
+      label: 'Aantasting van houten palen door schimmels/bacterieën',
+      value: 'staal'
+    },
+    {
+      label: 'Gaswinning of mijnbouw',
+      value: 'beton'
+    },
+    {
+      label: 'De funderingspalen drukken de woning omhoog',
+      value: 'beton'
+    },
+    {
+      label: 'Verkeer nabij de woning',
+      value: 'beton'
+    },
+    {
+      label: 'De funderingspalen worden naar beneden getrokken',
+      value: 'onbekend'
+    },
+    {
+      label: 'Funderingsherstel bij de buren',
+      value: 'beton'
+    },
+    {
+      label: 'Bodemdaling',
+      value: 'beton'
     },
     {
       label: 'Weet ik niet',
-      value: 'onbekend',
-      image: 'options/type_onbekend'
+      value: 'beton'
+    },
+    {
+      label: 'Fundering niet meer berekend op het huidige gewicht',
+      value: 'onbekend'
     }
   ]
 
@@ -98,7 +123,7 @@ export default class QuestionOne extends Vue {
 </script>
 
 <style lang="scss">
-.QuestionOne {
+.FoundationDamageCause {
   .Title {
     margin-bottom: 21px;
   }

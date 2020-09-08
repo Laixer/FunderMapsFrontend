@@ -1,11 +1,11 @@
 <template>
-  <div class="QuestionThree">
+  <div class="FoundationType">
     <Title :center="true">
-      Wat veroorzaakt de schade aan de woning?
+      Op welke type fundering is de woning gebouwd?
     </Title>
     
     <Form>
-      <RadioTextInput :value="value" id="type" :options="options" :valid="valid" @validate="handleValidation" @input="handleInput" />
+      <RadioImageInput :value="value" id="type" :options="options" :valid="valid" @validate="handleValidation" @input="handleInput" />
     </Form>
   </div>
 </template>
@@ -16,17 +16,16 @@ import { Prop, Watch, Component, Vue } from 'vue-property-decorator'
 import Title from '@/components/Title.vue'
 
 import Form from '@/components/common/Form.vue'
-import RadioTextInput from '@/components/form/RadioTextInput.vue'
+import RadioImageInput from '@/components/form/RadioImageInput.vue'
 
 import { IOption } from '@/components/common/IOption'
 
 @Component({
   components: {
-    Title, Form, RadioTextInput
+    Title, Form, RadioImageInput
   }
 })
-export default class QuestionThree extends Vue {
-
+export default class FoundationType extends Vue {
 
   /**
    * The form field value
@@ -43,48 +42,24 @@ export default class QuestionThree extends Vue {
    */
   private options: Array<IOption> = [
     {
-      label: 'Verkeerd gefundeerd bij de bouw',
-      value: 'hout'
+      label: 'Houten palen',
+      value: 'hout',
+      image: 'options/type_hout'
     },
     {
-      label: 'Beschadiging van de fundering door (planten)wortels',
-      value: 'beton'
+      label: 'Ondiep op staal',
+      value: 'staal',
+      image: 'options/type_staal'
     },
     {
-      label: 'Aantasting van houten palen door schimmels/bacterieën',
-      value: 'staal'
-    },
-    {
-      label: 'Gaswinning of mijnbouw',
-      value: 'beton'
-    },
-    {
-      label: 'De funderingspalen drukken de woning omhoog',
-      value: 'beton'
-    },
-    {
-      label: 'Verkeer nabij de woning',
-      value: 'beton'
-    },
-    {
-      label: 'De funderingspalen worden naar beneden getrokken',
-      value: 'onbekend'
-    },
-    {
-      label: 'Funderingsherstel bij de buren',
-      value: 'beton'
-    },
-    {
-      label: 'Bodemdaling',
-      value: 'beton'
+      label: 'Betonnen palen',
+      value: 'beton',
+      image: 'options/type_beton'
     },
     {
       label: 'Weet ik niet',
-      value: 'beton'
-    },
-    {
-      label: 'Fundering niet meer berekend op het huidige gewicht',
-      value: 'onbekend'
+      value: 'onbekend',
+      image: 'options/type_onbekend'
     }
   ]
 
@@ -123,7 +98,7 @@ export default class QuestionThree extends Vue {
 </script>
 
 <style lang="scss">
-.QuestionThree {
+.FoundationType {
   .Title {
     margin-bottom: 21px;
   }
