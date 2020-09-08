@@ -64,8 +64,8 @@ export default class QuestionTwo extends Vue {
    */
   private vrijstaandOptions: Array<IOption> = [
     {
-      label: 'Vrijstaand',
-      value: 'vrijstaand',
+      label: 'ChainedBuilding',
+      value: 'ChainedBuilding',
       image: 'options/vrijstaand_vrijstaand'
     },
     {
@@ -120,7 +120,7 @@ export default class QuestionTwo extends Vue {
    */
   @Watch('value') 
   valueChange() {
-    this.vrijstaandValue = this.value['vrijstaand'] || ''
+    this.vrijstaandValue = this.value['ChainedBuilding'] || ''
     this.eigendomValue = this.value['Owner'] || ''
     this.burenValue = this.value['NeighborRecovery'] || ''
   }
@@ -129,7 +129,7 @@ export default class QuestionTwo extends Vue {
    * Pass on the initial validity status
    */
   created() {
-    this.vrijstaandValue = this.value['vrijstaand'] || ''
+    this.vrijstaandValue = this.value['ChainedBuilding'] || ''
     this.eigendomValue = this.value['Owner'] || ''
     this.burenValue = this.value['NeighborRecovery'] || ''
     
@@ -163,21 +163,21 @@ export default class QuestionTwo extends Vue {
    */
   handleVrijstaandInput(value: string|number|boolean|Array<string>) {
     this.$emit('input', {
-      'vrijstaand': value,
+      'ChainedBuilding': value,
       'Owner': this.eigendomValue,
       'NeighborRecovery': this.burenValue
     })
   }
   handleEigendomInput(value: string|number|boolean|Array<string>) {
     this.$emit('input', {
-      'vrijstaand': this.vrijstaandValue,
+      'ChainedBuilding': this.vrijstaandValue,
       'Owner': value,
       'NeighborRecovery': this.burenValue
     })
   }
   handleBurenInput(value: string|number|boolean|Array<string>) {
     this.$emit('input', {
-      'vrijstaand': this.vrijstaandValue,
+      'ChainedBuilding': this.vrijstaandValue,
       'Owner': this.eigendomValue,
       'NeighborRecovery': value
     })
@@ -196,22 +196,42 @@ export default class QuestionTwo extends Vue {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    @media only screen and (min-width: 1115px) {
+      flex-direction: row;
+    }
   }
 
-  &--one {
-    width: 430px;
-    padding: 0 50px 35px 0;
+  &--one, &--two, &--three {
+    width: 380px;
+  }
+  &--one, &--two {
+    padding-bottom: 44px;
     border-bottom: 1px solid #D4DAF0;
   }
-  &--two {
-    width: 430px;
-    padding: 0 0 35px 50px;
-    border-bottom: 1px solid #D4DAF0;
-    border-left: 1px solid #D4DAF0;
+  &--two, &--three {
+    padding-top: 25px;
   }
   &--three {
-    width: 380px;
-    padding-top: 25px;
+    padding-bottom: 24px;
+  }
+
+  // More than regular breakpoint, because the items won't fit otherwise 
+  @media only screen and (min-width: 1115px) {
+    &--one {
+      width: 430px;
+      padding: 0 50px 35px 0;
+    }
+    &--two {
+      width: 430px;
+      padding: 0 0 35px 50px;
+      border-left: 1px solid #D4DAF0;
+    }
+    &--three {
+      padding-bottom: 0;
+    }
   }
 }
 </style>

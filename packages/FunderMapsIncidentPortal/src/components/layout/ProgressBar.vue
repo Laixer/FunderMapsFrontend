@@ -30,10 +30,17 @@ export default class ProgressBar extends Vue {
 
 <style lang="scss">
 .ProgressBar {
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
   height: 5px;
   background: #D4DAF0;
+  z-index: 99999;
+
+  @media only screen and (min-width: $BREAKPOINT) {
+    position: relative;
+  }
 
   .Progress {
     position: absolute;

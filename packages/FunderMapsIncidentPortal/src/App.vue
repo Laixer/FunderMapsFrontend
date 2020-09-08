@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <Header />
     <router-view/>
   </div>
 </template>
@@ -21,8 +20,10 @@ export default class App extends Vue {}
 
 <style lang="scss">
 body {
-  background: url('./assets/Background.jpg');
-  background-size: cover;
+  @media only screen and (min-width: $BREAKPOINT) {
+    background: url('./assets/Background.jpg');
+    background-size: cover;
+  }
 }
 #app {
   font-family: system-ui, sans-serif;
@@ -32,8 +33,8 @@ body {
   color: $PRIMARY_COLOR;
   background: white;
 
-  width: 1440px;
-  height: 910px;
+  // width: 1440px;
+  // height: 910px;
   
   position: absolute;
   left: 0;
@@ -49,6 +50,11 @@ body {
 
   display: flex;
   flex-direction: column;
+
+  @media only screen and (min-width: $BREAKPOINT) {
+    width: 1440px;
+    height: 910px;
+  }
 }
 
 /**

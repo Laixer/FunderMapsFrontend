@@ -90,8 +90,11 @@ export default class Address extends Vue {
 
   .Page__Content {
     padding: 0;
-    flex-direction: row;
     justify-content: space-between;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      flex-direction: row;
+    }
   }
 
   &__Wrapper {
@@ -100,7 +103,11 @@ export default class Address extends Vue {
     max-width: 100%;
     justify-content: space-between;
     height: 100%;
-    padding: 50px 80px;
+    padding: 25px 20px;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      padding: 50px 80px;
+    }
 
     .Title, .BodyText {
       margin-bottom: 26px;
@@ -111,8 +118,18 @@ export default class Address extends Vue {
   }
   .MapBox__Wrapper {
     position: relative;
-    max-width: 758px;
-    width: 758px;
+
+    max-width: 100%;
+    width: 100%;
+    min-height: 285px;
+    height: calc(100vh - 406px);
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      height: auto;
+      max-width: 758px;
+      width: calc(100% - 503px);
+    }
+    
   }
 }
 </style>

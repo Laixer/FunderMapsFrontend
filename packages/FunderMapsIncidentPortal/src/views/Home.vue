@@ -22,8 +22,9 @@
           </Button>
         </div>
       </div>
-
-      <img class="Home--right" src="../assets/home.jpg" width="640" />
+      <div class="Home--right">
+        <img src="../assets/home.jpg" width="640" height="585" />
+      </div>
     </div>
 
     <template slot="footer">
@@ -63,19 +64,45 @@ export default class Home extends Vue {
     display: flex;
     max-width: 100%;
     justify-content: space-between;
+    flex-direction: column;
 
-    img {
-      max-width: 640px;
+    @media only screen and (min-width: $BREAKPOINT) {
+      flex-direction: row;
     }
   }
   &--left {
-    max-width: calc(100% - 720px);
-
     .Title, .BodyText {
       margin-bottom: 26px;
     }
     .Button {
-      margin-top: 24px;
+      margin-top: 12px;
+
+      @media only screen and (min-width: $BREAKPOINT) {
+        margin-top: 24px;
+      }
+    }
+  }
+
+  &--right {
+    margin: 40px 0;
+    max-width: 100%;
+
+    // The max width of the image
+    @media only screen and (min-width: 640px) {
+      max-width: 640px;
+    }
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      margin: 0;
+      max-width: calc(100% - 610px); // 640px;
+    }
+
+    img {
+      display: block;
+      // object-fit: contain;
+      width: 100%;
+      height: auto;
+
     }
   }
 

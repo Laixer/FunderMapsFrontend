@@ -21,7 +21,7 @@ export default new Vuex.Store({
       1
     ],
     "Owner": "",
-    "FoundationRecovery": "",
+    "ChainedBuilding": "",
     "NeighborRecovery": "",
     "FoundationDamageCause": 6,
     "DocumentFile": [
@@ -29,6 +29,18 @@ export default new Vuex.Store({
     ],
     "Note": "",
     "InternalNote": ""
+  },
+  getters: {
+    /**
+     * Retrieve the indent request body
+     */
+    getIndicentRequestBody(state) {
+      const request = Object.assign(state)
+      request.Name = `${state.FirstName} ${state.LastName}`
+      delete request.FirstName
+      delete request.LastName
+      return request
+    }
   },
   mutations: {
     /**

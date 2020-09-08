@@ -15,11 +15,10 @@
         <FormField v-model="questionData.PhoneNumber" label="Telefoonnummer" id="telefoon" type="tel" autocomplete="tel" placeholder="+31" :valid="telefoonValid" @validate="handleTelefoonValidation" />
         <TextArea v-model="questionData.Note" label="Toelichting" placeholder="Korte beschrijving" id="toelichting" :valid="toelichtingValid" @validate="handleToelichtingValidation" :rows="4" />
       </Form>
-
     </div>
 
     <template slot="footer">
-      <Button :ghost="true" @click="handleNavigateBack">
+      <Button :disabled="busy" :ghost="true" @click="handleNavigateBack">
         <SvgIcon icon="icon_arrow_previous" />
         <span>Vorige</span>
       </Button>      
@@ -44,6 +43,8 @@ import FormField from '@/components/common/FormField.vue'
 import TextArea from '@/components/form/TextArea.vue'
 
 import * as EmailValidator from 'email-validator';
+
+import axios from 'axios'
 
 @Component({
   components: {
@@ -133,16 +134,21 @@ export default class Profile extends Vue {
 
     this.storeData()
 
-    // TODO: Replace with API call...
-    setTimeout(() => {
-      
+    axios({
+      method: 'POST',
+      url: `${process.env.VUE_APP_API_HOST}/api/incident`,
+      data: this.$store.getters.getIndicentRequestBody
+    })
+    .then(() => {
       this.busy = false
-
       this.$router.push({
         name: 'Finish'
       })
-
-    }, 600)
+    })
+    .catch(err => {
+      // TODO: Handle error
+      console.log(err)
+    })
   }
 
   /**
@@ -189,18 +195,20 @@ export default class Profile extends Vue {
   &__Wrapper {
     max-width: 550px;
     width: 100%;
-    margin: auto;
+    margin: 0 auto;
   }
   .Title{
     margin-bottom: 26px;
   }
 
-  .Form__Row {
-    display: flex;
-    justify-content: space-between;
+  @media only screen and (min-width: $BREAKPOINT) {
+    .Form__Row {
+      display: flex;
+      justify-content: space-between;
 
-    .FormField {
-      width: calc(50% - 10px);
+      .FormField {
+        width: calc(50% - 10px);
+      }
     }
   }
 }

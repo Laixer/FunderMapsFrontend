@@ -56,7 +56,7 @@ export default class Questions extends Vue {
   private questionData: Record<string,string|Array<string>|Record<string, string>> = {
     'FoundationType': '',
     'QuestionTwo': {
-      'vrijstaand': '',
+      'ChainedBuilding': '',
       'Owner': '',
       'NeighborRecovery': ''
     },
@@ -110,7 +110,7 @@ export default class Questions extends Vue {
     Object.keys(this.questionData).forEach(key => {
       if (key === 'QuestionTwo') {
         this.questionData[key] = {
-          'vrijstaand': this.$store.state['vrijstaand'],
+          'ChainedBuilding': this.$store.state['ChainedBuilding'],
           'Owner': this.$store.state['Owner'],
           'NeighborRecovery': this.$store.state['NeighborRecovery']
         }

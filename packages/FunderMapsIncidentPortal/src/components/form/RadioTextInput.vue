@@ -66,22 +66,40 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
   &__Wrapper {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
+    max-width: 1120px;
+    margin: 0 auto;
+
+    // 2x label width + 20px margin + 3x 80 + a bit
+    @media only screen and (max-width: 1379px) {
+      justify-content: center;
+      max-width: 550px;
+      width: 100%;
+      
+    }
   }
   &__Field {
-    margin-right: 20px;
     margin-bottom: 15px;
+    width: 100%;
 
-    &:nth-child(2n) {
-      margin-right: 0;
+    // 2x label width + 20px margin + 3x 80 + a bit
+    @media only screen and (min-width: 1380px) {
+      width: 550px;
+      margin-right: 20px;
+
+      &:nth-child(2n) {
+        margin-right: 0;
+      }
     }
   }
 
   &__Label {
-    width: 550px;
-    height: 55px;
+    max-width: 550px;
+    width: 100%;
+    min-height: 55px;
     position: relative;
 
-    display: flex;
+    display: inline-block;
     align-items: center;
 
     font-size: 18px;
@@ -98,7 +116,13 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
 
     transition: all .3s ease-in-out;
 
+    padding: 15px;
     padding-left: 45px; // space for the marker
+
+    span {
+      margin-top: 2px;
+      display: inline-block;
+    }
 
     &:before {
       content: '';
@@ -113,6 +137,7 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
     &:after {
       content: '';
       position: absolute;
+      top: 21px;
       left: 21px;
       width: 12px;
       height: 12px;

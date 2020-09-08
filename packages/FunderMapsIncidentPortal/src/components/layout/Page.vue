@@ -1,16 +1,18 @@
 <template>
   <div class="Page">
-    
-    <ProgressSteps v-if="steps" :step="step" :steps="steps"  /> 
+    <Header :step="step" :steps="steps" />
+    <div class="Page__Wrapper">
+      <ProgressSteps v-if="steps" :step="step" :steps="steps" /> 
 
-    <div class="Page__Main" :class="{ 'Page__Main--sidebar': steps > 0 }">
-      <div class="Page__Content">
-        <slot />
+      <div class="Page__Main" :class="{ 'Page__Main--sidebar': steps > 0 }">
+        <div class="Page__Content">
+          <slot />
+        </div>
+
+        <Footer>
+          <slot name="footer"></slot>
+        </Footer>
       </div>
-
-      <Footer>
-        <slot name="footer"></slot>
-      </Footer>
     </div>
 
   </div>
@@ -20,11 +22,13 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 import ProgressSteps from '@/components/layout/ProgressSteps.vue'
+import ProgressBar from '@/components/layout/ProgressBar.vue'
 import Footer from '@/components/layout/Footer.vue'
+import Header from '@/components/layout/Header.vue'
 
 @Component({
   components: {
-    ProgressSteps, Footer
+    ProgressSteps, ProgressBar, Footer, Header
   }
 })
 export default class Page extends Vue {
@@ -45,6 +49,18 @@ export default class Page extends Vue {
   display: flex;
   flex-grow: 1;
   align-items: stretch;
+  flex-direction: column;
+
+  &__Wrapper {
+    display: flex;
+    flex-grow: 1;
+    align-items: stretch;
+    flex-direction: column;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      flex-direction: row;
+    }
+  }
 
   &__Main, &__Content {
     flex-grow: 1;
@@ -55,12 +71,26 @@ export default class Page extends Vue {
   &__Main {
     &--sidebar {
       border-left: 1px solid #D4DAF0;
-      max-width: calc(100% - 80px);
+
+      @media only screen and (min-width: $BREAKPOINT) {
+        max-width: calc(100% - 80px);
+      }
     }
   }
   &__Content {
-    padding: 50px 80px;
     background: #F2F5FF;
+    padding: 25px 20px;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      padding: 50px 80px;
+    }
   }
+
+  @media only screen and (max-width: $BREAKPOINT) {
+    .ProgressSteps {
+      display: none;
+    }
+  }
+
 }
 </style>
