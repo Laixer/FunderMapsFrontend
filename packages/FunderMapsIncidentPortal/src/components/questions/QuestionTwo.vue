@@ -188,6 +188,7 @@ export default class QuestionTwo extends Vue {
 
 <style lang="scss">
 .QuestionTwo {
+  
   .Title {
     margin-bottom: 21px;
   }
@@ -199,18 +200,18 @@ export default class QuestionTwo extends Vue {
 
   &--one {
     width: 430px;
-    padding: 0 50px 40px 0;
+    padding: 0 50px 35px 0;
     border-bottom: 1px solid #D4DAF0;
   }
   &--two {
     width: 430px;
-    padding: 0 0 40px 50px;
+    padding: 0 0 35px 50px;
     border-bottom: 1px solid #D4DAF0;
     border-left: 1px solid #D4DAF0;
   }
   &--three {
     width: 380px;
-    padding-top: 40px;
+    padding-top: 25px;
   }
 }
 </style>
