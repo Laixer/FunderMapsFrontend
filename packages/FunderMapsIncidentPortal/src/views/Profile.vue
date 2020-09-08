@@ -24,8 +24,7 @@
         <span>Vorige</span>
       </Button>      
       <Button :disabled="!isValid"  @click="handleNavigate">
-        <span>Volgende</span>
-        <SvgIcon icon="icon_arrow_next" />
+        <span>Versturen</span>
       </Button>
     </template>
   
