@@ -72,6 +72,7 @@ export default {
         const header = {}
         xhr.setRequestHeader('Authorization', header.Authorization);
       }
+      this.$emit('handleUploadProgress', 'starting')
     },
     /**
      * Start the creation of a new report once the upload has finished with success
@@ -86,6 +87,7 @@ export default {
           file: response
         } 
       })
+      this.$emit('handleUploadProgress', 'finished')
     },
     handleError(file) { // error
       if (file && this.$refs.dropzone) {
@@ -96,6 +98,7 @@ export default {
         message: 'Het bestand kon niet verwerkt worden.',
         variant: 'danger'
       }
+      this.$emit('handleUploadProgress', 'finished')
     }
   }
 }
