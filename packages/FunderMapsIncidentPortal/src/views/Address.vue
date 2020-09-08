@@ -60,7 +60,7 @@ export default class Address extends Vue {
   }
 
   handleNavigate() {
-    if (! this.valid || !this.busy) return
+    if (! this.valid || this.busy) return
       
     // TODO: Busy animation in button?
     this.busy = true;

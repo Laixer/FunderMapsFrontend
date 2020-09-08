@@ -113,7 +113,7 @@ export default class Profile extends Vue {
    * Handle navigation forward
    */
   handleNavigate() {
-    if (! this.isValid || !this.busy) return
+    if (! this.isValid || this.busy) return
       
     // TODO: Busy animation in button?
     this.busy = true;

@@ -113,7 +113,7 @@ export default class Questions extends Vue {
    * Handle navigation forward
    */
   handleNavigate() {
-    if (! this.valid || !this.busy) return
+    if (! this.valid || this.busy) return
 
     // TODO: Busy animation in button?
     this.busy = true;
