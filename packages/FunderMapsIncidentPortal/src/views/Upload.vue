@@ -2,12 +2,14 @@
   <Page :step="7" :steps="8" class="Upload">
     
     <div class="Upload__Wrapper">
-      <Title subtitle="U kunt deze stap ook overslaan">
+      <Title :center="true" subtitle="U kunt deze stap ook overslaan">
         Heeft u een onderzoeksrapport beschikbaar?
       </Title>
       
       <Form>
-        <FormField label="Implement upload" id="upload" :valid="valid" @validate="handleValidation" />
+        <UploadArea />
+
+        <!-- <FormField label="Implement upload" id="upload" :valid="valid" @validate="handleValidation" /> -->
       </Form>
 
     </div>
@@ -37,11 +39,12 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
 import Form from '@/components/common/Form.vue'
 import FormField from '@/components/common/FormField.vue'
 
+import UploadArea from '@/components/common/UploadArea.vue'
 
 @Component({
   components: {
     Page, Button, Title, SvgIcon,
-    Form, FormField
+    Form, FormField, UploadArea
   }
 })
 export default class Upload extends Vue {
@@ -52,7 +55,7 @@ export default class Upload extends Vue {
    * 
    */
   handleValidation(value: string|number|boolean|Array<string>) {
-    this.valid = ((value + '').trim().length > 1)
+    this.valid = true
   }
 
   /**

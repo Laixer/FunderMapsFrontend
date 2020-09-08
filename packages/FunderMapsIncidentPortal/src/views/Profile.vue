@@ -136,7 +136,7 @@ export default class Profile extends Vue {
 
     axios({
       method: 'POST',
-      url: `${process.env.VUE_APP_API_HOST}/api/incident`,
+      url: `${process.env.VUE_APP_API_BASE_URL}/api/incident`,
       data: this.$store.getters.getIndicentRequestBody
     })
     .then(() => {

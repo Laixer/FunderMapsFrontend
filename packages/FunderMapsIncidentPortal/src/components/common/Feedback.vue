@@ -1,12 +1,12 @@
 <template>
-  <b-alert 
-    v-model="show" 
+  <div 
+    v-if="show" 
     class="Feedback"
     :variant="variant" 
     dismissible 
     fade>
     {{ message }}
-  </b-alert>
+  </div>
 </template>
 
 <script>
