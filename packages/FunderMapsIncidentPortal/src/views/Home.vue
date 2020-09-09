@@ -86,6 +86,7 @@ export default class Home extends Vue {
   &--right {
     margin: 40px 0;
     max-width: 100%;
+    max-height: 580px;
 
     // The max width of the image
     @media only screen and (min-width: 640px) {

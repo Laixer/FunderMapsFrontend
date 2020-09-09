@@ -222,11 +222,11 @@ export default class QuestionTwo extends Vue {
   @media only screen and (min-width: 1115px) {
     &--one {
       width: 430px;
-      padding: 0 50px 35px 0;
+      padding: 0 50px 31px 0;
     }
     &--two {
       width: 430px;
-      padding: 0 0 35px 50px;
+      padding: 0 0 31px 50px;
       border-left: 1px solid #D4DAF0;
     }
     &--three {
