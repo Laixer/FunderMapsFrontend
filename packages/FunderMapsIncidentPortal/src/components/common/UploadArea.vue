@@ -135,9 +135,6 @@ export default {
   .dz-message {
     align-self: center;
   }
-  &.vue-dropzone {
-    font-family: 'Gibson' !important;
-  }
   &.vue-dropzone:hover {
     background-color: white;
   }
