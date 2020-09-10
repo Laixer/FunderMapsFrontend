@@ -1,16 +1,12 @@
 <template>
   <div class="FormField" :class="fieldClasses">
-    <label 
-      :for="id"
-      class="FormField__Label">
-      {{ label }}
-    </label>
+    <label :for="id" class="FormField__Label">{{ label }}</label>
 
     <div class="FormField__Wrapper">
       <textarea
         v-if="type === 'textarea'"
         :id="id"
-        :value="fieldValue" 
+        :value="fieldValue"
         :type="type"
         :placeholder="placeholder"
         :autocomplete="autocomplete ? autocomplete: 'off'"
@@ -18,28 +14,25 @@
         :rows="rows"
         class="FormField__Field"
         @input="handleInput"
-        @blur="handleBlur" />
-      <input 
+        @blur="handleBlur"
+      />
+      <input
         v-else
         :id="id"
-        :value="fieldValue" 
+        :value="fieldValue"
         :type="type"
         :placeholder="placeholder"
         :autocomplete="autocomplete ? autocomplete: 'off'"
         :disabled="isDisabled"
         class="FormField__Field"
         @input="handleInput"
-        @blur="handleBlur" />
+        @blur="handleBlur"
+      />
 
-      <SvgIcon 
-        v-if="validationIcon" 
-        :icon="validationIcon" 
-        class="FormField__Icon" />
+      <SvgIcon v-if="validationIcon" :icon="validationIcon" class="FormField__Icon" />
     </div>
 
-    <span v-if="error" class="FormField__Feedback">
-      {{ error }}
-    </span>
+    <span v-if="error" class="FormField__Feedback">{{ error }}</span>
   </div>
 </template>
 
@@ -58,7 +51,7 @@ import { IOption } from './IOption'
 })
 export default class FormField extends Vue {
 
-  @Inject() registerFormField!: Function;
+  @Inject() registerFormField!: (field: IConnectedField) => void;
 
   /**
    * The type of form field
@@ -78,7 +71,7 @@ export default class FormField extends Vue {
   /**
    * The field value
    */
-  @Prop({ default: '' }) readonly value!: string|boolean|number|Array<string>;
+  @Prop({ default: '' }) readonly value!: string | boolean | number | Array<string>;
 
   /**
    * The placeholder value
@@ -93,7 +86,7 @@ export default class FormField extends Vue {
   /**
    * The validation state. Starts out as null
    */
-  @Prop({ default: null }) readonly valid!: boolean|null;
+  @Prop({ default: null }) readonly valid!: boolean | null;
 
   /**
    * The error message
@@ -137,7 +130,7 @@ export default class FormField extends Vue {
   /**
    * Disables the browser's auto complete function
    */
-  @Prop({ default: false }) readonly autocomplete!: boolean|string;
+  @Prop({ default: false }) readonly autocomplete!: boolean | string;
 
 
 
@@ -158,9 +151,9 @@ export default class FormField extends Vue {
   /**
    * The bound field value
    */
-  protected fieldValue: string|boolean|number|Array<string|boolean|number> = ''
+  protected fieldValue: string | boolean | number | Array<string | boolean | number> = ''
 
-  
+
   /******************************************
    * Computed
    */
@@ -187,7 +180,7 @@ export default class FormField extends Vue {
     if (this.novalidate) { // = validation is disabled
       return false
     }
-    return !! this.valid
+    return !!this.valid
   }
 
   /**
@@ -196,14 +189,14 @@ export default class FormField extends Vue {
    *  first validation is taken as validation indicator
    */
   get hasBeenValidated(): boolean {
-    return this.hasBeenInteractedWith && ! this.novalidate
+    return this.hasBeenInteractedWith && !this.novalidate
   }
 
   /**
    * Returns the icon name based on the validation status
    *  Returns false if validation hasn't occurred yet
    */
-  get validationIcon(): string|false {
+  get validationIcon(): string | false {
     if (this.hasBeenValidated) {
       return this.isValid ? 'icon_check' : 'icon_error'
     }
@@ -238,9 +231,9 @@ export default class FormField extends Vue {
    * Watchers
    */
   @Watch('value')
-  valueChanged(newValue: string|boolean|number|Array<string>) {
+  valueChanged(newValue: string | boolean | number | Array<string>) {
     if (!Array.isArray(newValue) && this.supportsMultiple) {
-      this.fieldValue = newValue === '' ? [] : [ newValue ]
+      this.fieldValue = newValue === '' ? [] : [newValue]
     } else {
       this.fieldValue = newValue
     }
@@ -254,11 +247,11 @@ export default class FormField extends Vue {
   created() {
 
     if (!Array.isArray(this.value) && this.supportsMultiple) {
-      this.fieldValue = this.value === '' ? [] : [ this.value ]
+      this.fieldValue = this.value === '' ? [] : [this.value]
     } else {
       this.fieldValue = this.value
     }
-    
+
     // If contained within a Form component, register the form field
     if (this.registerFormField) {
       const field: IConnectedField = {
@@ -267,7 +260,7 @@ export default class FormField extends Vue {
         validate: this.validate,
         isValid: this.isValid,
         resetValidation: this.resetValidation
-      } 
+      }
       this.registerFormField(field);
     }
   }
@@ -275,7 +268,7 @@ export default class FormField extends Vue {
   /******************************************
    * Methods
    */
- 
+
   /**
    * Validation starts after the initial blur (first user interaction)
    */
@@ -289,8 +282,8 @@ export default class FormField extends Vue {
   /**
    * Handle input changes
    */
-  handleInput( e: Event ) {
-    
+  handleInput(e: Event) {
+
     const target = e.target as HTMLInputElement
 
     if (this.supportsMultiple) {
@@ -330,7 +323,7 @@ export default class FormField extends Vue {
    *  Because the validation process itself is external, it does not reset state
    */
   resetValidation() {
-    this.hasBeenInteractedWith = false 
+    this.hasBeenInteractedWith = false
   }
 
   /**
@@ -347,10 +340,15 @@ export default class FormField extends Vue {
 </script>
 
 <style lang="scss">
-$disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$disabled: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 81,
+  $green: 41,
+  $blue: -114,
+  $alpha: -0.7
+);
 
 .FormField {
-
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
@@ -359,7 +357,7 @@ $disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alph
     font-size: 18px;
     line-height: 21px;
     letter-spacing: -0.3px;
-    color: #77808D;
+    color: #77808d;
     margin-bottom: 9px;
   }
 
@@ -367,7 +365,7 @@ $disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alph
     width: 100%;
     color: #202122;
     border-radius: 4px;
-    border: 2px solid #D4DAF0;
+    border: 2px solid #d4daf0;
     background: white;
     font-size: 16px;
     line-height: 19px;
@@ -376,9 +374,9 @@ $disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alph
     transition: border-color 0.2s ease-in-out;
 
     &::placeholder {
-      color: #77808D;
+      color: #77808d;
     }
-    
+
     &:focus {
       border-color: $PRIMARY_COLOR;
     }
@@ -387,7 +385,7 @@ $disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alph
   &__Wrapper {
     position: relative;
   }
-  
+
   &__Icon {
     position: absolute;
     top: 20px;
@@ -398,24 +396,24 @@ $disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alph
   }
 
   &--valid &__Field {
-    border-color: #00C95D;
+    border-color: #00c95d;
     padding-right: 45px;
   }
   &--invalid &__Field {
-    border-color: #FF3B30;
+    border-color: #ff3b30;
     padding-right: 45px;
   }
-  &--valid &__Icon, &--invalid &__Icon {
-    color: #00C95D;
+  &--valid &__Icon,
+  &--invalid &__Icon {
+    color: #00c95d;
     opacity: 1;
   }
   &--invalid &__Icon {
-    color: #FF3B30;
+    color: #ff3b30;
   }
   &--disabled &__Field {
     background: rgba(119, 128, 141, 0.2);
     cursor: not-allowed;
   }
 }
-
 </style>

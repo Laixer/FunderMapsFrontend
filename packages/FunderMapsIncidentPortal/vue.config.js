@@ -15,7 +15,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        prependData: `
+        additionalData: `
           $PRIMARY_COLOR: ${process.env.PRIMARY_COLOR};
           $BREAKPOINT: ${process.env.BREAKPOINT};
         `
