@@ -1,5 +1,17 @@
 
 module.exports = {
+  configureWebpack: {
+    plugins: [],
+    module: {
+      rules: [
+        {
+          /** SvgIcon loader */
+          test: /\.svg$/,
+          use: [{ loader: 'html-loader' }]
+        }
+      ]
+    }
+  },
   css: {
     loaderOptions: {
       sass: {
