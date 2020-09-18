@@ -3,7 +3,7 @@
  */
 export interface IOption {
   label: string,
-  value: string,
+  value: any,
   /**
    * Used for image options
    */

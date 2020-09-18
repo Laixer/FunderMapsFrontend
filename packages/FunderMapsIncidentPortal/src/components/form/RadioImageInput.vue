@@ -1,33 +1,30 @@
 <template>
   <div class="RadioImageInput" :class="fieldClasses">
     <div class="RadioImageInput__Wrapper">
-      <div 
+      <div
         v-for="(option, index) in options"
-        class="RadioImageInput__Field" 
-        :key="id + ' ' + index">
-
-        <input 
-          :id="id + ' ' + index" 
+        class="RadioImageInput__Field"
+        :key="id + ' ' + index"
+      >
+        <input
+          :id="id + ' ' + index"
           type="radio"
           :name="id"
-          :value="option.value" 
+          :value="option.value"
           :disabled="isDisabled"
-          :checked="option.value === value"
+          :checked="isChecked(option.value)"
           @input="handleInput"
-          @blur="handleBlur" />
+          @blur="handleBlur"
+        />
 
-        <label 
-          :for="id + ' ' + index"
-          class="RadioImageInput__Label">
+        <label :for="id + ' ' + index" class="RadioImageInput__Label">
           <SvgIcon :icon="option.image" />
           <SvgIcon class="SvgIcon--selected" icon="icon_selected" />
           <span>{{ option.label }}</span>
         </label>
       </div>
     </div>
-    <div v-if="error" class="RadioImageInput__Feedback">
-      {{ error }}
-    </div>
+    <div v-if="error" class="RadioImageInput__Feedback">{{ error }}</div>
   </div>
 </template>
 
@@ -38,7 +35,7 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
 import FormField from '@/components/common/FormField.vue'
 
 @Component({
-  components: { 
+  components: {
     SvgIcon
   }
 })
@@ -48,13 +45,17 @@ export default class RadioImageInput extends FormField {
    */
   @Prop({ default: 'radio' }) readonly type!: string;
 
+  private isChecked(value: string | boolean | number): boolean {
+    return this.value === value.toString() || this.value === value
+  }
+
   /**
    * List of css classes
    */
   get fieldClasses(): Record<string, boolean> {
     return {
       'RadioImageInput--disabled': this.isDisabled,
-      'RadioImageInput--busy': this.isBusy, 
+      'RadioImageInput--busy': this.isBusy,
       'RadioImageInput--valid': this.hasBeenValidated ? this.isValid : false,
       'RadioImageInput--invalid': this.hasBeenValidated ? !this.isValid : false,
     }
@@ -63,13 +64,27 @@ export default class RadioImageInput extends FormField {
 </script>
 
 <style lang="scss">
+$unselected: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 81,
+  $green: 41,
+  $blue: -114,
+  $alpha: -0.7
+);
+$unselectedText: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 81,
+  $green: 41,
+  $blue: -114
+);
+$unselectedSvg: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 176,
+  $green: 131,
+  $blue: -15
+);
 
-$unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
-$unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
-$unselectedSvg: adjust-color($PRIMARY_COLOR, $red: 176, $green: 131, $blue: -15);
-
-.RadioImageInput {  
-
+.RadioImageInput {
   &__Wrapper {
     display: flex;
     justify-content: center;
@@ -103,7 +118,7 @@ $unselectedSvg: adjust-color($PRIMARY_COLOR, $red: 176, $green: 131, $blue: -15)
     cursor: pointer;
     user-select: none;
 
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
     &:hover {
       border-color: $PRIMARY_COLOR;
@@ -123,7 +138,7 @@ $unselectedSvg: adjust-color($PRIMARY_COLOR, $red: 176, $green: 131, $blue: -15)
       font-size: 40px;
       color: $PRIMARY_COLOR;
       opacity: 0;
-      transition: all .3s ease-in-out;
+      transition: all 0.3s ease-in-out;
     }
   }
 

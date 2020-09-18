@@ -1,5 +1,11 @@
 <template>
-  <div class="Button" :class="{ 'Button--wide': wide, 'Button--ghost': ghost, 'Button--line': line }" @click="handleClick"><slot /></div>
+  <div
+    class="Button"
+    :class="{ 'Button--submit': isSubmit, 'Button--wide': wide, 'Button--ghost': ghost, 'Button--line': line }"
+    @click="handleClick"
+  >
+    <slot />
+  </div>
 </template>
 
 <script lang="ts">
@@ -7,6 +13,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component
 export default class Button extends Vue {
+
+  /**
+ * A ghost button has no fill or border
+ */
+  @Prop({ default: false }) readonly isSubmit!: boolean;
   /**
    * A ghost button has no fill or border
    */
@@ -30,11 +41,16 @@ export default class Button extends Vue {
 </script>
 
 <style lang="scss">
-
 /** TODO: test whether this works for different colors */
-$disabled: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$disabled: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 81,
+  $green: 41,
+  $blue: -114,
+  $alpha: -0.7
+);
 $active: adjust-color($PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
-$hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58); 
+$hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
 .Button {
   position: relative;
@@ -45,13 +61,17 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
   border-radius: 4px;
   cursor: pointer;
   user-select: none;
-  transition: color .2s ease-in-out, background-color .2s ease-in-out;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
   display: inline-flex;
   align-items: center;
 
   // Regular
   background: $PRIMARY_COLOR;
   color: white;
+
+  &--submit {
+    background: #00c95d;
+  }
 
   &:hover {
     background: $hover;

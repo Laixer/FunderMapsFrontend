@@ -1,13 +1,17 @@
 <template>
   <aside class="ProgressSteps">
-    <div class="ProgressSteps__Indicator" :style="{ top: indicatorOffset }"></div>
+    <div v-if="!isDone" class="ProgressSteps__Indicator" :style="{ top: indicatorOffset }"></div>
     <span class="ProgressSteps__Finished" v-for="index in finishedSteps" :key="`${index}_finished`">
       <SvgIcon icon="icon_circle_check" />
     </span>
     <span v-if="!isDone" class="ProgressSteps__Current">
       <span>{{ step }}</span>
     </span>
-    <span class="ProgressSteps__Future" v-for="(step, index) in futureSteps" :key="`${index}_future`">
+    <span
+      class="ProgressSteps__Future"
+      v-for="(step, index) in futureSteps"
+      :key="`${index}_future`"
+    >
       <span>{{ step }}</span>
     </span>
   </aside>
@@ -45,7 +49,7 @@ export default class ProgressSteps extends Vue {
    *  Each step takes up 64px. The parent element add 50px due to padding
    */
   get indicatorOffset(): string {
-    return `${ (this.finishedSteps * 64) + 50 }px`
+    return `${(this.finishedSteps * 64) + 50}px`
   }
 
   /**
@@ -78,12 +82,14 @@ export default class ProgressSteps extends Vue {
   width: 80px;
   height: 100%;
   padding: 50px 0;
-  
+
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  &__Current, &__Finished, &__Future {
+  &__Current,
+  &__Finished,
+  &__Future {
     width: 24px;
     height: 24px;
     position: relative;
@@ -91,18 +97,18 @@ export default class ProgressSteps extends Vue {
     text-align: center;
     border-radius: 50%;
     user-select: none;
-    
+
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       bottom: -30px;
       left: 11.5px; // 50% of 24px - 1/2 * 1px
       height: 20px;
       width: 1px;
-      background: #D4DAF0;
+      background: #d4daf0;
     }
 
-    &:last-child{
+    &:last-child {
       margin-bottom: 0;
 
       &:after {
@@ -111,24 +117,25 @@ export default class ProgressSteps extends Vue {
     }
   }
 
-  &__Current, &__Future {
+  &__Current,
+  &__Future {
     font-size: 16px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
   &__Current {
-    background: #00C95D;
+    background: #00c95d;
     color: white;
   }
   &__Finished {
-    fill: #D4DAF0;
+    fill: #d4daf0;
     font-size: 24px;
     line-height: 24px;
   }
   &__Future {
     color: rgba(119, 128, 141, 0.5);
-    border: 2px solid #D4DAF0;
+    border: 2px solid #d4daf0;
   }
 
   &__Indicator {
@@ -138,7 +145,7 @@ export default class ProgressSteps extends Vue {
     width: 2px;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
-    background: #00C95D;
+    background: #00c95d;
   }
 }
 </style>

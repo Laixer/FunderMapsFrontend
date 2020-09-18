@@ -2,7 +2,11 @@
  * 
  */
 export interface ISuggestion {
-  label: string,
-  value: string,
-  coordinates: [number, number]
+  addressId: string,
+  buildingGeometry: string,
+  buildingId: string,
+  buildingNumber: string,
+  builtYear: string,
+  postalCode: string,
+  street: string
 }

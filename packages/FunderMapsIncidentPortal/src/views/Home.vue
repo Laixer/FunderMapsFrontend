@@ -1,19 +1,14 @@
 <template>
   <Page class="Home">
-    
     <div class="Home__Wrapper">
       <div class="Home--left">
-        <Title>
-          Wat doen we?
-        </Title>
+        <Title>Wat doen we?</Title>
 
-        <BodyText :bold="true">
-          Stichting Kennis Centrum Aanpak Funderingsproblematiek (KCAF) is een stichting met als doelstelling het verzamelen, ontwikkelen en ontsluiten van kennis rond de aanpak en preventie van funderingsproblemen. 
-        </BodyText>
+        <BodyText
+          :bold="true"
+        >Stichting Kennis Centrum Aanpak Funderingsproblematiek (KCAF) is een stichting met als doelstelling het verzamelen, ontwikkelen en ontsluiten van kennis rond de aanpak en preventie van funderingsproblemen.</BodyText>
 
-        <BodyText>
-          KCAF fungeert als nationaal funderingsloket voor alle vragen rond deze problematiek. Van funderingsonderzoek tot funderingsherstel, van aanpak tot financiering, van preventie tot innovatie. Deze doelstelling willen we samen met vakmensen en eigen medewerkers bereiken. KCAF is een stichting zonder winstoogmerk. Bij dit loket kunt u een melding maken van een funderingsprobleem aan uw woning. Wij zullen u vrijblijvend van advies voorzien.
-        </BodyText>
+        <BodyText>KCAF fungeert als nationaal funderingsloket voor alle vragen rond deze problematiek. Van funderingsonderzoek tot funderingsherstel, van aanpak tot financiering, van preventie tot innovatie. Deze doelstelling willen we samen met vakmensen en eigen medewerkers bereiken. KCAF is een stichting zonder winstoogmerk. Bij dit loket kunt u een melding maken van een funderingsprobleem aan uw woning. Wij zullen u vrijblijvend van advies voorzien.</BodyText>
 
         <div>
           <Button @click="handleNavigate">
@@ -30,7 +25,6 @@
     <template slot="footer">
       <Copyright />
     </template>
-  
   </Page>
 </template>
 
@@ -50,9 +44,12 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
   }
 })
 export default class Home extends Vue {
-  handleNavigate() {    
+  handleNavigate(): void {
     this.$router.push({
-      name: 'Address'
+      name: 'Questions',
+      params: {
+        question: '1',
+      }
     })
   }
 }
@@ -61,6 +58,11 @@ export default class Home extends Vue {
 <style lang="scss">
 .Home {
   &__Wrapper {
+    padding: 20px 20px;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      padding: 50px 80px;
+    }
     display: flex;
     max-width: 100%;
     justify-content: space-between;
@@ -71,7 +73,8 @@ export default class Home extends Vue {
     }
   }
   &--left {
-    .Title, .BodyText {
+    .Title,
+    .BodyText {
       margin-bottom: 26px;
     }
     .Button {
@@ -103,7 +106,6 @@ export default class Home extends Vue {
       // object-fit: contain;
       width: 100%;
       height: auto;
-
     }
   }
 

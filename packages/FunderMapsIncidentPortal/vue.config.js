@@ -1,3 +1,4 @@
+var path = require('path')
 
 module.exports = {
   configureWebpack: {
@@ -7,6 +8,9 @@ module.exports = {
         {
           /** SvgIcon loader */
           test: /\.svg$/,
+          include: [
+            path.resolve(__dirname, "src/assets/icons")
+        ],
           use: [{ loader: 'html-loader' }]
         }
       ]

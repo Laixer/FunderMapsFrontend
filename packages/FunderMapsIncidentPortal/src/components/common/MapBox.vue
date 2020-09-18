@@ -37,7 +37,7 @@ export default {
     },
     options: {
       type: Object,
-      default: function() {
+      default: function () {
         return {}
       }
     }
@@ -57,6 +57,22 @@ export default {
       })
     )
     map.on('load', () => {
+      map.addSource('address', {
+        type: 'geojson',
+        data: null
+      })
+
+      map.addLayer({
+        id: 'address',
+        type: 'fill',
+        source: 'address',
+        layout: {},
+        paint: {
+          'fill-color': '#00c95d',
+          'fill-opacity': 0.5,
+        },
+      })
+
       this.$emit('load', { map })
     })
   },
@@ -69,9 +85,14 @@ export default {
 </script>
 
 <style>
-.jw-map-wrapper, .mapboxgl-map {
+.jw-map-wrapper,
+.mapboxgl-map {
   height: 100%;
   width: 100%;
+}
+
+.mapboxgl-control-container {
+  display: none;
 }
 /* .jw-map-wrapper {
   display: flex;
@@ -89,5 +110,4 @@ export default {
   width: 100% !important;
   height: 100% !important;
 } */
-
 </style>

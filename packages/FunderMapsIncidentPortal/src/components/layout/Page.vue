@@ -2,7 +2,7 @@
   <div class="Page">
     <Header :step="step" :steps="steps" />
     <div class="Page__Wrapper">
-      <ProgressSteps v-if="steps" :step="step" :steps="steps" /> 
+      <ProgressSteps v-if="steps" :step="step" :steps="steps" />
 
       <div class="Page__Main" :class="{ 'Page__Main--sidebar': steps > 0 }">
         <div class="Page__Content">
@@ -14,7 +14,6 @@
         </Footer>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -62,7 +61,8 @@ export default class Page extends Vue {
     }
   }
 
-  &__Main, &__Content {
+  &__Main,
+  &__Content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -70,7 +70,7 @@ export default class Page extends Vue {
   }
   &__Main {
     &--sidebar {
-      border-left: 1px solid #D4DAF0;
+      border-left: 1px solid #d4daf0;
 
       @media only screen and (min-width: $BREAKPOINT) {
         max-width: calc(100% - 80px);
@@ -78,12 +78,7 @@ export default class Page extends Vue {
     }
   }
   &__Content {
-    background: #F2F5FF;
-    padding: 25px 20px;
-
-    @media only screen and (min-width: $BREAKPOINT) {
-      padding: 50px 80px;
-    }
+    background: #f2f5ff;
   }
 
   @media only screen and (max-width: $BREAKPOINT) {
@@ -91,6 +86,5 @@ export default class Page extends Vue {
       display: none;
     }
   }
-
 }
 </style>

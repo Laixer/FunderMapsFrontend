@@ -245,13 +245,11 @@ export default class FormField extends Vue {
    */
 
   created() {
-
     if (!Array.isArray(this.value) && this.supportsMultiple) {
       this.fieldValue = this.value === '' ? [] : [this.value]
     } else {
       this.fieldValue = this.value
     }
-
     // If contained within a Form component, register the form field
     if (this.registerFormField) {
       const field: IConnectedField = {
@@ -363,6 +361,7 @@ $disabled: adjust-color(
 
   &__Field {
     width: 100%;
+    flex: 2;
     color: #202122;
     border-radius: 4px;
     border: 2px solid #d4daf0;
@@ -383,16 +382,30 @@ $disabled: adjust-color(
   }
 
   &__Wrapper {
-    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    @media only screen and (min-width: $BREAKPOINT) {
+      flex-direction: column;
+    }
   }
 
   &__Icon {
+    top: 35px;
+    flex: 0 1 10%;
     position: absolute;
-    top: 20px;
-    right: 15px;
+    width: 30px;
+    height: 40px;
+    right: 5px;
     font-size: 12px;
     opacity: 0;
+    margin: 0 5px;
     transition: opacity 0.2s ease-in-out;
+
+    svg {
+      display: block;
+      margin: auto;
+    }
   }
 
   &--valid &__Field {

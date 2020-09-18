@@ -1,24 +1,19 @@
 <template>
   <div class="CheckboxInput" :class="fieldClasses">
     <div class="CheckboxInput__Wrapper">
-      <div 
-        v-for="(option, index) in options"
-        class="CheckboxInput__Field" 
-        :key="id + ' ' + index">
-
-        <input 
-          :id="id + ' ' + index" 
+      <div v-for="(option, index) in options" class="CheckboxInput__Field" :key="id + ' ' + index">
+        <input
+          :id="id + ' ' + index"
           type="checkbox"
           :name="id"
-          :value="option.value" 
+          :value="option.value"
           :disabled="isDisabled"
           :checked="isChecked(option.value)"
           @input="handleInput"
-          @blur="handleBlur" />
+          @blur="handleBlur"
+        />
 
-        <label 
-          :for="id + ' ' + index"
-          class="CheckboxInput__Label">
+        <label :for="id + ' ' + index" class="CheckboxInput__Label">
           <span class="CheckboxInput__Checkbox">
             <SvgIcon icon="icon_check" />
           </span>
@@ -26,9 +21,7 @@
         </label>
       </div>
     </div>
-    <div v-if="error" class="CheckboxInput__Feedback">
-      {{ error }}
-    </div>
+    <div v-if="error" class="CheckboxInput__Feedback">{{ error }}</div>
   </div>
 </template>
 
@@ -44,7 +37,7 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
   }
 })
 export default class CheckboxInput extends FormField {
-  
+
   /**
    * The type of form field
    */
@@ -56,7 +49,7 @@ export default class CheckboxInput extends FormField {
   get fieldClasses(): Record<string, boolean> {
     return {
       'CheckboxInput--disabled': this.isDisabled,
-      'CheckboxInput--busy': this.isBusy, 
+      'CheckboxInput--busy': this.isBusy,
       'CheckboxInput--valid': this.hasBeenValidated ? this.isValid : false,
       'CheckboxInput--invalid': this.hasBeenValidated ? !this.isValid : false,
     }
@@ -65,19 +58,28 @@ export default class CheckboxInput extends FormField {
   /**
    * Whether the value is checked
    */
-  isChecked(value: string): boolean {
-    return Array.isArray(this.value) && this.value.includes(value)
+  isChecked(value: number | string | boolean): boolean {
+    return Array.isArray(this.value) && this.value.includes(value + '')
   }
 }
 </script>
 
 <style lang="scss">
+$unselected: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 81,
+  $green: 41,
+  $blue: -114,
+  $alpha: -0.7
+);
+$unselectedText: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 81,
+  $green: 41,
+  $blue: -114
+);
 
-$unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
-$unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
-
-.CheckboxInput {  
-
+.CheckboxInput {
   &__Wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -90,7 +92,6 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
       justify-content: center;
       max-width: 550px;
       width: 100%;
-      
     }
   }
   &__Field {
@@ -129,7 +130,7 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
     cursor: pointer;
     user-select: none;
 
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
     padding: 15px;
     padding-left: 45px; // space for the marker
@@ -139,20 +140,19 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
       display: inline-block;
     }
 
-
     &:hover {
       border-color: $PRIMARY_COLOR;
     }
   }
 
   &__Checkbox {
-    content: '';
+    content: "";
     position: absolute;
     left: 15px;
     width: 24px;
     height: 24px;
-    border: 2px solid #D4DAF0;
-    transition: all .3s ease-in-out;
+    border: 2px solid #d4daf0;
+    transition: all 0.3s ease-in-out;
 
     display: flex;
     justify-content: center;
@@ -174,7 +174,7 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
   }
   input:checked + &__Label &__Checkbox {
     border-color: $PRIMARY_COLOR;
-    background: $PRIMARY_COLOR
+    background: $PRIMARY_COLOR;
   }
 }
 </style>

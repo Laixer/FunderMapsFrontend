@@ -1,7 +1,7 @@
 <template>
   <div>
-    <Feedback :feedback="feedback" />
-    <vue2Dropzone 
+    <Feedback v-if="this.feedback.message !== ''" :feedback="feedback" />
+    <vue2Dropzone
       id="dropzone"
       ref="dropzone"
       :options="options"
@@ -9,18 +9,17 @@
       @vdropzone-sending="addHeaderBeforeSending"
       @vdropzone-success="handleSuccess"
       @vdropzone-error="handleError"
-      class="UploadArea d-flex justify-content-center">
+      @vdropzone-removed-file="handleRemoved"
+      @vdropzone-max-files-exceeded="handleMaxFilesExceeded"
+      class="UploadArea d-flex justify-content-center"
+    >
       <div class="align-self-center">
-        <img 
-          alt="upload" 
-          :src="image('upload.svg')" />
+        <img alt="upload" :src="image('upload.svg')" />
         <p class="mb-0 mt-3">
-          <strong>
-            Slepen en neerzetten voor upload
-          </strong>
-          <br>
+          <strong>Slepen en neerzetten voor upload</strong>
+          <br />
           <span>
-            of 
+            of
             <span>bladeren</span>
             om een bestand te kiezen
           </span>
@@ -35,13 +34,15 @@ import { image } from '@/helpers/assets'
 import vue2Dropzone from 'vue2-dropzone'
 import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 import Feedback from './Feedback'
+import SvgIcon from '@/components/common/SvgIcon.vue'
+
 
 // TODO: Auth Header...
 // import { authHeader } from '@/services/auth';
 
 export default {
   components: {
-    vue2Dropzone, Feedback
+    vue2Dropzone, Feedback,
   },
   data() {
     return {
@@ -50,10 +51,12 @@ export default {
         variant: ''
       },
       options: {
+        paramName: 'input',
+        addRemoveLinks: true,
         maxFiles: 1,
-        maxFileSize: 20,
-        // acceptedFiles: 'image/*,application/pdf',
-        url: (process.env.VUE_APP_API_BASE_URL + '/api/report/upload').replace(/([^:]\/)\/+/g, "$1") // TODO: Move to API
+        maxFileSize: 100,
+        acceptedFiles: 'application/pdf',
+        url: `${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/upload-document`.replace(/([^:]\/)\/+/g, "$1") // TODO: Move to API
       }
     }
   },
@@ -69,36 +72,40 @@ export default {
       }
       if (xhr.setRequestHeader) {
         // let header = authHeader() // TODO: Auth Header
-        const header = {}
-        xhr.setRequestHeader('Authorization', header.Authorization);
+        // const header = {}
+        // xhr.setRequestHeader('Authorization', header.Authorization);
       }
+      this.$refs.dropzone
       this.$emit('handleUploadProgress', 'starting')
     },
     /**
      * Start the creation of a new report once the upload has finished with success
      */
     handleSuccess(file, response) {
-      if (file && this.$refs.dropzone) {
-        this.$refs.dropzone.removeFile(file)
+      this.feedback = {
+        message: '',
+        variant: ''
       }
-      this.$router.push({
-        name: 'new-report',
-        params: {
-          file: response
-        } 
-      })
+      this.$emit('handleFileAdded', response)
       this.$emit('handleUploadProgress', 'finished')
     },
-    handleError(file) { // error
+    handleError(file, message, xhr) { // error
       if (file && this.$refs.dropzone) {
         this.$refs.dropzone.removeFile(file)
       }
-      
+
       this.feedback = {
-        message: 'Het bestand kon niet verwerkt worden.',
+        message: message,
         variant: 'danger'
       }
       this.$emit('handleUploadProgress', 'finished')
+    },
+    handleMaxFilesExceeded(file) {
+      this.$refs.dropzone.removeAllFiles()
+      this.$refs.dropzone.addFile(file)
+    },
+    handleRemoved(file, error, xhr) {
+      this.$emit('handleFileRemoved')
     }
   }
 }
@@ -107,10 +114,9 @@ export default {
 <style lang="scss">
 .UploadArea {
   width: 100%;
-  height: 300px;
   border-radius: 15px;
   background-color: rgba(255, 255, 255, 0.7);
-  border: 3px dashed #9EA9B8;
+  border: 3px dashed #9ea9b8;
   user-select: none;
   cursor: pointer;
   p {
@@ -121,11 +127,11 @@ export default {
     line-height: 17px;
     strong {
       font-size: 18px;
-      color: #373C41;
+      color: #373c41;
       font-weight: 600;
     }
     span span {
-      color: #1991EB;
+      color: #1991eb;
       font-weight: 600;
       text-decoration: underline;
       cursor: pointer;
@@ -138,8 +144,8 @@ export default {
   &.vue-dropzone:hover {
     background-color: white;
   }
-  &.vue-dropzone>.dz-preview .dz-details {
-    background: #17A4EA;
+  &.vue-dropzone > .dz-preview .dz-details {
+    background: #17a4ea;
   }
 }
 </style>

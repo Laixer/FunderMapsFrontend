@@ -1,19 +1,30 @@
 <template>
-  <Page :step="step" :steps="8" class="Questions">
-    
-    <component v-bind:is="currentQuestionComponent" :busy="busy" v-model="fieldData" @validity="handleValidity"></component>
+  <Page :step="this.currentStep" :steps="this.totalSteps" class="Questions">
+    <component
+      ref="currentQuestionComponent"
+      :is="this.questions[this.currentStep]"
+      :busy="busy"
+      @isValid="isValid"
+    />
 
     <template slot="footer">
-      <Button :ghost="true" @click="handleNavigateBack">
+      <Button :ghost="true" v-if="this.currentStep > 1" @click="handleNavigate(-1)">
         <SvgIcon icon="icon_arrow_previous" />
         <span>Vorige</span>
-      </Button>      
-      <Button :disabled="!valid"  @click="handleNavigate">
-        <span>Volgende</span>
-        <SvgIcon icon="icon_arrow_next" />
       </Button>
+      <template v-if="!this.isLastStep">
+        <Button :disabled="!this.valid" @click="handleNavigate(1)">
+          <span>Volgende</span>
+          <SvgIcon icon="icon_arrow_next" />
+        </Button>
+      </template>
+      <template v-else>
+        <Button :isSubmit="true" :disabled="!this.valid" @click="handleNavigate(1)">
+          <span>Versturen</span>
+          <SvgIcon icon="icon_check" />
+        </Button>
+      </template>
     </template>
-  
   </Page>
 </template>
 
@@ -24,25 +35,42 @@ import Page from '@/components/layout/Page.vue'
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/common/SvgIcon.vue'
 
-import FoundationType from '@/components/questions/FoundationType.vue'
-import QuestionTwo from '@/components/questions/QuestionTwo.vue'
-import FoundationDamageCause from '@/components/questions/FoundationDamageCause.vue'
-import FoundationDamageCharacteristics from '@/components/questions/FoundationDamageCharacteristics.vue'
-import EnvironmentDamageCharacteristics from '@/components/questions/EnvironmentDamageCharacteristics.vue'
+import ProfileQuestion from '@/components/questions/ProfileQuestion.vue'
+import UploadQuestion from '@/components/questions/UploadQuestion.vue'
+import AddressQuestion from '@/components/questions/AddressQuestion.vue'
+import FoundationTypeQuestion from '@/components/questions/FoundationTypeQuestion.vue'
+import AddressCharacteristicsQuestion from '@/components/questions/AddressCharacteristicsQuestion.vue'
+import FoundationDamageCharacteristicsQuestion from '@/components/questions/FoundationDamageCharacteristicsQuestion.vue'
+import EnvironmentDamageCharacteristicsQuestion from '@/components/questions/EnvironmentDamageCharacteristicsQuestion.vue'
+import FoundationDamageCauseQuestion from '@/components/questions/FoundationDamageCauseQuestion.vue'
+import QuestionMixin from '@/components/questions/Question'
 
 @Component({
   components: {
     Page, Button, SvgIcon,
-    FoundationType, QuestionTwo, FoundationDamageCause, FoundationDamageCharacteristics, EnvironmentDamageCharacteristics
+    AddressQuestion, FoundationTypeQuestion, AddressCharacteristicsQuestion, FoundationDamageCauseQuestion, FoundationDamageCharacteristicsQuestion, EnvironmentDamageCharacteristicsQuestion, ProfileQuestion
   }
 })
 export default class Questions extends Vue {
+  private questions: { [key: number]: typeof QuestionMixin } = {
+    1: AddressQuestion,
+    2: FoundationDamageCauseQuestion,
+    3: FoundationDamageCharacteristicsQuestion,
+    4: AddressCharacteristicsQuestion,
+    5: FoundationTypeQuestion,
+    6: EnvironmentDamageCharacteristicsQuestion,
+    7: UploadQuestion,
+    8: ProfileQuestion,
+  }
 
-  
-  /**
-   * Whether all inputs are valid
-   */
   private valid = false
+
+  /**
+   * Retrieve validation state of current question component
+   */
+  private isValid(validity: boolean): void {
+    this.valid = validity
+  }
 
   /**
    * Indicates the form is being submitted
@@ -50,142 +78,100 @@ export default class Questions extends Vue {
   private busy = false
 
   /**
-   * The data for all questions
-   */
-  // private questionData !: Record<string,string|Array<string>>
-  private questionData: Record<string,string|Array<string>|Record<string, string>> = {
-    'FoundationType': '',
-    'QuestionTwo': {
-      'ChainedBuilding': '',
-      'Owner': '',
-      'NeighborRecovery': ''
-    },
-    'FoundationDamageCause': '',
-    'FoundationDamageCharacteristics': [],
-    'EnvironmentDamageCharacteristics': [],
-  }
-
-  /**
    * The current step is based on the question number from the route
    */
-  get step(): number {
-    return 1 + parseInt(this.$route.params.question, 10)
+  get currentStep(): number {
+    return parseInt(this.$route.params.question, 10)
+  }
+
+  private get nextButtonText() {
+    return this.isLastStep ? "Versturen" : "Volgende"
+  }
+
+
+  private get isLastStep(): boolean {
+    return this.currentStep === this.totalSteps
+  }
+  /**
+   * The question component is a reference to the currently loaded dynamic component, 
+   * which in turn is loaded based on the question index from the route
+   */
+  private currentQuestionComponent(): QuestionMixin {
+    return this.$refs.currentQuestionComponent as QuestionMixin
+  }
+
+  get totalSteps(): number {
+    return Object.keys(this.questions).length
   }
 
   /**
-   * The question component is loaded based on the question number from the route
+   * Handle navigation 
    */
-  get currentQuestionComponent(): string {
-    switch(this.step) {
-      case 2:
-        return 'FoundationType'
-      case 3: 
-        return 'QuestionTwo'
-      case 4:
-        return 'FoundationDamageCause'
-      case 5:
-        return 'FoundationDamageCharacteristics'
-      case 6: 
-        return 'EnvironmentDamageCharacteristics'
-    }
-
-    return 'FoundationType'
-  } 
-
-  /**
-   * The v-model connection between question data & question components
-   */
-  get fieldData(): string|Array<string>|Record<string, string> {
-    return this.questionData[this.currentQuestionComponent]
-  }
-  set fieldData(value: string|Array<string>|Record<string, string>) {
-    this.questionData[this.currentQuestionComponent] = value
-  }
-
-  /**
-   * Load all question data at creation
-   */
-  created() {
-
-    Object.keys(this.questionData).forEach(key => {
-      if (key === 'QuestionTwo') {
-        this.questionData[key] = {
-          'ChainedBuilding': this.$store.state['ChainedBuilding'],
-          'Owner': this.$store.state['Owner'],
-          'NeighborRecovery': this.$store.state['NeighborRecovery']
-        }
-      } else {
-        this.questionData[key] = this.$store.state[key]
+  private async handleNavigate(direction: number): Promise<void> {
+    if (direction > 0 && !this.currentQuestionComponent().isValid) return
+    if (this.currentQuestionComponent)
+      try {
+        this.currentQuestionComponent().storeData()
+      } catch (e) {
+        console.error(`Error storing form data: ${e.message}`)
       }
-    })
-  }
 
-  /**
-   * Register changes in the form validity
-   */
-  handleValidity(valid: boolean) {
-    this.valid = valid
-  }
+    if (this.isLastStep && direction > 0) {
+      const data = JSON.stringify(this.$store.getters.getIndicentRequestBody)
+      const response = await fetch(`${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/submit`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: data // body data type must match "Content-Type" header
+      });
 
-  /**
-   * Handle navigation forward
-   */
-  handleNavigate() {
-    if (! this.valid) return
-
-    this.storeData()
-
-    const to = this.step === 6 
-      ? { name: 'Upload' } 
-      : { name: 'Questions',
+      // Navigate to last page and pass success state
+      this.$router.push(
+        {
+          name: 'Finish',
           params: {
-            question: '' + this.step
+            success: response.ok.toString()
           }
         }
+      )
 
-    this.$router.push(to)
-  }
 
-  /**
-   * Handle navigation backward
-   */
-  handleNavigateBack() {
-
-    if (this.valid) {
-      this.storeData()
-    }
-
-    const to = this.step === 2 
-      ? { name: 'Address' }
-      : { name: 'Questions',
-          params: {
-            question: '' + (this.step - 2)
-          }
-        }
-    this.$router.push(to)
-  }
-
-  /**
-   * Store the question data in vuex
-   */
-  storeData() {
-    const question = this.currentQuestionComponent
-
-    if (question === 'QuestionTwo') {
-      Object
-        .entries(this.questionData['QuestionTwo'])
-        .forEach((entry) => {
-        this.$store.commit('updateState', {
-          prop: entry[0],
-          value: entry[1]
-        })
-      })
     } else {
-      this.$store.commit('updateState', {
-        prop: question,
-        value: this.questionData[question]
-      })
+
+      this.valid = false
+      this.$router.push(
+        {
+          name: 'Questions',
+          params: {
+            question: (this.currentStep + direction).toString()
+          }
+        }
+      )
     }
   }
+
+  // /**
+  //  * Store the question data in vuex
+  //  */
+  // storeData() {
+  //   const question = this.currentQuestionComponent
+
+  //   if (question === 'QuestionTwo') {
+  //     Object
+  //       .entries(this.questionData['QuestionTwo'])
+  //       .forEach((entry) => {
+  //         this.$store.commit('updateState', {
+  //           prop: entry[0],
+  //           value: entry[1]
+  //         })
+  //       })
+  //   } else {
+  //     this.$store.commit('updateState', {
+  //       prop: question,
+  //       value: this.questionData[question]
+  //     })
+  //   }
+  // }
 }
 </script>

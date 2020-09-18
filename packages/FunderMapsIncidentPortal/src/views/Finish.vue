@@ -1,22 +1,13 @@
 <template>
   <Page class="Finish" :step="9" :steps="8">
-    
     <div class="Finish__Wrapper">
-      <Title>
-        Advies
-      </Title>
+      <Title>Advies</Title>
 
-      <BodyText :bold="true">
-        Bedankt voor het doorgeven van uw melding.
-      </BodyText>
+      <BodyText :bold="true">Bedankt voor het doorgeven van uw melding.</BodyText>
 
-      <BodyText>
-        Wij nemen contact met u op om u van een persoonlijk advies te voorzien. Uw gegevens blijven strikt vertrouwelijk en worden niet buiten het KCAF gedeeld. 
-      </BodyText>
+      <BodyText>Wij nemen contact met u op om u van een persoonlijk advies te voorzien. Uw gegevens blijven strikt vertrouwelijk en worden niet buiten het KCAF gedeeld.</BodyText>
 
-      <BodyText>
-        In ons stappenplan voor funderingsherstel leggen wij duidelijk uit welke stappen u alvast kunt nemen en voor welke stappen professionele hulp noodzakelijk is om grip te krijgen op funderingsproblemen.
-      </BodyText>
+      <BodyText>In ons stappenplan voor funderingsherstel leggen wij duidelijk uit welke stappen u alvast kunt nemen en voor welke stappen professionele hulp noodzakelijk is om grip te krijgen op funderingsproblemen.</BodyText>
 
       <div>
         <Button :line="true">
@@ -27,10 +18,8 @@
     </div>
 
     <template slot="footer">
-      <SvgIcon icon="icon_circle_check" />
-      Verzending gelukt
+      <SvgIcon icon="icon_circle_check" />Verzending gelukt
     </template>
-  
   </Page>
 </template>
 
@@ -49,17 +38,23 @@ import SvgIcon from '@/components/common/SvgIcon.vue'
     Page, Button, SvgIcon, Title, BodyText
   }
 })
-export default class Finish extends Vue {}
+export default class Finish extends Vue { }
 </script>
 
 <style lang="scss">
 .Finish {
   &__Wrapper {
+    padding: 20px 20px;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      padding: 50px 80px;
+    }
     max-width: 550px;
     margin: 0 auto;
   }
 
-  .Title, .BodyText {
+  .Title,
+  .BodyText {
     margin-bottom: 26px;
   }
   .Title + .BodyText {
@@ -72,10 +67,9 @@ export default class Finish extends Vue {}
 
     .SvgIcon {
       font-size: 24px;
-      color: #00C95D;
+      color: #00c95d;
       margin-right: 6px;
     }
   }
-  
 }
 </style>

@@ -1,31 +1,24 @@
 <template>
   <div class="RadioTextInput" :class="fieldClasses">
     <div class="RadioTextInput__Wrapper">
-      <div 
-        v-for="(option, index) in options"
-        class="RadioTextInput__Field" 
-        :key="id + ' ' + index">
-
-        <input 
-          :id="id + ' ' + index" 
+      <div v-for="(option, index) in options" class="RadioTextInput__Field" :key="id + ' ' + index">
+        <input
+          :id="id + ' ' + index"
           type="radio"
           :name="id"
-          :value="option.value" 
+          :value="option.value"
           :disabled="isDisabled"
-          :checked="option.value === value"
+          :checked="isChecked(option.value)"
           @input="handleInput"
-          @blur="handleBlur" />
+          @blur="handleBlur"
+        />
 
-        <label 
-          :for="id + ' ' + index"
-          class="RadioTextInput__Label">
+        <label :for="id + ' ' + index" class="RadioTextInput__Label">
           <span>{{ option.label }}</span>
         </label>
       </div>
     </div>
-    <div v-if="error" class="RadioTextInput__Feedback">
-      {{ error }}
-    </div>
+    <div v-if="error" class="RadioTextInput__Feedback">{{ error }}</div>
   </div>
 </template>
 
@@ -36,11 +29,16 @@ import FormField from '@/components/common/FormField.vue'
 
 @Component
 export default class RadioTextInput extends FormField {
-  
+
   /**
    * The type of form field
    */
   @Prop({ default: 'radio' }) readonly type!: string;
+
+
+  private isChecked(value: string | boolean | number): boolean {
+    return this.value === value.toString()
+  }
 
   /**
    * List of css classes
@@ -48,7 +46,7 @@ export default class RadioTextInput extends FormField {
   get fieldClasses(): Record<string, boolean> {
     return {
       'RadioTextInput--disabled': this.isDisabled,
-      'RadioTextInput--busy': this.isBusy, 
+      'RadioTextInput--busy': this.isBusy,
       'RadioTextInput--valid': this.hasBeenValidated ? this.isValid : false,
       'RadioTextInput--invalid': this.hasBeenValidated ? !this.isValid : false,
     }
@@ -57,12 +55,21 @@ export default class RadioTextInput extends FormField {
 </script>
 
 <style lang="scss">
+$unselected: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 81,
+  $green: 41,
+  $blue: -114,
+  $alpha: -0.7
+);
+$unselectedText: adjust-color(
+  $PRIMARY_COLOR,
+  $red: 81,
+  $green: 41,
+  $blue: -114
+);
 
-$unselected: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
-$unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
-
-.RadioTextInput {  
-
+.RadioTextInput {
   &__Wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -75,7 +82,6 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
       justify-content: center;
       max-width: 550px;
       width: 100%;
-      
     }
   }
   &__Field {
@@ -114,10 +120,10 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
     cursor: pointer;
     user-select: none;
 
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
     padding: 15px;
-    padding-left: 45px; // space for the marker
+    padding-left: 55px; // space for the marker
 
     span {
       margin-top: 2px;
@@ -125,24 +131,24 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114)
     }
 
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       left: 15px;
       width: 24px;
       height: 24px;
-      border: 2px solid #D4DAF0;
+      border: 2px solid #d4daf0;
       border-radius: 50%;
-      transition: all .3s ease-in-out;
+      transition: all 0.3s ease-in-out;
     }
     &:after {
-      content: '';
+      content: "";
       position: absolute;
       top: 21px;
       left: 21px;
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      transition: all .3s ease-in-out;
+      transition: all 0.3s ease-in-out;
       background-color: transparent;
     }
 
