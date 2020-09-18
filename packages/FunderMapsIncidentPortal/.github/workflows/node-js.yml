@@ -11,6 +11,12 @@ on:
 
 env:
   NODEJS_VERSION: '14.x'
+  PRIMARY_COLOR: '#2657FF'
+  BREAKPOINT: '900px'
+  VUE_APP_CLIENTID: 57
+  VUE_APP_MAPBOX_TOKEN: 'pk.eyJ1Ijoiam91cm5leXdvcmtzIiwiYSI6ImNrZXUwbG1zYjJtZXUzM284czQ5OGxvNHQifQ.CR6UwylpbEJh7rH4IE9wgA'
+  VUE_APP_MAPBOX_STYLE: 'mapbox://styles/journeyworks/ckeu0ndyc99j319qqz5ywaz2b'
+  VUE_APP_API_BASE_URL: 'https://staging.fundermaps.com'
 
 jobs:
   build:
@@ -30,8 +36,8 @@ jobs:
   deploy:
     name: Deploy
     env:
-      DEPLOY_NAME: fundermaps-sales-page
-      ARCHIVE: fundermaps-sales-page.${{ github.sha }}.tar.gz
+      DEPLOY_NAME: portal-fundermaps
+      ARCHIVE: portal-fundermaps.${{ github.sha }}.tar.gz
 
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
