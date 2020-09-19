@@ -62,7 +62,6 @@ export default new Vuex.Store({
      * Retrieve the indent request body
      */
     getIndicentRequestBody(state) {
-      console.log(process.env.VUE_APP_CLIENTID, state.environmentDamageCharacteristics)
       const request = {
         "Name": state.name,
         "ClientId": parseInt(process.env.VUE_APP_CLIENTID, 10),
