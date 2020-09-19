@@ -100,7 +100,9 @@ export default class Form extends Vue {
    * the event on success, or trigger an error event instead.
    */
   handleSubmit(e: Event): void {
-    if (this.busy) return
+    if (this.busy) {
+      return
+    }
 
     this.validate()
     

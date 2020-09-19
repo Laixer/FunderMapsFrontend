@@ -120,9 +120,10 @@ export default class ProfileQuestion extends Mixins(QuestionMixin) {
   public get isValid(): boolean {
     const body = this.$store.getters.getIndicentRequestBody
 
-    if (!body) return false
+    if (!body) {
+      return false
+    }
 
-    console.log(body)
     return !!(
       body.Address
       && body.ClientId
