@@ -52,9 +52,11 @@ export default class GeoCoder extends FormField {
     return this.validationIcon ? this.validationIcon : 'icon_search'
   }
 
-  async http<T>(request: string): Promise<T> {
+  async requestThenMap<T>(request: string): Promise<T> {
     const response = await fetch(request)
-    if (!response.ok) throw new Error(response.statusText)
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
     return await response.json()
   }
 
@@ -66,7 +68,7 @@ export default class GeoCoder extends FormField {
     const target = e.target as HTMLInputElement
     if (target.value.length > 2) {
       try {
-        this.suggestions = await this.http<ISuggestion[]>(`${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/address-suggest?query=${target.value}&limit=5`)
+        this.suggestions = await this.requestThenMap<ISuggestion[]>(`${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/address-suggest?query=${target.value}&limit=5`)
       } catch (e) {
         this.suggestions = []
       }
@@ -82,8 +84,6 @@ export default class GeoCoder extends FormField {
   private format(sug: ISuggestion): string {
     return formatAddressSuggestionWithMarkup(sug, this.fieldValue as string)
   }
-
-
 }
 </script>
 

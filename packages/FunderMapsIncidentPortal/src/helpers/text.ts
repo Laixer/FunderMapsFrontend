@@ -5,8 +5,12 @@ export function formatAddressSuggestion(suggestion: ISuggestion): string {
 }
 
 export function formatAddressSuggestionWithMarkup(suggestion: ISuggestion, inputValue: string): string {
-    const formatted = _formatAddressSuggestion(suggestion)
+    let formatted = _formatAddressSuggestion(suggestion)
     const matches = [...formatted.toLowerCase().matchAll(new RegExp(inputValue.toLowerCase(), "g"))]
+
+    formatted = formatted.length > 32
+        ? formatted.substr(0, 32 - 1) + '&hellip;'
+        : formatted;
 
     if (matches.length > 0) {
         const index = matches[0].index
@@ -18,5 +22,5 @@ export function formatAddressSuggestionWithMarkup(suggestion: ISuggestion, input
 }
 
 function _formatAddressSuggestion(suggestion: ISuggestion): string {
-    return `${suggestion.street} ${suggestion.buildingNumber}${(suggestion.postalCode) ? `, ${suggestion.postalCode}` : ''}`.replace(/\s\s+/g, '')
+    return `${suggestion.street} ${suggestion.buildingNumber}${(suggestion.postalCode) ? `, ${suggestion.postalCode}` : ''}, ${suggestion.city}`.replace(/\s\s+/g, '')
 }

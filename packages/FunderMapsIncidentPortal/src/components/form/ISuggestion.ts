@@ -8,5 +8,6 @@ export interface ISuggestion {
   buildingNumber: string,
   builtYear: string,
   postalCode: string,
-  street: string
+  street: string,
+  city: string
 }
