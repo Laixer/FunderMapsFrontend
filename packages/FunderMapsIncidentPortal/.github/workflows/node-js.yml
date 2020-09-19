@@ -50,6 +50,11 @@ jobs:
       with:
         node-version: ${{ env.NODEJS_VERSION }}
 
+    - name: Print version
+      run: |
+        find src -type f -exec sed -i "s/@@VERSION@@/$(git describe --long --always)/" {} +
+        find src -type f -exec sed -i "s/@@COMMIT@@/$(git rev-parse HEAD)/" {} +
+
     - run: npm install
     - run: npm run build
 

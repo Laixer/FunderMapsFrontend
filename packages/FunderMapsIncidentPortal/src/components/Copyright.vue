@@ -1,6 +1,6 @@
 <template>
   <span class="Copyright">
-    &copy; Copyright {{ new Date().getFullYear() }} Laixer • Versie 2.0 
+    &copy; Copyright {{ new Date().getFullYear() }} Laixer • @@VERSION@@
   </span>
 </template>
 
