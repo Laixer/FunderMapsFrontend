@@ -18,7 +18,7 @@
         </div>
       </div>
       <div class="Home--right">
-        <img src="../assets/home.jpg" width="640" height="585" />
+        <img src="../assets/home.jpg" width="640" height="585" alt="Logo" />
       </div>
     </div>
 

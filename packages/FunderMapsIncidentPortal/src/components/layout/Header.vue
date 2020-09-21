@@ -1,11 +1,10 @@
 <template>
   <header class="Header">
-
     <router-link :to="{ name: 'Home' }">
-      <img class="Header__Logo" src="../../assets/logo.png" />
+      <img class="Header__Logo" src="../../assets/logo.png" alt="Logo" />
     </router-link>
 
-    <ProgressBar v-if="steps" :step="step" :steps="steps"  /> 
+    <ProgressBar v-if="steps" :step="step" :steps="steps" />
   </header>
 </template>
 
@@ -40,13 +39,13 @@ export default class Page extends Vue {
   height: 98px;
   width: 100%;
   padding: 20px 80px;
-  border-bottom: 1px solid #D4DAF0;
+  border-bottom: 1px solid #d4daf0;
   background: white;
   z-index: 999999;
 
   display: flex;
   align-items: center;
-  
+
   user-select: none;
 
   @media only screen and (min-width: $BREAKPOINT) {
