@@ -70,6 +70,10 @@ export default class Home extends Vue {
 
     @media only screen and (min-width: $BREAKPOINT) {
       flex-direction: row;
+
+      &--right {
+        display: none;
+      }
     }
   }
   &--left {
@@ -87,6 +91,7 @@ export default class Home extends Vue {
   }
 
   &--right {
+    display: none;
     margin: 40px 0;
     max-width: 100%;
     max-height: 580px;
@@ -94,9 +99,11 @@ export default class Home extends Vue {
     // The max width of the image
     @media only screen and (min-width: 640px) {
       max-width: 640px;
+      display: none;
     }
 
     @media only screen and (min-width: $BREAKPOINT) {
+      display: block;
       margin: 0;
       max-width: calc(100% - 610px); // 640px;
     }
