@@ -1,6 +1,7 @@
 const path = require('path')
 const {argv} = require('yargs')
 const webpack = require('webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   outputDir: argv.vendor ?  `${argv.vendor}-dist` : 'dist',
@@ -8,6 +9,11 @@ module.exports = {
     plugins: [
       new webpack.DefinePlugin({
         VENDOR: JSON.stringify(argv.vendor ?  argv.vendor : 'default')
+      }),
+      new CopyWebpackPlugin({
+        patterns: [
+          { from: `vendors/${argv.vendor ? argv.vendor : 'default'}/favicon.ico`, to: '.' }
+        ]
       })
     ],
     module: {
