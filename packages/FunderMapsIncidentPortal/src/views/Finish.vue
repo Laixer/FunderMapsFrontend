@@ -6,10 +6,12 @@
       <BodyText :bold="true">Bedankt voor het doorgeven van uw melding.</BodyText>
       <BodyText><span v-html="vendor.final.content"/></BodyText>
       <div>
-        <Button :line="true">
-          <span>Bekijk het stappenplan</span>
-          <SvgIcon icon="icon_externallink" />
-        </Button>
+        <a href="https://www.kcaf.nl/publicaties/stappenplan-funderingsherstel/" target="_blank" alt="stappenplann">
+          <Button :line="true">
+            <span>Bekijk het stappenplan</span>
+           <SvgIcon icon="icon_externallink" />
+         </Button>
+        </a>
       </div>
     </div>
 
@@ -51,6 +53,10 @@ export default class Finish extends Vue {
     }
     max-width: 550px;
     margin: 0 auto;
+  }
+
+  a {
+    text-decoration: none
   }
 
   .Title,
