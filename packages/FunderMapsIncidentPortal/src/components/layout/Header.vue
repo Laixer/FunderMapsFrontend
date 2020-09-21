@@ -1,6 +1,6 @@
 <template>
   <header class="Header">
-    <router-link :to="{ name: 'Home' }">
+    <router-link aria-label="Home" :to="{ name: 'Home' }">
       <img class="Header__Logo" src="../../assets/logo.png" alt="Logo" />
     </router-link>
 
