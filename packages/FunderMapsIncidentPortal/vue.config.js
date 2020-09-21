@@ -5,7 +5,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const vendor = argv.vendor ? argv.vendor : 'default'
 module.exports = {
-  outputDir: vendor ?  `${vendor}-dist` : 'dist',
   configureWebpack: {
     plugins: [
       new webpack.DefinePlugin({
