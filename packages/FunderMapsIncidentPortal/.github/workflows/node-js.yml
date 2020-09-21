@@ -31,7 +31,25 @@ jobs:
       with:
         node-version: ${{ env.NODEJS_VERSION }}
     - run: npm install
-    - run: npm run-script build
+    - run: npm run build
+
+  test-deploy:
+    name: Test Deploy
+    env:
+      ARCHIVE: portal-fundermaps.${{ github.sha }}.tar.gz
+
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODEJS_VERSION }}
+    - run: npm install
+    - run: bash .github/workflows/build-vendors.sh
 
   deploy:
     name: Deploy

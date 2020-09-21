@@ -1,7 +1,7 @@
 <template>
   <header class="Header">
     <router-link aria-label="Home" :to="{ name: 'Home' }">
-      <img class="Header__Logo" src="../../assets/logo.png" alt="Logo" />
+      <img class="Header__Logo" :src="vendorLogo" alt="Logo" />
     </router-link>
 
     <ProgressBar v-if="steps" :step="step" :steps="steps" />
@@ -10,7 +10,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-
+import vendor from '@/vendor'
 import ProgressBar from '@/components/layout/ProgressBar.vue'
 
 @Component({
@@ -27,6 +27,8 @@ export default class Page extends Vue {
    * The total number of steps
    */
   @Prop({ default: 0 }) readonly steps!: number;
+
+  private vendorLogo = vendor.logo
 
 }
 </script>
@@ -47,7 +49,9 @@ export default class Page extends Vue {
   align-items: center;
 
   user-select: none;
-
+  img {
+    height: 30px;
+  }
   @media only screen and (min-width: $BREAKPOINT) {
     position: relative;
     height: 115px;

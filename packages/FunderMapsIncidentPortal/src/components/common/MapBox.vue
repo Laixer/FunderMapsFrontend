@@ -68,7 +68,7 @@ export default {
         source: 'address',
         layout: {},
         paint: {
-          'fill-color': '#00c95d',
+          'fill-color': process.env.VUE_APP_PRIMARY_COLOR,
           'fill-opacity': 0.5,
         },
       })
