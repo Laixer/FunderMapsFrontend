@@ -5,7 +5,8 @@ function build() {
     git rev-parse HEAD > $1-dist/COMMIT
     tar -czvf $1-dist.tar.gz -C $1-dist .
     echo $SSH_KEY > id_rsa
-    scp -i id_rsa $1-dist.tar.gz $SSH_USER@$SSH_HOST:/var/cache/deployment/tmp
+    chmod 400 id_rsa
+    scp -v -i id_rsa $1-dist.tar.gz $SSH_USER@$SSH_HOST:/var/cache/deployment/tmp
 }
 
 for f in ./vendors/* ; do
