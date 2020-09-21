@@ -59,9 +59,7 @@ export default class UploadQuestion extends Mixins(QuestionMixin) {
   }
 
   private handleAddedFile(fileUrl: any) {
-    console.log(fileUrl.name)
     this.value = [fileUrl.name]
-    console.log(this.value)
   }
 
 
