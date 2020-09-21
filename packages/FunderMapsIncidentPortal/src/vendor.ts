@@ -4,12 +4,12 @@ export declare const VENDOR: string;
 
 export type VendorConfig = {
     name: string,
-    logo: any,
+    logo: string,
     home: {
         title: string,
         subtitle: string,
         content: string,
-        image: any
+        image: string
     },
     final: {
         content: string

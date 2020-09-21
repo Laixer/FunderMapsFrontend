@@ -3,16 +3,17 @@ const {argv} = require('yargs')
 const webpack = require('webpack')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
+const vendor = argv.vendor ? argv.vendor : 'default'
 module.exports = {
-  outputDir: argv.vendor ?  `${argv.vendor}-dist` : 'dist',
+  outputDir: vendor ?  `${vendor}-dist` : 'dist',
   configureWebpack: {
     plugins: [
       new webpack.DefinePlugin({
-        VENDOR: JSON.stringify(argv.vendor ?  argv.vendor : 'default')
+        VENDOR: JSON.stringify(vendor)
       }),
       new CopyWebpackPlugin({
         patterns: [
-          { from: `vendors/${argv.vendor ? argv.vendor : 'default'}/favicon.ico`, to: '.' }
+          { from: `vendors/${vendor}/favicon.ico`, to: '.' }
         ]
       })
     ],
@@ -32,8 +33,9 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
+        
         additionalData: `
-          $PRIMARY_COLOR: ${process.env.VUE_APP_PRIMARY_COLOR};
+          @import "./vendors/${vendor}/style.scss";
           $BREAKPOINT: ${process.env.BREAKPOINT};
         `
       }

@@ -1,5 +1,5 @@
-import * as logo from './logo.png'
-import * as homeImage from './home.jpg'
+import * as logo from './assets/logo.png'
+import * as homeImage from './assets/home.jpg'
 
 export default {
     name: "default",
