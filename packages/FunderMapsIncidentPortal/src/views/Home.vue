@@ -2,14 +2,9 @@
   <Page class="Home">
     <div class="Home__Wrapper">
       <div class="Home--left">
-        <Title>Wat doen we?</Title>
-
-        <BodyText
-          :bold="true"
-        >Stichting Kennis Centrum Aanpak Funderingsproblematiek (KCAF) is een stichting met als doelstelling het verzamelen, ontwikkelen en ontsluiten van kennis rond de aanpak en preventie van funderingsproblemen.</BodyText>
-
-        <BodyText>KCAF fungeert als nationaal funderingsloket voor alle vragen rond deze problematiek. Van funderingsonderzoek tot funderingsherstel, van aanpak tot financiering, van preventie tot innovatie. Deze doelstelling willen we samen met vakmensen en eigen medewerkers bereiken. KCAF is een stichting zonder winstoogmerk. Bij dit loket kunt u een melding maken van een funderingsprobleem aan uw woning. Wij zullen u vrijblijvend van advies voorzien.</BodyText>
-
+        <Title>{{vendor.home.title}}</Title>
+        <BodyText :bold="true">{{vendor.home.subtitle}}</BodyText>
+        <BodyText>{{vendor.home.content}}</BodyText>
         <div>
           <Button @click="handleNavigate">
             <span>Melding maken</span>
@@ -18,7 +13,7 @@
         </div>
       </div>
       <div class="Home--right">
-        <img src="../assets/home.jpg" width="640" height="585" alt="Logo" />
+        <img :src="vendor.home.image" width="640" height="585" alt="Logo" />
       </div>
     </div>
 
@@ -37,6 +32,7 @@ import BodyText from '@/components/BodyText.vue'
 import Copyright from '@/components/Copyright.vue'
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/common/SvgIcon.vue'
+import vendor from '@/vendor'
 
 @Component({
   components: {
@@ -52,6 +48,8 @@ export default class Home extends Vue {
       }
     })
   }
+
+  private vendor = vendor
 }
 </script>
 

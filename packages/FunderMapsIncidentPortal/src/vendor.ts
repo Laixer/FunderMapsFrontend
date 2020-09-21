@@ -4,7 +4,13 @@ export declare const VENDOR: string;
 
 export type VendorConfig = {
     name: string,
-    logo: any
+    logo: any,
+    home: {
+        title: string,
+        subtitle: string,
+        content: string,
+        image: any
+    }
 }
 
 const vendor: VendorConfig = require(`../vendors/${VENDOR}/vendor.config`).default

@@ -1,6 +1,13 @@
 import * as logo from './logo.png'
+import * as homeImage from './home.jpg'
 
 export default {
     name: "default",
-    logo: logo
+    logo: logo,
+    home: {
+        title: "Wat doen we?",
+        subtitle: "Stichting Kennis Centrum Aanpak Funderingsproblematiek (KCAF) is een stichting met als doelstelling het verzamelen, ontwikkelen en ontsluiten van kennis rond de aanpak en preventie van funderingsproblemen.",
+        content: "KCAF fungeert als nationaal funderingsloket voor alle vragen rond deze problematiek. Van funderingsonderzoek tot funderingsherstel, van aanpak tot financiering, van preventie tot innovatie. Deze doelstelling willen we samen met vakmensen en eigen medewerkers bereiken. KCAF is een stichting zonder winstoogmerk. Bij dit loket kunt u een melding maken van een funderingsprobleem aan uw woning. Wij zullen u vrijblijvend van advies voorzien.",
+        image: homeImage
+    }
 }
