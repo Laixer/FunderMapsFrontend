@@ -1,5 +1,5 @@
 <template>
-  <span class="Copyright">&copy; Copyright {{ new Date().getFullYear() }} Laixer • @@VERSION@@</span>
+  <span class="Copyright">&copy; Copyright {{ new Date().getFullYear() }} FunderMaps • @@VERSION@@</span>
 </template>
 
 <style lang="scss">
