@@ -86,7 +86,6 @@ export default class ProfileQuestion extends Mixins(QuestionMixin) {
   private phoneNumber: string | null = null
   private note: string | null = null
 
-  private phoneRegex = /(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)/
 
 
   private get firstnameValid(): boolean | null {
@@ -108,9 +107,11 @@ export default class ProfileQuestion extends Mixins(QuestionMixin) {
       && EmailValidator.validate(this.email)
   }
 
+  private phoneRegex = /\d+/
   private get phoneNumberValid(): boolean {
     return this.phoneNumber !== null
       && this.phoneNumber.length > 0
+      && this.phoneNumber.length <= 16
       && this.phoneRegex.test(this.phoneNumber)
 
   }
