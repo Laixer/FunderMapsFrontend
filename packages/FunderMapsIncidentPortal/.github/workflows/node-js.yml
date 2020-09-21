@@ -44,7 +44,7 @@ jobs:
 
     strategy:
       matrix:
-        vendor: [default,portal-fundermaps]
+        vendor: [portal-fundermaps]
 
     steps:
     - uses: actions/checkout@v2
@@ -82,15 +82,15 @@ jobs:
         source: ${{ env.ARCHIVE }}
         target: '/var/cache/deployment/tmp'
 
-    # - name: Running deploy script
-    #   uses: appleboy/ssh-action@master
-    #   with:
-    #     host: ${{ secrets.SSH_HOST }}
-    #     username: ${{ secrets.SSH_USER }}
-    #     key: ${{ secrets.SSH_KEY }}
-    #     port: 22
-    #     script: |
-    #       mv /var/cache/deployment/current/${{ matrix.vendor }}.*.tar.gz /var/cache/deployment/previous/
-    #       mv /var/cache/deployment/tmp/${{ env.ARCHIVE }} /var/cache/deployment/current/
-    #       /var/cache/deployment/deploy.sh ${{ matrix.vendor }}
-    #       rm -f $(ls -1t /var/cache/deployment/previous/${{ matrix.vendor }}.*.tar.gz | tail -n +5)
+    - name: Running deploy script
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        port: 22
+        script: |
+          mv /var/cache/deployment/current/${{ matrix.vendor }}.*.tar.gz /var/cache/deployment/previous/
+          mv /var/cache/deployment/tmp/${{ env.ARCHIVE }} /var/cache/deployment/current/
+          /var/cache/deployment/deploy.sh ${{ matrix.vendor }}
+          rm -f $(ls -1t /var/cache/deployment/previous/${{ matrix.vendor }}.*.tar.gz | tail -n +5)
