@@ -13,10 +13,11 @@ export function formatAddressSuggestionWithMarkup(suggestion: ISuggestion, input
         : formatted;
 
     if (matches.length > 0) {
-        const index = matches[0].index
-        const length = matches[0][0].length
 
-        return [formatted.slice(0, index), '<strong>', formatted.slice(index, length), '</strong>', formatted.slice(length, formatted.length)].join('')
+        const index: number = matches[0].index as number
+        const length: number = matches[0][0].length as number
+        const end: number = index + length
+        return [formatted.slice(0, index), '<strong>', formatted.slice(index, end), '</strong>', formatted.slice(end, formatted.length)].join('')
     }
     return formatted
 }
