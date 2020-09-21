@@ -98,8 +98,14 @@ $unselectedSvg: adjust-color(
   }
 
   &__Label {
-    width: 180px;
-    height: 180px;
+    width: 120px;
+    height: 120px;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      width: 180px;
+      height: 180px;
+    }
+
     position: relative;
 
     display: flex;
@@ -125,7 +131,10 @@ $unselectedSvg: adjust-color(
     }
 
     .SvgIcon:not(.SvgIcon--selected) {
-      font-size: 106px;
+      @media only screen and (min-width: $BREAKPOINT) {
+        font-size: 106px;
+      }
+      font-size: 53px;
       padding-top: 20px;
       padding-bottom: 13px;
       color: $unselectedSvg;

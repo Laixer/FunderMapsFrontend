@@ -170,7 +170,6 @@ export default class AddressCharacteristicsQuestion extends Mixins(QuestionMixin
   &--one,
   &--two,
   &--three {
-    width: 380px;
   }
   &--one,
   &--two {
