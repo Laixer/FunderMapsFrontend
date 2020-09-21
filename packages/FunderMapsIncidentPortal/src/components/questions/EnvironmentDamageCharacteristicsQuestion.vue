@@ -102,7 +102,7 @@ export default class EnvironmentDamageCharacteristicsQuestion extends Mixins(Que
   }
 
   private handleInput(value: Array<EnvironmentDamageCharacteristics>): void {
-    this.value = value.flatMap((val) => parseInt(val + '', 10))
+    this.value = value
   }
 }
 </script>

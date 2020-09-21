@@ -37,7 +37,7 @@ export default class RadioTextInput extends FormField {
 
 
   private isChecked(value: string | boolean | number): boolean {
-    return this.value === value.toString()
+    return this.value === value.toString() || this.value === value
   }
 
   /**
