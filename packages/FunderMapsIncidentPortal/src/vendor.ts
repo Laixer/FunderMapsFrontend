@@ -10,6 +10,9 @@ export type VendorConfig = {
         subtitle: string,
         content: string,
         image: any
+    },
+    final: {
+        content: string
     }
 }
 

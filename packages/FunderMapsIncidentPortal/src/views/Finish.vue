@@ -4,11 +4,7 @@
       <Title>Advies</Title>
 
       <BodyText :bold="true">Bedankt voor het doorgeven van uw melding.</BodyText>
-
-      <BodyText>Wij nemen contact met u op om u van een persoonlijk advies te voorzien. Uw gegevens blijven strikt vertrouwelijk en worden niet buiten het KCAF gedeeld.</BodyText>
-
-      <BodyText>In ons stappenplan voor funderingsherstel leggen wij duidelijk uit welke stappen u alvast kunt nemen en voor welke stappen professionele hulp noodzakelijk is om grip te krijgen op funderingsproblemen.</BodyText>
-
+      <BodyText><span v-html="vendor.final.content"/></BodyText>
       <div>
         <Button :line="true">
           <span>Bekijk het stappenplan</span>
@@ -32,13 +28,17 @@ import BodyText from '@/components/BodyText.vue'
 
 import Button from '@/components/Button.vue'
 import SvgIcon from '@/components/common/SvgIcon.vue'
+import vendor from '@/vendor'
+
 
 @Component({
   components: {
     Page, Button, SvgIcon, Title, BodyText
   }
 })
-export default class Finish extends Vue { }
+export default class Finish extends Vue { 
+    private vendor = vendor
+}
 </script>
 
 <style lang="scss">

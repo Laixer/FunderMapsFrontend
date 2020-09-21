@@ -2,9 +2,9 @@
   <Page class="Home">
     <div class="Home__Wrapper">
       <div class="Home--left">
-        <Title>{{vendor.home.title}}</Title>
-        <BodyText :bold="true">{{vendor.home.subtitle}}</BodyText>
-        <BodyText>{{vendor.home.content}}</BodyText>
+        <Title><span v-html="vendor.home.title"/></Title>
+        <BodyText :bold="true"><span v-html="vendor.home.subtitle"/></BodyText>
+      <BodyText><span v-html="vendor.home.content"/></BodyText>
         <div>
           <Button @click="handleNavigate">
             <span>Melding maken</span>

@@ -1,6 +1,6 @@
 <template>
   <p class="BodyText" :class="{ 'BodyText--center': center, 'BodyText--bold': bold }">
-    <slot>{{ text }}</slot>
+        <slot>{{ text }}</slot>
   </p>
 </template>
 
@@ -22,6 +22,7 @@ export default class BodyText extends Vue {
    * Whether to make the text bold
    */
   @Prop({ default: false }) readonly bold!: boolean;
+
 }
 </script>
 
