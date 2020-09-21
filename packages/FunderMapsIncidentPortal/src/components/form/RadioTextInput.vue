@@ -37,7 +37,7 @@ export default class RadioTextInput extends FormField {
 
 
   private isChecked(value: string | boolean | number): boolean {
-    return this.value === value.toString() || this.value === value
+    return this.value === value.toString()
   }
 
   /**
@@ -62,12 +62,7 @@ $unselected: adjust-color(
   $blue: -114,
   $alpha: -0.7
 );
-$unselectedText: adjust-color(
-  $PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114
-);
+$unselectedText: adjust-color($PRIMARY_COLOR, $red: 21, $green: 0, $blue: -124);
 
 .RadioTextInput {
   &__Wrapper {

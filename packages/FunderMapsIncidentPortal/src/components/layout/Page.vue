@@ -78,7 +78,7 @@ export default class Page extends Vue {
     }
   }
   &__Content {
-    background: #f2f5ff;
+    background: #fbfcff;
   }
 
   @media only screen and (max-width: $BREAKPOINT) {

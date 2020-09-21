@@ -27,9 +27,8 @@ export default class BodyText extends Vue {
 
 
 <style lang="scss">
-
 .BodyText {
-  color: #77808D;
+  color: #606976;
   font-size: 18px;
   line-height: 26px;
   margin: 0;
@@ -44,5 +43,4 @@ export default class BodyText extends Vue {
     font-weight: bold;
   }
 }
-
 </style>

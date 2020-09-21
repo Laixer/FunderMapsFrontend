@@ -1,12 +1,10 @@
 <template>
-  <span class="Copyright">
-    &copy; Copyright {{ new Date().getFullYear() }} Laixer • @@VERSION@@
-  </span>
+  <span class="Copyright">&copy; Copyright {{ new Date().getFullYear() }} Laixer • @@VERSION@@</span>
 </template>
 
 <style lang="scss">
 .Copyright {
   font-size: 12px;
-  color: #77808D;
+  color: #606976;
 }
 </style>

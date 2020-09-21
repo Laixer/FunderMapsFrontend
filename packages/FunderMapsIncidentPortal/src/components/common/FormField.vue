@@ -358,7 +358,7 @@ $disabled: adjust-color(
     font-size: 18px;
     line-height: 21px;
     letter-spacing: -0.3px;
-    color: #77808d;
+    color: #606976;
     margin-bottom: 9px;
   }
 
@@ -376,7 +376,7 @@ $disabled: adjust-color(
     transition: border-color 0.2s ease-in-out;
 
     &::placeholder {
-      color: #77808d;
+      color: #606976;
     }
 
     &:focus {
