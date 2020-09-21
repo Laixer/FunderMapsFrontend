@@ -35,6 +35,7 @@
         label="Telefoonnummer"
         id="telefoon"
         type="tel"
+        :pattern="this.phoneRegex"
         autocomplete="tel"
         placeholder="+31"
         :valid="phoneNumberValid"
@@ -85,6 +86,9 @@ export default class ProfileQuestion extends Mixins(QuestionMixin) {
   private phoneNumber: string | null = null
   private note: string | null = null
 
+  private phoneRegex = /(^\+[0-9]{2}|^\+[0-9]{2}\(0\)|^\(\+[0-9]{2}\)\(0\)|^00[0-9]{2}|^0)([0-9]{9}$|[0-9\-\s]{10}$)/
+
+
   private get firstnameValid(): boolean | null {
     return this.firstName !== null
       && this.firstName.length < 255
@@ -106,8 +110,9 @@ export default class ProfileQuestion extends Mixins(QuestionMixin) {
 
   private get phoneNumberValid(): boolean {
     return this.phoneNumber !== null
-      && this.phoneNumber.length < 20
       && this.phoneNumber.length > 0
+      && this.phoneRegex.test(this.phoneNumber)
+
   }
 
   private get noteValid(): boolean {

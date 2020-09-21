@@ -21,6 +21,7 @@
         :id="id"
         :value="fieldValue"
         :type="type"
+        :pattern="pattern"
         :placeholder="placeholder"
         :autocomplete="autocomplete ? autocomplete: 'off'"
         :disabled="isDisabled"
@@ -57,6 +58,8 @@ export default class FormField extends Vue {
    * The type of form field
    */
   @Prop({ default: 'text' }) readonly type!: string;
+
+  @Prop({ default: '' }) readonly pattern!: string;
 
   /**
    * The field id
