@@ -6,18 +6,17 @@ export function formatAddressSuggestion(suggestion: ISuggestion): string {
 
 export function formatAddressSuggestionWithMarkup(suggestion: ISuggestion, inputValue: string): string {
     let formatted = _formatAddressSuggestion(suggestion)
-    const matches = [...formatted.toLowerCase().matchAll(new RegExp(inputValue.toLowerCase(), "g"))]
+    const indexOf = formatted.toLowerCase().indexOf(inputValue.toLowerCase())
 
     formatted = formatted.length > 32
         ? formatted.substr(0, 32 - 1) + '&hellip;'
         : formatted;
 
-    if (matches.length > 0) {
+    if (indexOf !== undefined) {
 
-        const index: number = matches[0].index as number
-        const length: number = matches[0][0].length as number
-        const end: number = index + length
-        return [formatted.slice(0, index), '<strong>', formatted.slice(index, end), '</strong>', formatted.slice(end, formatted.length)].join('')
+        const length: number = inputValue.length as number
+        const end: number = indexOf + length
+        return [formatted.slice(0, indexOf), '<strong>', formatted.slice(indexOf, end), '</strong>', formatted.slice(end, formatted.length)].join('')
     }
     return formatted
 }
