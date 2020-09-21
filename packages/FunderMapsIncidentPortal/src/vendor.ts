@@ -4,6 +4,9 @@ export declare const VENDOR: string;
 
 export type VendorConfig = {
     name: string,
+    style: {
+        mapboxPrimaryColor: string,
+    },
     logo: string,
     home: {
         title: string,

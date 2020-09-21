@@ -3,6 +3,9 @@ import * as homeImage from './assets/home.jpg'
 
 export default {
     name: "default",
+    style: {
+        mapboxPrimaryColor: "#2657FF",
+    },
     logo: logo,
     home: {
         title: "Wat doen we?",

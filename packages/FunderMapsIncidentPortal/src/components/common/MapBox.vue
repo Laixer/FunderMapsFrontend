@@ -15,6 +15,7 @@
 
 import mapboxgl from 'mapbox-gl'
 import 'mapbox-gl/dist/mapbox-gl.css';
+import vendor from '@/vendor'
 
 /**
  * The Mapbox instance should not be reactive
@@ -68,8 +69,8 @@ export default {
         source: 'address',
         layout: {},
         paint: {
-          'fill-color': process.env.VUE_APP_PRIMARY_COLOR,
-          'fill-opacity': 0.5,
+          'fill-color': vendor.style.mapboxPrimaryColor,
+          'fill-opacity': 0.8,
         },
       })
 
