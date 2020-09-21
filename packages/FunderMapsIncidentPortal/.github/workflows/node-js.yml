@@ -50,8 +50,18 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ env.NODEJS_VERSION }}
+
+    - name: Print version
+      run: |
+        find src -type f -exec sed -i "s/@@VERSION@@/$(git describe --long --always)/" {} +
+        find src -type f -exec sed -i "s/@@COMMIT@@/$(git rev-parse HEAD)/" {} +
+
     - run: npm install
     - run: bash .github/workflows/build-vendors.sh
+      env: 
+        SSH_HOST: ${{ secrets.SSH_HOST }}
+        SSH_USER: ${{ secrets.SSH_USER }}
+        SSH_KEY: ${{ secrets.SSH_KEY }}
 
   deploy:
     name: Deploy
