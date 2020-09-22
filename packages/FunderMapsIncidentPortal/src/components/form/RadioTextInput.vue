@@ -55,15 +55,6 @@ export default class RadioTextInput extends FormField {
 </script>
 
 <style lang="scss">
-$unselected: adjust-color(
-  $PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114,
-  $alpha: -0.7
-);
-$unselectedText: adjust-color($PRIMARY_COLOR, $red: 21, $green: 0, $blue: -124);
-
 .RadioTextInput {
   &__Wrapper {
     display: flex;
@@ -107,8 +98,9 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 21, $green: 0, $blue: -124);
     line-height: 19px;
     letter-spacing: -0.3px;
 
-    color: $unselectedText;
-    border: 2px solid $unselected;
+    filter: grayscale(80%);
+    opacity: 0.8;
+    border: 2px solid;
     border-radius: 4px;
     background: white;
 
@@ -148,6 +140,8 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 21, $green: 0, $blue: -124);
     }
 
     &:hover {
+      filter: none;
+
       border-color: $PRIMARY_COLOR;
     }
   }
@@ -156,6 +150,7 @@ $unselectedText: adjust-color($PRIMARY_COLOR, $red: 21, $green: 0, $blue: -124);
     display: none;
   }
   input:checked + &__Label {
+    filter: none;
     background-color: rgba(156, 178, 255, 0.1); // TODO: Use color adjust
     border-color: $PRIMARY_COLOR;
     color: #202122;

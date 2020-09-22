@@ -41,14 +41,6 @@ export default class Button extends Vue {
 </script>
 
 <style lang="scss">
-/** TODO: test whether this works for different colors */
-$disabled: adjust-color(
-  $PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114,
-  $alpha: -0.7
-);
 $active: adjust-color($PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
 $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
@@ -81,7 +73,8 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
     background: $active;
   }
   &[disabled] {
-    background: $disabled;
+    opacity: 0.25;
+    filter: grayscale(80%);
     cursor: not-allowed;
   }
 
@@ -104,7 +97,7 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
       padding: 15px 27px 16px;
     }
     &[disabled] {
-      background: $disabled;
+      filter: grayscale(80%);
       color: white;
       border: none;
       padding: 15px 27px 16px;
@@ -113,14 +106,21 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
   &--ghost {
     background: transparent;
-    color: $disabled;
+    color: $PRIMARY_COLOR;
+    filter: grayscale(80%);
+    opacity: 0.8;
 
     &:hover {
       background: transparent;
+      filter: none;
+      opacity: 1;
+
       color: $PRIMARY_COLOR;
     }
     &:active {
       background: transparent;
+      filter: none;
+      opacity: 1;
       color: $active;
     }
   }
