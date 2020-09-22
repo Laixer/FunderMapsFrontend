@@ -69,8 +69,6 @@ import TextArea from '@/components/form/TextArea.vue'
 
 import * as EmailValidator from 'email-validator';
 
-import axios from 'axios'
-
 @Component({
   mixins: [QuestionMixin],
   components: {
