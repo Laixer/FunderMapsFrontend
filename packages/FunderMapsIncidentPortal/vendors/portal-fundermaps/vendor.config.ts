@@ -1,4 +1,4 @@
-import * as logo from './assets/logo.png'
+import * as logo from './assets/logo.svg'
 import * as homeImage from './assets/home.jpg'
 
 export default {
