@@ -53,9 +53,8 @@ export default {
       options: {
         paramName: 'input',
         addRemoveLinks: true,
-        maxFiles: 1,
         maxFilesize: 100,
-        acceptedFiles: 'application/pdf',
+        acceptedFiles: 'application/pdf, image/png, image/jpeg, image/gif, image/bmp, image/tiff, image/webp, text/plain',
         url: `${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/upload-document`.replace(/([^:]\/)\/+/g, "$1") // TODO: Move to API
       }
     }
