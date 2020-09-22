@@ -1,19 +1,21 @@
 <template>
   <aside class="ProgressSteps">
-    <div v-if="!isDone" class="ProgressSteps__Indicator" :style="{ top: indicatorOffset }"></div>
-    <span class="ProgressSteps__Finished" v-for="index in finishedSteps" :key="`${index}_finished`">
-      <SvgIcon icon="icon_circle_check" />
-    </span>
-    <span v-if="!isDone" class="ProgressSteps__Current">
-      <span>{{ step }}</span>
-    </span>
-    <span
-      class="ProgressSteps__Future"
-      v-for="(step, index) in futureSteps"
-      :key="`${index}_future`"
-    >
-      <span>{{ step }}</span>
-    </span>
+    <transition name="slide">
+      <div v-if="!isDone" class="ProgressSteps__Indicator" :style="{ top: indicatorOffset }"></div>
+    </transition>
+
+    <transition-group name="list" tag="ul">
+      <li v-for="step in steps" v-bind:key="step" :class="getClassFor(step)">
+        <template v-if="step < currentStep">
+          <span>
+            <SvgIcon icon="icon_check" />
+          </span>
+        </template>
+        <template v-else>
+          <span>{{ step }}</span>
+        </template>
+      </li>
+    </transition-group>
   </aside>
 </template>
 
@@ -30,7 +32,7 @@ export default class ProgressSteps extends Vue {
   /**
    * The progress # (step)
    */
-  @Prop({ default: 0, required: true }) readonly step!: number;
+  @Prop({ default: 0, required: true }) readonly currentStep!: number;
   /**
    * The total number of steps
    */
@@ -41,7 +43,19 @@ export default class ProgressSteps extends Vue {
    * The number of finished steps
    */
   get finishedSteps(): number {
-    return Math.max(0, this.step - 1)
+    return Math.max(0, this.currentStep - 1)
+  }
+
+  private getClassFor(step: number): string {
+    if (step < this.currentStep) {
+      return "ProgressSteps__Finished"
+    }
+
+    if (step === this.currentStep) {
+      return "ProgressSteps__Current"
+    }
+
+    return "ProgressSteps__Future"
   }
 
   /**
@@ -56,14 +70,14 @@ export default class ProgressSteps extends Vue {
    * The future steps (numbers)
    */
   get futureSteps(): number[] {
-    return this.range((this.steps - Math.min(this.steps, this.step)), this.step + 1)
+    return this.range((this.steps - Math.min(this.steps, this.currentStep)), this.currentStep + 1)
   }
 
   /**
    * When the current step is beyond the maximum steps we can take we're done.
    */
   get isDone(): boolean {
-    return this.steps < this.step
+    return this.steps < this.currentStep
   }
 
   /**
@@ -77,6 +91,17 @@ export default class ProgressSteps extends Vue {
 
 
 <style lang="scss">
+.list-enter-active {
+  transition: all 1s;
+}
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter,
+.list-leave-to {
+  transform: translateY(30px);
+  opacity: 0;
+}
 .ProgressSteps {
   position: relative;
   width: 80px;
@@ -87,9 +112,15 @@ export default class ProgressSteps extends Vue {
   flex-direction: column;
   align-items: center;
 
+  ul {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__Current,
   &__Finished,
   &__Future {
+    transition: color 0.3s;
     width: 24px;
     height: 24px;
     position: relative;
@@ -118,7 +149,8 @@ export default class ProgressSteps extends Vue {
   }
 
   &__Current,
-  &__Future {
+  &__Future,
+  &__Finished {
     font-size: 16px;
     display: inline-flex;
     align-items: center;
@@ -129,9 +161,18 @@ export default class ProgressSteps extends Vue {
     color: white;
   }
   &__Finished {
-    fill: #d4daf0;
-    font-size: 24px;
-    line-height: 24px;
+    span {
+      display: flex;
+      align-content: center;
+      justify-content: center;
+
+      svg {
+        width: 1em;
+        height: 1em;
+      }
+    }
+    background: $PRIMARY_COLOR;
+    color: white;
   }
   &__Future {
     color: rgba(119, 128, 141, 0.5);
@@ -139,6 +180,7 @@ export default class ProgressSteps extends Vue {
   }
 
   &__Indicator {
+    transition: top 0.3s ease;
     position: absolute;
     left: 0;
     height: 24px;

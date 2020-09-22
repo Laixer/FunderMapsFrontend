@@ -10,7 +10,7 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/Home.vue')
   },
   {
-    path: '/vragen/:question',
+    path: '/vragen',
     name: 'Questions',
     component: () => import('../views/Questions.vue')
   },

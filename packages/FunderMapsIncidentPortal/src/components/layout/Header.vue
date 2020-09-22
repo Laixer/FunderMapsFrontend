@@ -35,10 +35,12 @@ export default class Page extends Vue {
 
 <style lang="scss">
 .Header {
-  position: sticky;
+  transition: all 0.3s;
+  box-shadow: 0 3px 5px rgba(57, 63, 72, 0.2);
+  position: fixed;
   top: 0;
   left: 0;
-  height: 98px;
+  height: 80px;
   width: 100%;
   padding: 20px 80px;
   border-bottom: 1px solid #d4daf0;
@@ -47,14 +49,23 @@ export default class Page extends Vue {
 
   display: flex;
   align-items: center;
-
   user-select: none;
-  img {
+
+  a {
+    margin: auto;
     height: 30px;
   }
+
   @media only screen and (min-width: $BREAKPOINT) {
-    position: relative;
+    box-shadow: 0 3px 5px rgba(57, 63, 72, 0.2);
+    position: sticky;
+    top: 0;
     height: 115px;
+
+    a {
+      margin: 0;
+      height: 30px;
+    }
   }
 
   @media only screen and (min-width: $BREAKPOINT) {

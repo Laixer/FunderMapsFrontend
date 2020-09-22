@@ -2,11 +2,17 @@
   <Page class="Home">
     <div class="Home__Wrapper">
       <div class="Home--left">
-        <Title><span v-html="vendor.home.title"/></Title>
-        <BodyText :bold="true"><span v-html="vendor.home.subtitle"/></BodyText>
-      <BodyText><span v-html="vendor.home.content"/></BodyText>
+        <Title>
+          <span v-html="vendor.home.title" />
+        </Title>
+        <BodyText :bold="true">
+          <span v-html="vendor.home.subtitle" />
+        </BodyText>
+        <BodyText>
+          <span v-html="vendor.home.content" />
+        </BodyText>
         <div>
-          <Button @click="handleNavigate">
+          <Button id="navigateBodyButton" @click="handleNavigate">
             <span>Melding maken</span>
             <SvgIcon icon="icon_arrow_next" />
           </Button>
@@ -19,6 +25,10 @@
 
     <template slot="footer">
       <Copyright />
+      <Button id="navigateFooterButton" @click="handleNavigate">
+        <span>Melding maken</span>
+        <SvgIcon icon="icon_arrow_next" />
+      </Button>
     </template>
   </Page>
 </template>
@@ -107,6 +117,7 @@ export default class Home extends Vue {
     }
 
     img {
+      border-radius: 5px;
       display: block;
       // object-fit: contain;
       width: 100%;
@@ -114,9 +125,36 @@ export default class Home extends Vue {
     }
   }
 
+  #navigateBodyButton {
+    display: none;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      display: inline-flex;
+    }
+  }
+
+  #navigateFooterButton {
+    display: inline-flex;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      display: none;
+    }
+  }
+
   // Align Copyright to the start
   .Footer {
-    justify-content: start;
+    justify-content: center;
+
+    .Copyright {
+      display: none;
+    }
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      justify-content: start;
+      .Copyright {
+        display: block;
+      }
+    }
   }
 }
 </style>

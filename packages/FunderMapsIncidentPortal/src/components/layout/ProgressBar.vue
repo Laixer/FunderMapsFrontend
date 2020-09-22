@@ -22,7 +22,7 @@ export default class ProgressBar extends Vue {
    * The progress in %, with a max of 100%
    */
   get progress(): string {
-    return `${Math.min(100, (this.step / this.steps) * 100 )}%`
+    return `${Math.min(100, (this.step / this.steps) * 100)}%`
   }
 }
 </script>
@@ -35,7 +35,7 @@ export default class ProgressBar extends Vue {
   left: 0;
   width: 100%;
   height: 5px;
-  background: #D4DAF0;
+  background: #d4daf0;
   z-index: 99999;
 
   @media only screen and (min-width: $BREAKPOINT) {
@@ -43,11 +43,12 @@ export default class ProgressBar extends Vue {
   }
 
   .Progress {
+    transition: width 0.3s;
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    background: #00C95D;
+    background: #00c95d;
   }
 }
 </style>

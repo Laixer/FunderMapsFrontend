@@ -1,11 +1,13 @@
 <template>
   <Page :step="this.currentStep" :steps="this.totalSteps" class="Questions">
-    <component
-      ref="currentQuestionComponent"
-      :is="this.questions[this.currentStep]"
-      :busy="busy"
-      @isValid="isValid"
-    />
+    <transition name="slide" mode="out-in" appear>
+      <component
+        ref="currentQuestionComponent"
+        :is="this.questions[this.currentStep]"
+        :busy="busy"
+        @isValid="isValid"
+      />
+    </transition>
 
     <template slot="footer">
       <Button :ghost="true" v-if="this.currentStep > 1" @click="handleNavigate(-1)">
@@ -77,13 +79,15 @@ export default class Questions extends Vue {
    */
   private busy = false
 
+
+  private currentStep = 1;
+
   /**
    * The current step is based on the question number from the route
    */
-  get currentStep(): number {
-    return parseInt(this.$route.params.question, 10)
-  }
-
+  // get currentStep(): number {
+  //   return parseInt(this.$route.params.question, 10)
+  // }
   private get nextButtonText() {
     return this.isLastStep ? "Versturen" : "Volgende"
   }
@@ -140,14 +144,15 @@ export default class Questions extends Vue {
     } else {
 
       this.valid = false
-      this.$router.push(
-        {
-          name: 'Questions',
-          params: {
-            question: (this.currentStep + direction).toString()
-          }
-        }
-      )
+      this.currentStep += direction
+      // this.$router.push(
+      //   {
+      //     name: 'Questions',
+      //     params: {
+      //       question: (this.currentStep + direction).toString()
+      //     }
+      //   }
+      // )
     }
   }
 
@@ -175,3 +180,20 @@ export default class Questions extends Vue {
   // }
 }
 </script>
+
+<style lang="scss">
+.slide-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-enter {
+  transform: translateX(-10px);
+  opacity: 0;
+}
+.slide-leave-to {
+  transform: translateX(10px);
+  opacity: 0;
+}
+</style>

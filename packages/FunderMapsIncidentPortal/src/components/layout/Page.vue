@@ -2,7 +2,7 @@
   <div class="Page">
     <Header :step="step" :steps="steps" />
     <div class="Page__Wrapper">
-      <ProgressSteps v-if="steps" :step="step" :steps="steps" />
+      <ProgressSteps v-if="steps" :currentStep="step" :steps="steps" />
 
       <div class="Page__Main" :class="{ 'Page__Main--sidebar': steps > 0 }">
         <div class="Page__Content">
@@ -45,6 +45,14 @@ export default class Page extends Vue {
 
 <style lang="scss">
 .Page {
+  margin-top: 80px;
+  margin-bottom: 40px;
+
+  @media only screen and (min-width: $BREAKPOINT) {
+    margin: 0;
+  }
+
+  overflow: hidden;
   display: flex;
   flex-grow: 1;
   align-items: stretch;
