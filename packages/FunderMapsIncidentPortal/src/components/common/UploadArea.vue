@@ -10,7 +10,6 @@
       @vdropzone-success="handleSuccess"
       @vdropzone-error="handleError"
       @vdropzone-removed-file="handleRemoved"
-      @vdropzone-max-files-exceeded="handleMaxFilesExceeded"
       class="UploadArea d-flex justify-content-center"
     >
       <div class="align-self-center">
@@ -85,7 +84,7 @@ export default {
         message: '',
         variant: ''
       }
-      this.$emit('handleFileAdded', response)
+      this.$emit('handleFileAdded', file, response)
       this.$emit('handleUploadProgress', 'finished')
     },
     handleError(file, message, xhr) { // error
@@ -99,12 +98,8 @@ export default {
       }
       this.$emit('handleUploadProgress', 'finished')
     },
-    handleMaxFilesExceeded(file) {
-      this.$refs.dropzone.removeAllFiles()
-      this.$refs.dropzone.addFile(file)
-    },
     handleRemoved(file, error, xhr) {
-      this.$emit('handleFileRemoved')
+      this.$emit('handleFileRemoved', file, error, xhr)
     }
   }
 }

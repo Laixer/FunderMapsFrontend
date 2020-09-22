@@ -75,10 +75,9 @@ export default new Vuex.Store({
         "OhainedBuilding": state.chainedBuilding,
         "NeighborRecovery": state.neighborRecovery,
         "FoundationDamageCause": parseInt(state.foundationDamageCause + '', 10),
-        "DocumentFile": state.documentFile,
+        "DocumentFile": state.documentFile.flatMap((entry: any) => [entry.file]),
         "Note": state.note,
       }
-
       return request
     }
   },

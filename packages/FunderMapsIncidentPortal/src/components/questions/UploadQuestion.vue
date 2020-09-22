@@ -39,14 +39,14 @@ import UploadArea from '@/components/common/UploadArea.vue'
   }
 })
 export default class UploadQuestion extends Mixins(QuestionMixin) {
-  private value: Array<string> = []
+  private value: Array<{ uuid: string, file: string }> = [];
 
   public get isValid(): boolean {
     return true
   }
 
   created(): void {
-    this.value = this.$store.state.documentFIle
+    this.value = this.$store.state.documentFile
   }
 
   public storeData(): void {
@@ -58,13 +58,14 @@ export default class UploadQuestion extends Mixins(QuestionMixin) {
     ])
   }
 
-  private handleAddedFile(fileUrl: any) {
-    this.value = [fileUrl.name]
+  private handleAddedFile(file: any, response: any) {
+    this.value.push({ uuid: file.upload.uuid as string, file: response.name })
   }
 
-
-  private handleRemovedFile() {
-    this.value = []
+  private handleRemovedFile(file: any, error: any, xhr: any) {
+    this.value = this.value.filter((entry) => {
+      entry.uuid !== file.upload.uuid
+    })
   }
 
   private handleUploadProgress(status: string) {
