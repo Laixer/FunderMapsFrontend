@@ -12,8 +12,7 @@ export function formatAddressSuggestionWithMarkup(suggestion: ISuggestion, input
         ? formatted.substr(0, 32 - 1) + '&hellip;'
         : formatted;
 
-    if (indexOf !== undefined) {
-
+    if (indexOf >= 0) {
         const length: number = inputValue.length as number
         const end: number = indexOf + length
         return [formatted.slice(0, indexOf), '<strong>', formatted.slice(indexOf, end), '</strong>', formatted.slice(end, formatted.length)].join('')
