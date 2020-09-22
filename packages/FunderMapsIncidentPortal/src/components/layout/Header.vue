@@ -36,7 +36,6 @@ export default class Page extends Vue {
 <style lang="scss">
 .Header {
   transition: all 0.3s;
-  box-shadow: 0 3px 5px rgba(57, 63, 72, 0.2);
   position: fixed;
   top: 0;
   left: 0;
@@ -57,7 +56,6 @@ export default class Page extends Vue {
   }
 
   @media only screen and (min-width: $BREAKPOINT) {
-    box-shadow: 0 3px 5px rgba(57, 63, 72, 0.2);
     position: sticky;
     top: 0;
     height: 115px;
