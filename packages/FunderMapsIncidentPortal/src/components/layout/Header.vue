@@ -1,8 +1,6 @@
 <template>
   <header class="Header">
-    <router-link aria-label="Home" :to="{ name: 'Home' }">
-      <img class="Header__Logo" :src="vendorLogo" alt="Logo" />
-    </router-link>
+    <img class="Header__Logo" :src="vendorLogo" alt="Logo" />
 
     <ProgressBar v-if="steps" :step="step" :steps="steps" />
   </header>
