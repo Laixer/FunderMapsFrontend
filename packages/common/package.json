@@ -1,0 +1,18 @@
+{
+  "name": "@laixer/common",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Module for commonly reused components.",
+  "scripts": {
+    "serve": "start-storybook",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "main": "dist/injex.js",
+  "module": "src/index.js",
+  "dependencies": {
+    "material-design-icons-iconfont": "^5.0.1",
+    "roboto-fontface": "*",
+    "vuetify": "^2.2.11"
+  }
+}
