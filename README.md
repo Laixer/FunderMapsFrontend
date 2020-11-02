@@ -81,4 +81,4 @@ This section details the primary tooling used to set up this monorepo, highlight
 # License 
 [(Back to top)](#About)
 
-This project uses the [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/) license. Please have a look at the [LICENSE.md](LICENSE.md) for more details.
+This project uses the [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/) license. Please have a look at the [LICENSE](LICENSE) for more details.
