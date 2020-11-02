@@ -5,9 +5,11 @@
 # About
 This repository aims to combine all Laixer frontend applications into a single monorepo. Currently, each project is maintained separately, which promotes code duplication and decreases time efficiency for implementing new features.
 
-For more info, please visit the appropriate section in this README. Visit the issue board if you wish to see what is currently being worked on. Please see the table of contents below for quick 
+For more info, please visit the appropriate section in this README. If you wish to see what is currently being worked on, please visit the project page. 
 
-#### Practical
+Please see the references below for an overview of information.
+
+#### Practical 
 [Setup for development](#setup-for-development) - Step-by-step guideline on how to set up a development environment.
 
 #### Informative
