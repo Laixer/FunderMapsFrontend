@@ -14,6 +14,7 @@ Please see the references below for an overview of information.
 
 #### Informative
 [Project information](#projects) - For information about the individual projects included in this monorepo.
+
 [Tooling](#tooling)  - For information about our tooling.
 
 
@@ -79,3 +80,5 @@ This section details the primary tooling used to set up this monorepo, highlight
 
 # License 
 [(Back to top)](#About)
+
+This project uses the [GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/) license. Please have a look at the [LICENSE.md](LICENSE.md) for more details.
