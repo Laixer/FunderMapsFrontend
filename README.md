@@ -23,6 +23,8 @@ Please see the references below for an overview of information.
 [(Back to top)](#About)
 This section details our step-by-step setup process to rapidly start development according to our guidelines.
 
+// TODO: Migrate to Wiki
+
 ### Node
 
 // TODO: Node setup guide
@@ -45,6 +47,8 @@ This section details our step-by-step setup process to rapidly start development
 
 # Projects
 [(Back to top)](#About)
+// TODO: Migrate to Wiki
+
 This section details our individual projects and their purpose.
 
 ## Client App
@@ -67,6 +71,8 @@ This section details our individual projects and their purpose.
 
 # Tooling
 [(Back to top)](#About)
+
+// TODO: Migrate to Wiki
 
 This section details the primary tooling used to set up this monorepo, highlighting the essential features that we use from each.
 
