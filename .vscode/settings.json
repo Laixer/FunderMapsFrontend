@@ -1,0 +1,13 @@
+{
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "eslint.format.enable": true,
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+}

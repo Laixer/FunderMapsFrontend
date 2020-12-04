@@ -12,11 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    },
     "types": [
       "webpack-env"
     ],
@@ -27,12 +22,6 @@
       "scripthost"
     ]
   },
-  "include": [
-    "packages/**/*.ts",
-    "packages/**/*.tsx",
-    "packages/**/*.vue",
-    "main.ts"
-  ],
   "exclude": [
     "node_modules"
   ]
