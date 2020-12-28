@@ -1,8 +1,9 @@
-import * as logo from './assets/logo.svg'
-import * as homeImage from './assets/home.jpg'
-import * as background from './assets/background.jpg'
+import logo from './assets/logo.svg'
+import homeImage from './assets/home.jpg'
+import background from './assets/background.jpg'
+import { VendorConfig } from '../vendor'
 
-export default {
+export const config: VendorConfig = {
     name: "portal-fundermaps",
     client_id: 61,
     style: {

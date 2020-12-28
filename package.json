@@ -1,7 +1,8 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "vendors/*"
   ],
   "repository": {
     "type": "git",
@@ -21,24 +22,13 @@
     "build": "lerna run build",
     "publish": "lerna publish"
   },
-  "dependencies": {
-    "core-js": "^3.8.0",
-    "vue": "^3.0.0",
-    "vue-class-component": "^8.0.0-0",
-    "vue-property-decorator": "^9.1.2",
-    "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
-  },
   "devDependencies": {
     "concurrently": "^5.3.0",
-    "copy-webpack-plugin": "^6.3.2",
     "eslint": "^7.14.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-vue": "^7.1.0",
     "lerna": "^3.22.1",
-    "node-sass": "^5.0.0",
-    "sass-loader": "^10.1.0",
     "typescript": "~3.9.3",
     "yargs": "^16.1.1"
   }
