@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+
 export declare const VENDOR: string;
 
 export type VendorConfig = {
@@ -20,7 +21,5 @@ export type VendorConfig = {
     }
 }
 
-export const favicon = require(`/${VENDOR}/favicon.ico`)
-
-const vendor: VendorConfig = require(`/${VENDOR}/vendor.config`).default
-export default vendor
+const config: VendorConfig = require(`./${VENDOR}/config.json`)
+export default config

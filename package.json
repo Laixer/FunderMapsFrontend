@@ -23,6 +23,7 @@
     "publish": "lerna publish"
   },
   "devDependencies": {
+    "@types/node": "^14.14.14",
     "concurrently": "^5.3.0",
     "eslint": "^7.14.0",
     "eslint-config-airbnb-base": "^14.2.1",
