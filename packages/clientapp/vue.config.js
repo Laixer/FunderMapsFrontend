@@ -4,26 +4,20 @@ const base = require("../../vue.config.base");
 
 module.exports = {
   chainWebpack: config => {
-    config.merge(base.config)
+    config.merge(base.config);
 
     // TODO: Extract to base
-    config.resolve.alias.delete("@")
-
-    // TODO: Extract to base
-    config.resolve
-      .plugin("tsconfig-paths")
-      .use(require("tsconfig-paths-webpack-plugin"))
+    config.resolve.alias.delete("@");
 
     // TODO: Extract to base
     config.module
       .rule("icon loader")
       .test(/\.svg$/)
-      .include
-      .add(path.resolve(__dirname, "src/assets/icons"))
+      .include.add(path.resolve(__dirname, "src/assets/icons"))
       .end()
       .use("html-loader")
       .loader("html-loader")
-      .end()
+      .end();
 
     // TODO: Extract to base
     config.module
@@ -31,8 +25,7 @@ module.exports = {
       .test(/\.ico(\?v=\d+\.\d+\.\d+)?$/)
       .use("url-loader")
       .loader("url-loader")
-      .end()
+      .end();
   },
   ...base.css
 };
-

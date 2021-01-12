@@ -2,13 +2,31 @@
   <div id="nav">
     <router-link to="/">
       Home
-    </router-link> |
-    <router-link to="/about">
-      About
     </router-link>
   </div>
   <router-view />
 </template>
+
+<script lang="ts">
+import { refreshLogin } from "./services/auth";
+
+import { Options, Vue } from "vue-class-component";
+import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+
+@Options({
+  components: {
+    HelloWorld
+  }
+})
+export default class App extends Vue {
+  created(): void {
+    console.log("Setting interval");
+    setInterval(() => {
+      refreshLogin();
+    }, 60000 * 10);
+  }
+}
+</script>
 
 <style lang="scss">
 @import "~@/style.scss";
