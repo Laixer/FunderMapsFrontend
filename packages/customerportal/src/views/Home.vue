@@ -70,8 +70,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-$BREAKPOINT: 900px;
-$PRIMARY_COLOR: red;
 .Home {
   &__Wrapper {
     padding: 20px 20px;

@@ -5,11 +5,9 @@
 </template>
 
 <style lang="scss">
-@import "~@/style.scss";
-
 body {
   @media only screen and (min-width: $BREAKPOINT) {
-    background: url("./assets/Background.jpg");
+    background: $VENDOR_BACKGROUND_IMAGE;
     background-size: cover;
   }
 }
@@ -18,7 +16,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  color: $PRIMARY_COLOR;
+  color: $VENDOR_PRIMARY_COLOR;
   background: white;
 
   // width: 1440px;
