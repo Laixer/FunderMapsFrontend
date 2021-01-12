@@ -53,6 +53,7 @@ exports.css = {
         },
         additionalData: `
           @import "~@vendor/${vendor}/style.scss";
+          @import "~@/style.scss";
         `
       }
     }
