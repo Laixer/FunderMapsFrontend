@@ -1,13 +1,28 @@
 {
-  "editor.formatOnPaste": true,
-  "editor.formatOnSave": true,
-  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
-  "eslint.format.enable": true,
-  "eslint.codeAction.showDocumentation": {
-    "enable": true
+  "editor.codeActionsOnSave": [
+    "source.organizeImports",
+    "source.fixAll.eslint",
+  ],
+  "[javascript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.format.enable": true
 }
