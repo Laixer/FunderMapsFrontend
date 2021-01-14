@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const path = require("path");
 const base = require("../../vue.config.base");
-console.log(process.argv);
 
 module.exports = {
   chainWebpack: config => {

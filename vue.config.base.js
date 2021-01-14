@@ -43,7 +43,6 @@ exports.config = {
   }
 };
 
-console.log(path.resolve(__dirname, vendorPath));
 exports.css = {
   css: {
     loaderOptions: {
