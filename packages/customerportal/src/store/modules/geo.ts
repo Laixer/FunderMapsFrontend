@@ -1,5 +1,5 @@
 import store from "@/store";
-import Address from "@/types/Address";
+import { Address } from "@fundermaps/common";
 import { getModule, Module, Mutation, VuexModule } from "vuex-module-decorators";
 
 export interface GeoState {

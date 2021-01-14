@@ -1,8 +1,18 @@
-﻿
-/// <summary>
-/// Environment damage characteristics.
-/// </summary>
-enum EnvironmentDamageCharacteristics {
+﻿/* eslint-disable @typescript-eslint/no-namespace */
+
+export class EnvironmentDamageCharacteristics {
+  constructor(type: EnvironmentDamageCharacteristics.Type) {
+    this.type = type;
+  }
+
+  type: EnvironmentDamageCharacteristics.Type;
+}
+
+export namespace EnvironmentDamageCharacteristics {
+  /// <summary>
+  /// Environment damage characteristics.
+  /// </summary>
+  export enum Type {
     /// <summary>
     /// Subsidence.
     /// </summary>
@@ -56,7 +66,6 @@ enum EnvironmentDamageCharacteristics {
     /// <summary>
     /// Low ground water.
     /// </summary>
-    LowGroundWater,
+    LowGroundWater
+  }
 }
-
-export default EnvironmentDamageCharacteristics

@@ -1,4 +1,15 @@
-enum FoundationDamageCause {
+/* eslint-disable @typescript-eslint/no-namespace */
+
+export class FoundationDamageCause {
+  constructor(type: FoundationDamageCause.Type) {
+    this.type = type;
+  }
+
+  type: FoundationDamageCause.Type;
+}
+
+export namespace FoundationDamageCause {
+  export enum Type {
     /// <summary>
     /// Drainage.
     /// </summary>
@@ -82,7 +93,6 @@ enum FoundationDamageCause {
     /// <summary>
     /// Foundation was partially recovered.
     /// </summary>
-    PartialFoundationRecovery,
+    PartialFoundationRecovery
+  }
 }
-
-export default FoundationDamageCause

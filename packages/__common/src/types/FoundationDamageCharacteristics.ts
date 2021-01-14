@@ -1,8 +1,18 @@
-﻿
-/// <summary>
-/// Foundation damage characteristics.
-/// </summary>
-enum FoundationDamageCharacteristics {
+﻿/* eslint-disable @typescript-eslint/no-namespace */
+
+export class FoundationDamageCharacteristics {
+  constructor(type: FoundationDamageCharacteristics.Type) {
+    this.type = type;
+  }
+
+  type: FoundationDamageCharacteristics.Type;
+}
+
+export namespace FoundationDamageCharacteristics {
+  /// <summary>
+  /// Foundation damage characteristics.
+  /// </summary>
+  export enum Type {
     /// <summary>
     /// Jamming door window.
     /// </summary>
@@ -36,7 +46,6 @@ enum FoundationDamageCharacteristics {
     /// <summary>
     /// Crooked floor wall.
     /// </summary>
-    CrookedFloorWall,
+    CrookedFloorWall
+  }
 }
-
-export default FoundationDamageCharacteristics
