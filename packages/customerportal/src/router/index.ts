@@ -1,9 +1,13 @@
+import { config } from "@fundermaps/vendor";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
+    meta: {
+      title: config.customerportal.title
+    },
     component: () => import("../views/Home.vue")
   }
   // {

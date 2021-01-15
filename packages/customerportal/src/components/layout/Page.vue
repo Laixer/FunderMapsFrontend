@@ -2,7 +2,7 @@
   <div class="Page">
     <Header :step="step" :steps="steps" />
     <div class="Page__Wrapper">
-      <ProgressSteps v-if="steps" :currentStep="step" :steps="steps" />
+      <ProgressSteps v-if="steps" :current-step="step" :steps="steps" />
 
       <div class="Page__Main" :class="{ 'Page__Main--sidebar': steps > 0 }">
         <div class="Page__Content">
@@ -17,29 +17,29 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import ProgressSteps from "@/components/layout/ProgressSteps.vue";
+import Footer from "@/components/layout/Footer.vue";
+import Header from "@/components/layout/Header.vue";
 
-import ProgressSteps from '@/components/layout/ProgressSteps.vue'
-import ProgressBar from '@/components/layout/ProgressBar.vue'
-import Footer from '@/components/layout/Footer.vue'
-import Header from '@/components/layout/Header.vue'
+import { defineComponent } from "vue";
 
-@Component({
-  components: {
-    ProgressSteps, ProgressBar, Footer, Header
+export default defineComponent({
+  name: "Page",
+  components: { ProgressSteps, Footer, Header },
+  props: {
+    // The progress # (step)
+    step: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    // The total number of steps
+    steps: {
+      type: Number,
+      required: true
+    }
   }
-})
-export default class Page extends Vue {
-  /**
-   * The progress # (step)
-   */
-  @Prop({ default: 0 }) readonly step!: number;
-  /**
-   * The total number of steps
-   */
-  @Prop({ default: 0 }) readonly steps!: number;
-
-}
+});
 </script>
 
 <style lang="scss">

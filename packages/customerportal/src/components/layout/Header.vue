@@ -1,14 +1,10 @@
 <template>
   <header class="Header">
     <div class="Header__Group">
-      <img class="Header__Logo" :src="vendorLogo" alt="Logo" />
+      <img class="Header__Logo" alt="Logo" />
     </div>
     <div class="Header__Group">
-      <img
-        class="Header__Logo Header__Logo__Second"
-        :src="kcafLogo"
-        alt="Logo__Second"
-      />
+      <img class="Header__Logo Header__Logo__Second" alt="Logo__Second" />
       <a href="https://www.kcaf.nl/funderingslabel/" target="_blank">
         Hulp nodig?
       </a>
@@ -18,30 +14,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import vendor from '@/vendor'
-import kcafLogo from '@/assets/Logo-KCAF.png'
-import ProgressBar from '@/components/layout/ProgressBar.vue'
+import ProgressBar from "@/components/layout/ProgressBar.vue";
+import { defineComponent } from "vue";
 
-@Component({
-  components: {
-    ProgressBar
+export default defineComponent({
+  name: "Header",
+  components: { ProgressBar },
+  props: {
+    // The progress # (step)
+    step: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    // The total number of steps
+    steps: {
+      type: Number,
+      required: true
+    }
   }
-})
-export default class Page extends Vue {
-  /**
-   * The progress # (step)
-   */
-  @Prop({ default: 0 }) readonly step!: number;
-  /**
-   * The total number of steps
-   */
-  @Prop({ default: 0 }) readonly steps!: number;
-
-  private vendorLogo = vendor.logo
-  private kcafLogo = kcafLogo
-
-}
+});
 </script>
 
 <style lang="scss">
@@ -88,6 +80,7 @@ export default class Page extends Vue {
     margin: auto;
     max-height: 80px;
     max-height: 64px;
+    content: $VENDOR_LOGO;
 
     @media only screen and (min-width: $BREAKPOINT) {
       max-height: 80px;
@@ -97,6 +90,7 @@ export default class Page extends Vue {
 
   &__Logo__Second {
     display: none;
+    content: url("~@/assets/Logo-KCAF.png");
     @media only screen and (min-width: $BREAKPOINT) {
       display: initial;
     }

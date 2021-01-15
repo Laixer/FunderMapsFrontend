@@ -5,28 +5,32 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { defineComponent } from "vue";
 
-@Component
-export default class ProgressBar extends Vue {
-  /**
-   * The current step
-   */
-  @Prop({ default: 0, required: true }) readonly step!: number;
-  /**
-   * The total number of steps
-   */
-  @Prop({ default: 0, required: true }) readonly steps!: number;
-
-  /**
-   * The progress in %, with a max of 100%
-   */
-  get progress(): string {
-    return `${Math.min(100, (this.step / this.steps) * 100)}%`
+export default defineComponent({
+  name: "ProgressBar",
+  components: {},
+  props: {
+    // The progress # (step)
+    step: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    // The total number of steps
+    steps: {
+      type: Number,
+      required: true
+    }
+  },
+  computed: {
+    // The progress in %, with a max of 100%
+    progress(): string {
+      return `${Math.min(100, (this.step / this.steps) * 100)}%`;
+    }
   }
-}
+});
 </script>
-
 
 <style lang="scss">
 .ProgressBar {

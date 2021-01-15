@@ -1,6 +1,6 @@
 <template>
-  <!-- <Page class="Home">
-    <div class="Home__Wrapper">
+  <Page class="Home">
+    <!-- <div class="Home__Wrapper">
       <div class="Home--left">
         <Title>
           <span v-html="vendor.home.title" />
@@ -29,13 +29,13 @@
         <span>Bekijk funderingsrisico</span>
         <SvgIcon icon="icon_arrow_next" />
       </Button>
-    </template>
-  </Page> -->
+    </template> -->
+  </Page>
   <div>home</div>
 </template>
 
 <script lang="ts">
-// import Page from "@/components/layout/Page.vue";
+import Page from "@/components/layout/Page.vue";
 // import Title from "@/components/Title.vue";
 // import BodyText from "@/components/BodyText.vue";
 // import Copyright from "@/components/Copyright.vue";
@@ -46,7 +46,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "Home",
   components: {
-    // Page,
+    Page
     // Button,
     // SvgIcon,
     // Copyright,
