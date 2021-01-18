@@ -1,60 +1,52 @@
 <template>
   <div
     class="RiskLabel"
-    :style="{ background: this.risk.labelColor }"
+    :style="{ background: risk.labelColor }"
     :class="{
       'RiskLabel--submit': isSubmit,
       'RiskLabel--wide': wide,
       'RiskLabel--ghost': ghost,
-      'RiskLabel--line': line,
+      'RiskLabel--line': line
     }"
   >
-    <div
-      class="RiskLabel__Banner"
-      :style="{ background: this.risk.labelColor }"
-    >
+    <div class="RiskLabel__Banner" :style="{ background: risk.labelColor }">
       <div class="RiskLabel__Title">Funderingsrisico</div>
-      <div
-        class="RiskLabel__Label"
-        :style="{ background: this.risk.labelColor }"
-      >
-        <span>{{ translateFoundationRisk(this.risk.foundationRisk) }}</span>
+      <div class="RiskLabel__Label" :style="{ background: risk.labelColor }">
+        <span>{{ risk.foundationRisk.translate }}</span>
       </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import Address from '@/types/Address';
-import AnalysisRisk from '@/types/AnalysisRisk';
-import FoundationRisk, { translate } from '@/types/FoundationRisk';
+import { AnalysisRisk } from "@fundermaps/common";
+import { defineComponent } from "vue";
 
-@Component
-export default class RiskLabel extends Vue {
-  @Prop({ required: true }) readonly risk!: AnalysisRisk;
-
-  /**
- * A ghost button has no fill or border
- */
-  @Prop({ default: false }) readonly isSubmit!: boolean;
-  /**
-   * A ghost button has no fill or border
-   */
-  @Prop({ default: false }) readonly ghost!: boolean;
-  /**
-   * A line button only shows a border in normal view. Fill shows in states
-   */
-  @Prop({ default: false }) readonly line!: boolean;
-  /**
-   * The button takes up full width if true
-   */
-  @Prop({ default: false }) readonly wide!: boolean;
-
-  private translateFoundationRisk(input: FoundationRisk) {
-    return translate(input)
+export default defineComponent({
+  name: "RiskLabel",
+  props: {
+    // The analysis risk to display
+    risk: {
+      type: AnalysisRisk,
+      required: true
+    },
+    // A ghost button has no fill or border
+    ghost: {
+      type: Boolean,
+      default: false
+    },
+    // A line button only shows a border in normal view. Fill shows in states
+    line: {
+      type: Boolean,
+      default: false
+    },
+    // The button takes up full width if true
+    wide: {
+      type: Boolean,
+      default: false
+    }
   }
-}
+});
 </script>
 
 <style lang="scss">

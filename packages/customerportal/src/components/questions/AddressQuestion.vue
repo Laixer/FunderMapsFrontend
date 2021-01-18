@@ -33,7 +33,7 @@ import Form from "@/components/common/Form.vue";
 import GeoCoder from "@/components/form/GeoCoder.vue";
 
 import MapBox from "@/components/common/MapBox.vue";
-import Address from "@/types/Address";
+import { Address } from "@fundermaps/common";
 
 @Options({
   mixins: [QuestionMixin],

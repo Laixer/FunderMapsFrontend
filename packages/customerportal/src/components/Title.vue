@@ -1,6 +1,8 @@
 <template>
   <div class="Title" :class="{ 'Title--center': center }">
-    <h1><slot>{{ title }}</slot></h1>
+    <h1>
+      <slot>{{ title }}</slot>
+    </h1>
     <slot name="subtitle">
       <p v-if="subtitle">{{ subtitle }}</p>
     </slot>
@@ -8,31 +10,36 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { defineComponent } from "vue";
 
-@Component
-export default class Title extends Vue {
-  /**
-   * The title / label text
-   */
-  @Prop({ default: '' }) readonly title!: string;
-  /**
-   * Some titles have subtitles / instructions
-   */
-  @Prop({ default: '' }) readonly subtitle!: string;
-  /**
-   * Whether to center the text
-   */
-  @Prop({ default: false }) readonly center!: boolean;
-}
+export default defineComponent({
+  name: "Title",
+  componens: {},
+  props: {
+    // The title / label text
+    title: {
+      type: String,
+      required: true,
+      default: ""
+    },
+    // Some titles have subtitles / instructions
+    subtitle: {
+      type: String,
+      default: ""
+    },
+    // Whether to center the text
+    center: {
+      type: Boolean,
+      default: false
+    }
+  }
+});
 </script>
 
-
 <style lang="scss">
-
 .Title {
   color: #202122;
-  
+
   h1 {
     font-size: 24px;
     line-height: 1.25;
@@ -51,5 +58,4 @@ export default class Title extends Vue {
     line-height: 32px;
   }
 }
-
 </style>

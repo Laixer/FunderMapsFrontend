@@ -1,34 +1,35 @@
 <template>
-  <p
-    class="BodyText"
-    :class="{ 'BodyText--center': center, 'BodyText--bold': bold }"
-  >
+  <p class="BodyText" :class="{ 'BodyText--center': center, 'BodyText--bold': bold }">
     <slot>{{ text }}</slot>
   </p>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { defineComponent } from "vue";
 
-@Component
-export default class BodyText extends Vue {
-  /**
-   * The text
-   */
-  @Prop({ default: '' }) readonly text!: string;
-  /**
-   * Whether to center the text
-   */
-  @Prop({ default: false }) readonly center!: boolean;
-
-  /**
-   * Whether to make the text bold
-   */
-  @Prop({ default: false }) readonly bold!: boolean;
-
-}
+export default defineComponent({
+  name: "BodyText",
+  componens: {},
+  props: {
+    // The text
+    text: {
+      type: String,
+      required: true,
+      default: ""
+    },
+    // Whether to center the text
+    center: {
+      type: Boolean,
+      default: false
+    },
+    // Whether to make the text bol
+    bold: {
+      type: Boolean,
+      default: false
+    }
+  }
+});
 </script>
-
 
 <style lang="scss">
 .BodyText {

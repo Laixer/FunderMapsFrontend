@@ -9,40 +9,46 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { defineComponent } from "vue";
 
-@Component
-export default class Button extends Vue {
-
-  /**
- * A ghost button has no fill or border
- */
-  @Prop({ default: false }) readonly isSubmit!: boolean;
-  /**
-   * A ghost button has no fill or border
-   */
-  @Prop({ default: false }) readonly ghost!: boolean;
-  /**
-   * A line button only shows a border in normal view. Fill shows in states
-   */
-  @Prop({ default: false }) readonly line!: boolean;
-  /**
-   * The button takes up full width if true
-   */
-  @Prop({ default: false }) readonly wide!: boolean;
-
-  /**
-   * Pass on the click event
-   */
-  handleClick(e: Event) {
-    this.$emit('click', e)
+export default defineComponent({
+  name: "Button",
+  componens: {},
+  props: {
+    // Whether this is a submit button for a form
+    isSubmit: {
+      type: Boolean,
+      default: false
+    },
+    // A ghost button has no fill or border
+    ghost: {
+      type: Boolean,
+      default: false
+    },
+    // A line button only shows a border in normal view. Fill shows in states
+    line: {
+      type: Boolean,
+      default: false
+    },
+    // The button takes up full width if true
+    wide: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ["click"],
+  methods: {
+    // Pass on the click event
+    handleClick(e: Event) {
+      this.$emit("click", e);
+    }
   }
-}
+});
 </script>
 
 <style lang="scss">
-$active: adjust-color($PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
-$hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
+$active: adjust-color($VENDOR_PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
+$hover: adjust-color($VENDOR_PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
 .Button {
   position: relative;
@@ -58,7 +64,7 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
   align-items: center;
 
   // Regular
-  background: $PRIMARY_COLOR;
+  background: $VENDOR_PRIMARY_COLOR;
   color: white;
 
   &--submit {
@@ -80,12 +86,12 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
   &--line {
     background: white;
-    color: $PRIMARY_COLOR;
+    color: $VENDOR_PRIMARY_COLOR;
     padding: 13px 25px 14px;
-    border: 2px solid $PRIMARY_COLOR;
+    border: 2px solid $VENDOR_PRIMARY_COLOR;
 
     &:hover {
-      background: $PRIMARY_COLOR;
+      background: $VENDOR_PRIMARY_COLOR;
       color: white;
       border: none;
       padding: 15px 27px 16px;
@@ -106,7 +112,7 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
   &--ghost {
     background: transparent;
-    color: $PRIMARY_COLOR;
+    color: $VENDOR_PRIMARY_COLOR;
     filter: grayscale(80%);
     opacity: 0.8;
 
@@ -115,7 +121,7 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
       filter: none;
       opacity: 1;
 
-      color: $PRIMARY_COLOR;
+      color: $VENDOR_PRIMARY_COLOR;
     }
     &:active {
       background: transparent;

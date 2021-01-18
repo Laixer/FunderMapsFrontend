@@ -1,28 +1,21 @@
 <template>
-  <div v-html="require(`!html-loader!../../assets/icons/${icon}.svg`)" class="SvgIcon svg-container"></div>
+  <div class="SvgIcon svg-container" v-html="require(`!html-loader!../../assets/icons/${icon}.svg`)"></div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
 /**
  * Obtained from https://gist.github.com/achhunna/cae74645f3ef1e7787c07bcdee163d18
- * Article on usage: https://medium.com/js-dojo/making-svg-icon-component-in-vue-cb7fac70e758 
+ * Article on usage: https://medium.com/js-dojo/making-svg-icon-component-in-vue-cb7fac70e758
  * Modified as per comment on article.
- * 
- * Also requires webpack.config.js rule. See: https://stackoverflow.com/a/55318979/1533140 
- * 
+ *
+ * Also requires webpack.config.js rule. See: https://stackoverflow.com/a/55318979/1533140
+ *
  * TODO: Avoid inline svg. Convert into svg element with all icons in head, and use 'use' for inline.
  */
-function recursivelyRemoveFill(el) {
-  if (!el) {
-    return;
-  }
-  el.removeAttribute('fill');
-  [].forEach.call(el.children, child => {
-    recursivelyRemoveFill(child);
-  });
-}
-export default {
-  name: 'SvgIcon',
+export default defineComponent({
+  name: "SvgIcon",
   props: {
     icon: {
       type: String,
@@ -35,47 +28,59 @@ export default {
     growByHeight: {
       type: Boolean,
       default: true
-    },
+    }
   },
   watch: {
     icon() {
-      this.$nextTick(this.setupSvg)
+      this.$nextTick(this.setupSvg);
     },
     hasFill() {
-      this.$nextTick(this.setupSvg)
+      this.$nextTick(this.setupSvg);
     },
     growByHeight() {
-      this.$nextTick(this.setupSvg)
+      this.$nextTick(this.setupSvg);
     }
   },
   mounted() {
-    this.setupSvg()
+    this.setupSvg();
   },
   methods: {
-    setupSvg() {
-      if (this.$el.firstElementChild.nodeName === 'svg') {
+    setupSvg(): void {
+      if (this.$el.firstElementChild.nodeName === "svg") {
         const svgElement = this.$el.firstElementChild;
         // use `viewBox` attribute to get the svg's inherent width and height
-        const viewBox = svgElement.getAttribute('viewBox').split(' ').map(n => Number(n));
-        const widthToHeight = (viewBox[2] / viewBox[3]).toFixed(2);
+        const viewBox = svgElement
+          .getAttribute("viewBox")
+          .split(" ")
+          .map((n: string) => Number(n));
+        const widthToHeight = Number((viewBox[2] / viewBox[3]).toFixed(2));
         if (this.hasFill) {
           // recursively remove all fill attribute of element and its nested children
-          recursivelyRemoveFill(svgElement);
+          this.recursivelyRemoveFill(svgElement);
         }
         // set width and height relative to font size
         // if growByHeight is true, height set to 1em else width set to 1em and remaining is calculated based on widthToHeight ratio
         if (this.growByHeight) {
-            svgElement.setAttribute('height', '1em');
-            svgElement.setAttribute('width', `${widthToHeight}em`);
+          svgElement.setAttribute("height", "1em");
+          svgElement.setAttribute("width", `${widthToHeight}em`);
         } else {
-            svgElement.setAttribute('width', '1em');
-            svgElement.setAttribute('height', `${1 / widthToHeight}em`);
+          svgElement.setAttribute("width", "1em");
+          svgElement.setAttribute("height", `${1 / widthToHeight}em`);
         }
-        svgElement.classList.add('svg-class');
+        svgElement.classList.add("svg-class");
       }
+    },
+    recursivelyRemoveFill(el: Element): void {
+      if (!el) {
+        return;
+      }
+      el.removeAttribute("fill");
+      [].forEach.call(el.children, child => {
+        this.recursivelyRemoveFill(child);
+      });
     }
   }
-}
+});
 </script>
 
 <style lang="scss" scoped>
