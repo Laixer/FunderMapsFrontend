@@ -14,6 +14,15 @@ export type VendorConfig = {
   };
   customerportal: {
     title: string;
+    home: {
+      title: string;
+      subtitle: string;
+      content: string;
+      image: string;
+    };
+    final: {
+      content: string;
+    };
   };
   incidentportal: {
     title: string;
