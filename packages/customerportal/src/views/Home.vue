@@ -1,6 +1,6 @@
 <template>
   <Page class="Home">
-    <!-- <div class="Home__Wrapper">
+    <div class="Home__Wrapper">
       <div class="Home--left">
         <Title>
           <span v-html="vendor.home.title" />
@@ -19,7 +19,7 @@
         </div>
       </div>
       <div class="Home--right">
-        <img :src="vendor.home.image" width="640" height="585" alt="Logo" />
+        <img class="Home__Image" width="640" height="585" alt="Logo" />
       </div>
     </div>
 
@@ -29,48 +29,52 @@
         <span>Bekijk funderingsrisico</span>
         <SvgIcon icon="icon_arrow_next" />
       </Button>
-    </template> -->
+    </template>
   </Page>
-  <div>home</div>
 </template>
 
 <script lang="ts">
 import Page from "@/components/layout/Page.vue";
-// import Title from "@/components/Title.vue";
-// import BodyText from "@/components/BodyText.vue";
-// import Copyright from "@/components/Copyright.vue";
-// import Button from "@/components/Button.vue";
-// import SvgIcon from "@/components/common/SvgIcon.vue";
+import Title from "@/components/Title.vue";
+import BodyText from "@/components/BodyText.vue";
+import Copyright from "@/components/Copyright.vue";
+import Button from "@/components/Button.vue";
+import SvgIcon from "@/components/common/SvgIcon.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Home",
   components: {
-    Page
-    // Button,
-    // SvgIcon,
-    // Copyright,
-    // Title,
-    // BodyText
+    Page,
+    Button,
+    SvgIcon,
+    Copyright,
+    Title,
+    BodyText
   },
-  data() {
-    return {
-      vendor: {}
-    };
+  inject: {
+    vendor: {
+      from: "vendor"
+    }
+  },
+  methods: {
+    handleNavigate(): void {
+      this.$router.push({
+        name: "Questions",
+        params: {
+          question: "1"
+        }
+      });
+    }
   }
-  // handleNavigate(): void {
-  //   this.$router.push({
-  //     name: 'Questions',
-  //     params: {
-  //       question: '1',
-  //     }
-  //   })
-  // }
 });
 </script>
 
 <style lang="scss">
 .Home {
+  &__Image {
+    content: $VENDOR_HOME_IMAGE;
+  }
   &__Wrapper {
     padding: 20px 20px;
 
