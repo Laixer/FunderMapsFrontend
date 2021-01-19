@@ -40,7 +40,7 @@ export class Address {
    *
    * This generates a coordinate for center point in the polygon
    */
-  get Coordinates(): string {
+  get coordinates(): [number, number] {
     const coordinates = this.geojson.coordinates[0][0];
     return coordinates
       .reduce((a: number[], b: number[]) => {

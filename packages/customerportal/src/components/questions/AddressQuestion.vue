@@ -21,78 +21,78 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import QuestionMixin from "@/components/questions/Question.vue";
+// import { Options, Vue } from "vue-class-component";
+// import QuestionMixin from "@/components/questions/Question.vue";
 
-import Page from "@/components/layout/Page.vue";
-import Title from "@/components/Title.vue";
-import Button from "@/components/Button.vue";
-import SvgIcon from "@/components/common/SvgIcon.vue";
+// import Page from "@/components/layout/Page.vue";
+// import Title from "@/components/Title.vue";
+// import Button from "@/components/Button.vue";
+// import SvgIcon from "@/components/common/SvgIcon.vue";
 
-import Form from "@/components/common/Form.vue";
-import GeoCoder from "@/components/form/GeoCoder.vue";
+// import Form from "@/components/common/Form.vue";
+// import GeoCoder from "@/components/form/GeoCoder.vue";
 
-import MapBox from "@/components/common/MapBox.vue";
-import { Address } from "@fundermaps/common";
+// import MapBox from "@/components/common/MapBox.vue";
+// import { Address } from "@fundermaps/common";
 
-@Options({
-  mixins: [QuestionMixin],
-  components: {
-    Page,
-    Button,
-    SvgIcon,
-    Title,
-    Form,
-    GeoCoder,
-    MapBox
-  }
-})
-export default class AddressQuestion extends Mixins(QuestionMixin) {
-  private address: Address | null = null;
-  private map: any;
+// @Options({
+//   mixins: [QuestionMixin],
+//   components: {
+//     Page,
+//     Button,
+//     SvgIcon,
+//     Title,
+//     Form,
+//     GeoCoder,
+//     MapBox
+//   }
+// })
+// export default class AddressQuestion extends Mixins(QuestionMixin) {
+//   private address: Address | null = null;
+//   private map: any;
 
-  private token = process.env.VUE_APP_MAPBOX_TOKEN;
-  private style = process.env.VUE_APP_MAPBOX_STYLE;
+//   private token = process.env.VUE_APP_MAPBOX_TOKEN;
+//   private style = process.env.VUE_APP_MAPBOX_STYLE;
 
-  created(): void {
-    this.address = this.$store.state.address;
-  }
+//   created(): void {
+//     this.address = this.$store.state.address;
+//   }
 
-  public get isValid(): boolean {
-    return this.address !== null;
-  }
+//   public get isValid(): boolean {
+//     return this.address !== null;
+//   }
 
-  public storeData(): void {
-    this.$store.commit("updateState", [
-      {
-        key: "address",
-        value: this.address
-      }
-    ]);
-  }
+//   public storeData(): void {
+//     this.$store.commit("updateState", [
+//       {
+//         key: "address",
+//         value: this.address
+//       }
+//     ]);
+//   }
 
-  private handleMapbox({ map }: Record<string, any>) {
-    this.map = map;
-    if (this.address !== undefined) {
-      this.handleCoordinates();
-    }
-  }
+//   private handleMapbox({ map }: Record<string, any>) {
+//     this.map = map;
+//     if (this.address !== undefined) {
+//       this.handleCoordinates();
+//     }
+//   }
 
-  private handleAddress(address: Address) {
-    this.address = address;
-    this.handleCoordinates();
-  }
+//   private handleAddress(address: Address) {
+//     this.address = address;
+//     this.handleCoordinates();
+//   }
 
-  private handleCoordinates() {
-    if (this.map && this.address) {
-      this.map.getSource("address").setData(this.address.geojson);
-      this.map.flyTo({
-        center: this.address.coordinates,
-        zoom: 18
-      });
-    }
-  }
-}
+//   private handleCoordinates() {
+//     if (this.map && this.address) {
+//       this.map.getSource("address").setData(this.address.geojson);
+//       this.map.flyTo({
+//         center: this.address.coordinates,
+//         zoom: 18
+//       });
+//     }
+//   }
+// }
 </script>
 
 <style lang="scss">

@@ -5,12 +5,12 @@
       id="dropzone"
       ref="dropzone"
       :options="options"
-      useCustomSlot
+      use-custom-slot
+      class="UploadArea d-flex justify-content-center"
       @vdropzone-sending="addHeaderBeforeSending"
       @vdropzone-success="handleSuccess"
       @vdropzone-error="handleError"
       @vdropzone-removed-file="handleRemoved"
-      class="UploadArea d-flex justify-content-center"
     >
       <div class="align-self-center">
         <img alt="upload" :src="image('upload.svg')" />
@@ -29,34 +29,35 @@
 </template>
 
 <script>
-import { image } from '@/helpers/assets'
-import vue2Dropzone from 'vue2-dropzone'
-import 'vue2-dropzone/dist/vue2Dropzone.min.css'
-import Feedback from './Feedback'
-import SvgIcon from '@/components/common/SvgIcon.vue'
-
+import { image } from "@/helpers/assets";
+import vue2Dropzone from "vue2-dropzone";
+import "vue2-dropzone/dist/vue2Dropzone.min.css";
+import Feedback from "./Feedback";
+import SvgIcon from "@/components/common/SvgIcon.vue";
 
 // TODO: Auth Header...
 // import { authHeader } from '@/services/auth';
 
 export default {
   components: {
-    vue2Dropzone, Feedback,
+    vue2Dropzone,
+    Feedback
   },
   data() {
     return {
       feedback: {
-        message: '',
-        variant: ''
+        message: "",
+        variant: ""
       },
       options: {
-        paramName: 'input',
+        paramName: "input",
         addRemoveLinks: true,
         maxFilesize: 100,
-        acceptedFiles: 'application/pdf, image/png, image/jpeg, image/gif, image/bmp, image/tiff, image/webp, text/plain',
+        acceptedFiles:
+          "application/pdf, image/png, image/jpeg, image/gif, image/bmp, image/tiff, image/webp, text/plain",
         url: `${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/upload-document`.replace(/([^:]\/)\/+/g, "$1") // TODO: Move to API
       }
-    }
+    };
   },
   methods: {
     image,
@@ -65,44 +66,45 @@ export default {
      */
     addHeaderBeforeSending(file, xhr) {
       this.feedback = {
-        message: '',
-        variant: ''
-      }
+        message: "",
+        variant: ""
+      };
       if (xhr.setRequestHeader) {
         // let header = authHeader() // TODO: Auth Header
         // const header = {}
         // xhr.setRequestHeader('Authorization', header.Authorization);
       }
-      this.$refs.dropzone
-      this.$emit('handleUploadProgress', 'starting')
+      this.$refs.dropzone;
+      this.$emit("handleUploadProgress", "starting");
     },
     /**
      * Start the creation of a new report once the upload has finished with success
      */
     handleSuccess(file, response) {
       this.feedback = {
-        message: '',
-        variant: ''
-      }
-      this.$emit('handleFileAdded', file, response)
-      this.$emit('handleUploadProgress', 'finished')
+        message: "",
+        variant: ""
+      };
+      this.$emit("handleFileAdded", file, response);
+      this.$emit("handleUploadProgress", "finished");
     },
-    handleError(file, message, xhr) { // error
+    handleError(file, message, xhr) {
+      // error
       if (file && this.$refs.dropzone) {
-        this.$refs.dropzone.removeFile(file)
+        this.$refs.dropzone.removeFile(file);
       }
 
       this.feedback = {
         message: message,
-        variant: 'danger'
-      }
-      this.$emit('handleUploadProgress', 'finished')
+        variant: "danger"
+      };
+      this.$emit("handleUploadProgress", "finished");
     },
     handleRemoved(file, error, xhr) {
-      this.$emit('handleFileRemoved', file, error, xhr)
+      this.$emit("handleFileRemoved", file, error, xhr);
     }
   }
-}
+};
 </script>
 
 <style lang="scss">

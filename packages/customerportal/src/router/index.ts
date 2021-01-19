@@ -9,15 +9,15 @@ const routes: Array<RouteRecordRaw> = [
       title: config.customerportal.title
     },
     component: () => import("../views/Home.vue")
+  },
+  {
+    path: "/vragen",
+    name: "Questions",
+    // route level code-splitting
+    // this generates a separate chunk (questions.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "questions" */ "../views/Questions.vue")
   }
-  // {
-  //   path: "/vragen",
-  //   name: "Questions",
-  //   // route level code-splitting
-  //   // this generates a separate chunk (questions.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "questions" */ "../views/Questions.vue")
-  // }
 ];
 
 const router = createRouter({

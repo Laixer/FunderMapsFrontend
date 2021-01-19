@@ -5,35 +5,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Mixins } from 'vue-property-decorator'
-import QuestionMixin from '@/components/questions/Question'
+// import { Component, Vue, Mixins } from 'vue-property-decorator'
+// import QuestionMixin from '@/components/questions/Question'
 
-import Page from '@/components/layout/Page.vue'
-import Title from '@/components/Title.vue'
-import Button from '@/components/Button.vue'
-import SvgIcon from '@/components/common/SvgIcon.vue'
+// import Page from '@/components/layout/Page.vue'
+// import Title from '@/components/Title.vue'
+// import Button from '@/components/Button.vue'
+// import SvgIcon from '@/components/common/SvgIcon.vue'
 
-import TextArea from '@/components/form/TextArea.vue'
+// import TextArea from '@/components/form/TextArea.vue'
 
+// @Component({
+//   mixins: [QuestionMixin],
+//   components: {
+//     Page, Button, Title, SvgIcon, TextArea
+//   }
+// })
 
-@Component({
-  mixins: [QuestionMixin],
-  components: {
-    Page, Button, Title, SvgIcon, TextArea
-  }
-})
+// export default class PaymentQuestion extends Mixins(QuestionMixin) {
+//   public get isValid(): boolean {
+//     return true
+//   }
 
-export default class PaymentQuestion extends Mixins(QuestionMixin) {
-  public get isValid(): boolean {
-    return true
-  }
-
-  public storeData(): void {
-    return
-  }
-}
+//   public storeData(): void {
+//     return
+//   }
+// }
 </script>
-
 
 <style lang="scss">
 .Payment {

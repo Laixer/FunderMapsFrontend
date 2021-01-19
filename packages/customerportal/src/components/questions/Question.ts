@@ -7,7 +7,7 @@ interface Data {
 export const isValidKey: InjectionKey<ComputedRef<boolean>> = Symbol();
 export const storeDataKey: InjectionKey<() => void> = Symbol();
 
-export default (props: Data, context: SetupContext) => {
+export default (props: Data, { emit }: SetupContext) => {
   const isValid = inject(
     isValidKey,
     computed(() => false)
@@ -17,14 +17,14 @@ export default (props: Data, context: SetupContext) => {
     return;
   });
 
-  context.emit("isValid", isValid);
+  emit("isValid", isValid);
 
   onMounted(() => {
-    context.emit("isValid", isValid);
+    emit("isValid", isValid);
   });
 
   onUpdated(() => {
-    context.emit("isValid", isValid);
+    emit("isValid", isValid);
     storeData();
   });
 

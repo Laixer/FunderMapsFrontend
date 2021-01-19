@@ -9,27 +9,17 @@
           :value="firstName"
           label="Voornaam"
           autocomplete="given-name"
-          :valid="firstnameValid"
-          @input="updateFirstname"
+          :valid="isFirstNameValid"
         />
         <FormField
           id="achternaam"
           :value="lastName"
           label="Achternaam"
           autocomplete="family-name"
-          :valid="lastnameValid"
-          @input="updateLastname"
+          :valid="isLastNameValid"
         />
       </div>
-      <FormField
-        id="email"
-        :value="email"
-        label="E-mail"
-        type="email"
-        autocomplete="email"
-        :valid="emailValid"
-        @input="updateEmail"
-      />
+      <FormField id="email" :value="email" label="E-mail" type="email" autocomplete="email" :valid="isEmailValid" />
     </Form>
   </div>
 </template>
@@ -79,6 +69,15 @@ export default defineComponent({
 
     provide(isValidKey, isValid);
     provide(storeDataKey, storeData);
+
+    return {
+      firstName,
+      lastName,
+      email,
+      isFirstNameValid,
+      isLastNameValid,
+      isEmailValid
+    };
   }
 });
 </script>

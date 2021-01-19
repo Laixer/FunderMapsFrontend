@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 
+export * as MapBox from "./components/MapBox.vue";
 export * from "./types/Address";
 export * from "./types/AnalysisRisk";
 export * from "./types/EnvironmentDamageCharacteristics";

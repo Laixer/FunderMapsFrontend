@@ -7,5 +7,6 @@ import { createApp } from "vue";
 const app = createApp(App)
   .use(store)
   .use(router)
-  .provide("vendor", config.customerportal)
+  .provide("vendor_data", config.customerportal)
+  .provide("vendor_style", config.style)
   .mount("#app");
