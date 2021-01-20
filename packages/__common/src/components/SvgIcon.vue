@@ -1,4 +1,5 @@
 <template>
+  <!--  eslint-disable-next-line vue/no-v-html -->
   <div class="SvgIcon svg-container" v-html="require(`!html-loader!../../assets/icons/${icon}.svg`)"></div>
 </template>
 

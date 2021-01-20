@@ -39,7 +39,7 @@ import Title from "@/components/Title.vue";
 import BodyText from "@/components/BodyText.vue";
 import Copyright from "@/components/Copyright.vue";
 import Button from "@/components/Button.vue";
-import SvgIcon from "@/components/common/SvgIcon.vue";
+import { SvgIcon } from "@fundermaps/common";
 import { defineComponent } from "vue";
 
 export default defineComponent({

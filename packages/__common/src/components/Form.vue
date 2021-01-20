@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent, provide, ref, watch, nextTick } from "vue";
-import { IConnectedField } from "./IConnectedField";
+import { ConnectedField } from "./ConnectedField";
 
 export default defineComponent({
   name: "Form",
@@ -25,11 +25,12 @@ export default defineComponent({
       default: false
     }
   },
+  emits: ["submit", "error"],
   setup(props, { emit }) {
     const btn = ref<HTMLButtonElement | null>(null);
 
     // The list of registered (connected) form fields. Fields contained withing the form are automatically connected
-    const fields = ref<Array<IConnectedField>>([]);
+    const fields = ref<Array<ConnectedField>>([]);
 
     /**
      * Provide a method for child form fields to connect themselves to this form component
@@ -40,7 +41,7 @@ export default defineComponent({
      */
     const registerFormField = provide(
       "registerFormField",
-      ({ validate, isValid, resetValidation, disable, enable }: IConnectedField) => {
+      ({ validate, isValid, resetValidation, disable, enable }: ConnectedField) => {
         fields.value.push({ validate, isValid, resetValidation, disable, enable });
       }
     );
