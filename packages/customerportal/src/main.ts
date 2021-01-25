@@ -1,7 +1,7 @@
 import App from "@/App.vue";
 import router from "@/router";
 import store from "@/store";
-import { config } from "@fundermaps/vendor";
+import { CustomerPortalConfig, customerPortalConfig, VendorConfig, vendorConfig } from "@fundermaps/vendor";
 import { createApp, Plugin } from "vue";
 
 const devtools: Plugin = {
@@ -20,5 +20,6 @@ createApp(App)
   .use(store)
   .use(router)
   .use(devtools)
-  .provide("vendor_data", config)
+  .provide<CustomerPortalConfig>("app_config", customerPortalConfig)
+  .provide<VendorConfig>("vendor_config", vendorConfig)
   .mount("#app");

@@ -39,7 +39,7 @@
 import Page from "@/components/layout/Page.vue";
 import { /*SvgIcon, Button,*/ BodyText, Copyright, Title } from "@fundermaps/common";
 import { defineComponent, inject } from "vue";
-import { VendorConfig } from "@fundermaps/vendor";
+import { CustomerPortalConfig } from "@fundermaps/vendor";
 
 export default defineComponent({
   name: "Home",
@@ -52,11 +52,11 @@ export default defineComponent({
     BodyText
   },
   setup() {
-    const vendorConfig = inject<VendorConfig>("vendor_data");
+    const app = inject("app_config") as CustomerPortalConfig;
     const text = {
-      title: vendorConfig?.customerportal.home.title,
-      subtitle: vendorConfig?.customerportal.home.subtitle,
-      content: vendorConfig?.customerportal.home.content
+      title: app.home.title,
+      subtitle: app.home.subtitle,
+      content: app.home.content
     };
 
     return { text };
