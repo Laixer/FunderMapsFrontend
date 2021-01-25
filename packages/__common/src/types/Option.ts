@@ -1,5 +1,5 @@
 /**
- *
+ * TODO: Rename
  */
 export interface Option {
   label: string;

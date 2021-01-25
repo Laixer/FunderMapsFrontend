@@ -37,7 +37,7 @@ import Page from "@/components/layout/Page.vue";
 import Button from "@/components/Button.vue";
 import { SvgIcon } from "@fundermaps/common";
 
-import ProfileQuestion from "@/components/questions/ProfileQuestion.vue";
+// import ProfileQuestion from "@/components/questions/ProfileQuestion.vue";
 // import AddressQuestion from "@/components/questions/AddressQuestion.vue";
 // import PaymentQuestion from '@/components/questions/PaymentQuestion.vue'
 // import useQuestions from "@/components/questions/Question";
@@ -49,8 +49,8 @@ export default defineComponent({
   components: {
     Page,
     Button,
-    SvgIcon,
-    ProfileQuestion
+    SvgIcon
+    // ProfileQuestion
     // AddressQuestion,
     // ResultPage
   },

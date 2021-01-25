@@ -14,13 +14,12 @@ export default defineComponent({
     // The progress # (step)
     step: {
       type: Number,
-      required: false,
       default: 0
     },
     // The total number of steps
     steps: {
       type: Number,
-      required: true
+      default: 0
     }
   },
   computed: {

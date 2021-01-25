@@ -23,6 +23,11 @@ body {
     background-size: cover;
   }
 }
+
+a:-webkit-any-link {
+  text-decoration: none;
+}
+
 #app {
   font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;

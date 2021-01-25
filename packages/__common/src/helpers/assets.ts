@@ -2,7 +2,7 @@
  * Take care of loading an asset
  */
 function asset(path: string): any {
-  return import("~assets/" + path);
+  return import("!html-loader!../assets/" + path);
 }
 
 /**

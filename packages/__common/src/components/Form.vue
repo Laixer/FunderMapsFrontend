@@ -9,9 +9,9 @@
 
 <script lang="ts">
 import { defineComponent, provide, ref, watch, nextTick } from "vue";
-import { ConnectedField } from "./ConnectedField";
+import ConnectedField from "./ConnectedField";
 
-export const Form = defineComponent({
+export default defineComponent({
   name: "Form",
   props: {
     // Whether the form is busy - meaning the fields are disabled
@@ -81,7 +81,9 @@ export const Form = defineComponent({
       // Note:
       //  Why not ref the form itself and use submit() on the form DOM element?
       //  Because then the submit event handler bound by vue is not triggered...
-      btn.value?.click();
+      if (btn.value) {
+        btn.value.click();
+      }
     };
 
     // Capture the submit event, handle validation, and then either pass on

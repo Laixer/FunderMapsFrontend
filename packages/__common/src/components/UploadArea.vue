@@ -32,12 +32,12 @@
 import { image } from "../helpers/assets";
 // import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
-import { Feedback } from "./Feedback.vue";
+import Feedback from "./Feedback.vue";
 import { defineComponent, ref } from "vue";
 
 // TODO: Auth Header...
 // import { authHeader } from '@/services/auth';
-export const UploadArea = defineComponent({
+export default defineComponent({
   name: "UploadArea",
   components: {
     // vue2Dropzone,

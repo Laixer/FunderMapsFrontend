@@ -17,7 +17,9 @@ exports.config = {
     // TODO: Rename to project vendor
     "vendor define": {
       plugin: require("webpack").DefinePlugin,
-      args: [{ VENDOR: JSON.stringify(vendor) }]
+      args: [
+        { __VENDOR: JSON.stringify(vendor), __APP: JSON.stringify(process.VUE_CLI_SERVICE.pkg.name.split("/")[1]) }
+      ]
     },
     "vendor copy": {
       plugin: require("copy-webpack-plugin"),

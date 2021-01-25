@@ -1,12 +1,7 @@
 <template>
   <div
     class="Button"
-    :class="{
-      'Button--submit': isSubmit,
-      'Button--wide': wide,
-      'Button--ghost': ghost,
-      'Button--line': line
-    }"
+    :class="{ 'Button--submit': isSubmit, 'Button--wide': wide, 'Button--ghost': ghost, 'Button--line': line }"
     @click="handleClick"
   >
     <slot />
@@ -14,42 +9,49 @@
 </template>
 
 <script lang="ts">
-import { Vue, Options } from "vue-class-component";
-import { Prop } from "vue-property-decorator";
+import { defineComponent } from "vue";
 
-@Options({})
-export default class Button extends Vue {
-  /**
-   * A ghost button has no fill or border
-   */
-  @Prop({ default: false }) readonly isSubmit!: boolean;
-  /**
-   * A ghost button has no fill or border
-   */
-  @Prop({ default: false }) readonly ghost!: boolean;
-  /**
-   * A line button only shows a border in normal view. Fill shows in states
-   */
-  @Prop({ default: false }) readonly line!: boolean;
-  /**
-   * The button takes up full width if true
-   */
-  @Prop({ default: false }) readonly wide!: boolean;
+export default defineComponent({
+  name: "Button",
+  componens: {},
+  props: {
+    // Whether this is a submit button for a form
+    isSubmit: {
+      type: Boolean,
+      default: false
+    },
+    // A ghost button has no fill or border
+    ghost: {
+      type: Boolean,
+      default: false
+    },
+    // A line button only shows a border in normal view. Fill shows in states
+    line: {
+      type: Boolean,
+      default: false
+    },
+    // The button takes up full width if true
+    wide: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: { click: null },
+  setup(_, { emit }) {
+    // Pass on the click event
+    const handleClick = (e: Event) => {
+      emit("click", e);
+    };
 
-  /**
-   * Pass on the click event
-   */
-  handleClick(e: Event): void {
-    this.$emit("click", e);
+    return { handleClick };
   }
-}
+});
 </script>
 
 <style lang="scss">
-$VENDOR_PRIMARY_COLOR: blue;
-
 $active: adjust-color($VENDOR_PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
 $hover: adjust-color($VENDOR_PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
+
 .Button {
   position: relative;
   padding: 15px 27px 16px;

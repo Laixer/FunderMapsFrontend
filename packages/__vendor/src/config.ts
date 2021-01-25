@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-declare const VENDOR: string;
+declare const __VENDOR: string;
 
 export type VendorConfig = {
   name: string;
@@ -38,4 +38,4 @@ export type VendorConfig = {
   };
 };
 
-export const config: VendorConfig = require(`./${VENDOR}/config.json`);
+export const config: VendorConfig = require(`./${__VENDOR}/config.json`);

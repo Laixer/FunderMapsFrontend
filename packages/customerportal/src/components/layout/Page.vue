@@ -36,7 +36,7 @@ export default defineComponent({
     // The total number of steps
     steps: {
       type: Number,
-      required: true
+      default: 0
     }
   }
 });

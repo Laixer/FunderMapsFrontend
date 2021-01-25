@@ -5,8 +5,8 @@
     </div>
     <div class="Header__Group">
       <img class="Header__Logo Header__Logo__Second" alt="Logo__Second" />
-      <a href="https://www.kcaf.nl/funderingslabel/" target="_blank">
-        Hulp nodig?
+      <a href="https://www.kcaf.nl/funderingsrisico/" target="_blank">
+        Uitleg
       </a>
     </div>
     <ProgressBar v-if="steps" :step="step" :steps="steps" />
@@ -30,7 +30,7 @@ export default defineComponent({
     // The total number of steps
     steps: {
       type: Number,
-      required: true
+      default: 0
     }
   }
 });

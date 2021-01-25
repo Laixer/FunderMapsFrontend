@@ -6,6 +6,8 @@ module.exports = {
   chainWebpack: config => {
     config.merge(base.config);
 
+    config.devtool("source-map");
+
     // TODO: Extract to base
     config.resolve.alias.delete("@");
 

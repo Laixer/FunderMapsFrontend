@@ -3,20 +3,20 @@
     <div class="Home__Wrapper">
       <div class="Home--left">
         <Title>
-          <span v-html="vendor.home.title" />
+          <span v-html="text.title" />
         </Title>
         <BodyText :bold="true">
-          <span v-html="vendor.home.subtitle" />
+          <span v-html="text.subtitle" />
         </BodyText>
         <BodyText>
-          <span v-html="vendor.home.content" />
+          <span v-html="text.content" />
         </BodyText>
-        <div>
-          <Button id="navigateBodyButton" @click="handleNavigate">
+        <!-- <router-link :to="{ name: 'Questions' }">
+          <Button id="navigateBodyButton">
             <span>Bekijk funderingsrisico</span>
             <SvgIcon icon="icon_arrow_next" />
           </Button>
-        </div>
+        </router-link> -->
       </div>
       <div class="Home--right">
         <img class="Home__Image" width="640" height="585" alt="Logo" />
@@ -24,48 +24,42 @@
     </div>
 
     <template #footer>
-      <Copyright />
-      <Button id="navigateFooterButton" @click="handleNavigate">
-        <span>Bekijk funderingsrisico</span>
-        <SvgIcon icon="icon_arrow_next" />
-      </Button>
+      <Copyright company="FunderMaps" />
+      <!-- <router-link :to="{ name: 'Questions' }">
+        <Button id="navigateFooterButton">
+          <span>Bekijk funderingsrisico</span>
+          <SvgIcon icon="icon_arrow_next" />
+        </Button>
+      </router-link> -->
     </template>
   </Page>
 </template>
 
 <script lang="ts">
 import Page from "@/components/layout/Page.vue";
-import Title from "@/components/Title.vue";
-import BodyText from "@/components/BodyText.vue";
-import Copyright from "@/components/Copyright.vue";
-import Button from "@/components/Button.vue";
-import { SvgIcon } from "@fundermaps/common";
-import { defineComponent } from "vue";
+import { /*SvgIcon, Button,*/ BodyText, Copyright, Title } from "@fundermaps/common";
+import { defineComponent, inject } from "vue";
+import { VendorConfig } from "@fundermaps/vendor";
 
 export default defineComponent({
   name: "Home",
   components: {
     Page,
-    Button,
-    SvgIcon,
+    // Button,
+    // SvgIcon,
     Copyright,
     Title,
     BodyText
   },
-  inject: {
-    vendor: {
-      from: "vendor"
-    }
-  },
-  methods: {
-    handleNavigate(): void {
-      this.$router.push({
-        name: "Questions",
-        params: {
-          question: "1"
-        }
-      });
-    }
+  setup() {
+    const vendorConfig = inject<VendorConfig>("vendor_data");
+    const text = {
+      title: vendorConfig?.customerportal.home.title,
+      subtitle: vendorConfig?.customerportal.home.subtitle,
+      content: vendorConfig?.customerportal.home.content
+    };
+
+    return { text };
   }
 });
 </script>

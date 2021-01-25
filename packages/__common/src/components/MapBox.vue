@@ -14,7 +14,7 @@ import { defineComponent, ref, onBeforeUnmount, onMounted, inject, SetupContext,
 /**
  * A Generic MapBox wrapper component
  */
-export const MapBox = defineComponent({
+export default defineComponent({
   name: "MapBox",
   props: {
     options: {

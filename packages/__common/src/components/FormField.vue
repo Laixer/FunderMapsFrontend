@@ -38,11 +38,11 @@
 </template>
 
 <script lang="ts">
-import { SvgIcon } from "./SvgIcon.vue";
+import SvgIcon from "./SvgIcon.vue";
 import { defineComponent, inject, PropType, ref, computed, readonly, watch, SetupContext } from "vue";
 
-import { ConnectedField } from "./ConnectedField";
-import { Option } from "./Option";
+import ConnectedField from "./ConnectedField";
+import { Option } from "../types/Option";
 
 export const withFormFieldProps = () => {
   return {
@@ -306,7 +306,7 @@ export const useFormField = (
   };
 };
 
-export const FormField = defineComponent({
+export default defineComponent({
   name: "FormField",
   components: { SvgIcon },
   props: withFormFieldProps(),
