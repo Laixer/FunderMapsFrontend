@@ -46,10 +46,10 @@ export default class Button extends Vue {
 </script>
 
 <style lang="scss">
-$PRIMARY_COLOR: blue;
+$VENDOR_PRIMARY_COLOR: blue;
 
-$active: adjust-color($PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
-$hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
+$active: adjust-color($VENDOR_PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
+$hover: adjust-color($VENDOR_PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 .Button {
   position: relative;
   padding: 15px 27px 16px;
@@ -64,7 +64,7 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
   align-items: center;
 
   // Regular
-  background: $PRIMARY_COLOR;
+  background: $VENDOR_PRIMARY_COLOR;
   color: white;
 
   &--submit {
@@ -86,12 +86,12 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
   &--line {
     background: white;
-    color: $PRIMARY_COLOR;
+    color: $VENDOR_PRIMARY_COLOR;
     padding: 13px 25px 14px;
-    border: 2px solid $PRIMARY_COLOR;
+    border: 2px solid $VENDOR_PRIMARY_COLOR;
 
     &:hover {
-      background: $PRIMARY_COLOR;
+      background: $VENDOR_PRIMARY_COLOR;
       color: white;
       border: none;
       padding: 15px 27px 16px;
@@ -112,7 +112,7 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
   &--ghost {
     background: transparent;
-    color: $PRIMARY_COLOR;
+    color: $VENDOR_PRIMARY_COLOR;
     filter: grayscale(80%);
     opacity: 0.8;
 
@@ -121,7 +121,7 @@ $hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
       filter: none;
       opacity: 1;
 
-      color: $PRIMARY_COLOR;
+      color: $VENDOR_PRIMARY_COLOR;
     }
     &:active {
       background: transparent;

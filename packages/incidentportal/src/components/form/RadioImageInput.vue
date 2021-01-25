@@ -65,20 +65,20 @@ export default class RadioImageInput extends FormField {
 
 <style lang="scss">
 $unselected: adjust-color(
-  $PRIMARY_COLOR,
+  $VENDOR_PRIMARY_COLOR,
   $red: 81,
   $green: 41,
   $blue: -114,
   $alpha: -0.7
 );
 $unselectedText: adjust-color(
-  $PRIMARY_COLOR,
+  $VENDOR_PRIMARY_COLOR,
   $red: 81,
   $green: 41,
   $blue: -114
 );
 $unselectedSvg: adjust-color(
-  $PRIMARY_COLOR,
+  $VENDOR_PRIMARY_COLOR,
   $red: 176,
   $green: 131,
   $blue: -15
@@ -131,7 +131,7 @@ $unselectedSvg: adjust-color(
     transition: all 0.3s ease-in-out;
 
     &:hover {
-      border-color: $PRIMARY_COLOR;
+      border-color: $VENDOR_PRIMARY_COLOR;
     }
 
     .SvgIcon:not(.SvgIcon--selected) {
@@ -149,7 +149,7 @@ $unselectedSvg: adjust-color(
       top: -2px;
       right: -2px;
       font-size: 40px;
-      color: $PRIMARY_COLOR;
+      color: $VENDOR_PRIMARY_COLOR;
       opacity: 0;
       transition: all 0.3s ease-in-out;
     }
@@ -159,14 +159,14 @@ $unselectedSvg: adjust-color(
     display: none;
   }
   input[type="radio"]:checked + &__Label {
-    color: $PRIMARY_COLOR;
-    border-color: $PRIMARY_COLOR;
+    color: $VENDOR_PRIMARY_COLOR;
+    border-color: $VENDOR_PRIMARY_COLOR;
 
     .SvgIcon--selected {
       opacity: 1;
     }
     .SvgIcon:not(.SvgIcon--selected) {
-      color: $PRIMARY_COLOR;
+      color: $VENDOR_PRIMARY_COLOR;
     }
   }
 }

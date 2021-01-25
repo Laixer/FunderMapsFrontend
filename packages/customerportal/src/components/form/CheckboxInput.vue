@@ -1,7 +1,7 @@
 <template>
   <div class="CheckboxInput" :class="fieldClasses">
     <div class="CheckboxInput__Wrapper">
-      <div v-for="(option, index) in options" class="CheckboxInput__Field" :key="id + ' ' + index">
+      <div v-for="(option, index) in options" :key="id + ' ' + index" class="CheckboxInput__Field">
         <input
           :id="id + ' ' + index"
           type="checkbox"
@@ -25,59 +25,52 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { Prop, Component } from 'vue-property-decorator';
-import FormField from '@/components/common/FormField.vue'
-import SvgIcon from '@/components/common/SvgIcon.vue'
+import { SvgIcon, useFormField, withFormFieldProps } from "@fundermaps/common";
+import { defineComponent, computed } from "vue";
 
-@Component({
-  components: {
-    SvgIcon
-  }
-})
-export default class CheckboxInput extends FormField {
-
-  /**
-   * The type of form field
-   */
-  @Prop({ default: 'checkbox' }) readonly type!: string;
-
-  /**
-   * List of css classes
-   */
-  get fieldClasses(): Record<string, boolean> {
-    return {
-      'CheckboxInput--disabled': this.isDisabled,
-      'CheckboxInput--busy': this.isBusy,
-      'CheckboxInput--valid': this.hasBeenValidated ? this.isValid : false,
-      'CheckboxInput--invalid': this.hasBeenValidated ? !this.isValid : false,
+export default defineComponent({
+  name: "CheckboxInput",
+  components: { SvgIcon },
+  props: {
+    ...withFormFieldProps(),
+    // The type of form field
+    type: {
+      type: String,
+      default: "checkbox"
     }
-  }
+  },
+  setup(props, context) {
+    const formField = useFormField(props, context);
 
-  /**
-   * Whether the value is checked
-   */
-  isChecked(value: number | string | boolean): boolean {
-    return Array.isArray(this.value) && this.value.includes(value + '')
+    // List of css classes
+    const fieldClasses = computed(
+      (): Record<string, boolean> => {
+        return {
+          "CheckboxInput--disabled": formField.isDisabled.value,
+          "CheckboxInput--busy": formField.isBusy.value,
+          "CheckboxInput--valid": formField.hasBeenValidated.value ? !!formField.isValid.value : false,
+          "CheckboxInput--invalid": formField.hasBeenValidated.value ? !formField.isValid.value : false
+        };
+      }
+    );
+
+    // Whether the value is checked
+    const isChecked = (value: number | string | boolean): boolean => {
+      return Array.isArray(formField.fieldValue.value) && formField.fieldValue.value.includes(value + "");
+    };
+
+    return {
+      fieldClasses,
+      isChecked
+    };
   }
-}
+});
 </script>
 
 <style lang="scss">
-$unselected: adjust-color(
-  $PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114,
-  $alpha: -0.7
-);
-$unselectedText: adjust-color(
-  $PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114
-);
+$unselected: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$unselectedText: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
 
 .CheckboxInput {
   &__Wrapper {
@@ -141,7 +134,7 @@ $unselectedText: adjust-color(
     }
 
     &:hover {
-      border-color: $PRIMARY_COLOR;
+      border-color: $VENDOR_PRIMARY_COLOR;
     }
   }
 
@@ -169,12 +162,12 @@ $unselectedText: adjust-color(
   }
   input:checked + &__Label {
     background-color: rgba(156, 178, 255, 0.1); // TODO: Use color adjust
-    border-color: $PRIMARY_COLOR;
+    border-color: $VENDOR_PRIMARY_COLOR;
     color: #202122;
   }
   input:checked + &__Label &__Checkbox {
-    border-color: $PRIMARY_COLOR;
-    background: $PRIMARY_COLOR;
+    border-color: $VENDOR_PRIMARY_COLOR;
+    background: $VENDOR_PRIMARY_COLOR;
   }
 }
 </style>

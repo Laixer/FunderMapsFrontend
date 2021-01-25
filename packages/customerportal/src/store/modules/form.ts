@@ -7,26 +7,26 @@ export interface FormState {
   email: string | null;
 }
 
-@Module({ dynamic: true, store, name: "form" })
-class Form extends VuexModule implements FormState {
+@Module({ dynamic: true, store, name: "form", namespaced: true })
+class FormModule extends VuexModule implements FormState {
   firstName: string | null = null;
   lastName: string | null = null;
   email: string | null = null;
 
   @Mutation
-  setFirstname(value: string) {
+  setFirstname(value: string | null) {
     this.firstName = value;
   }
 
   @Mutation
-  setLastname(value: string) {
+  setLastname(value: string | null) {
     this.firstName = value;
   }
 
   @Mutation
-  setEmail(value: string) {
+  setEmail(value: string | null) {
     this.firstName = value;
   }
 }
 
-export const FormModule = getModule(Form);
+export default getModule(FormModule);

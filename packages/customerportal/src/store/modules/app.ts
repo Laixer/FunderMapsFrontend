@@ -5,8 +5,8 @@ export interface AppState {
   riskRequestBody: unknown;
 }
 
-@Module({ dynamic: true, store, name: "app" })
-class App extends VuexModule implements AppState {
+@Module({ dynamic: true, store, name: "app", namespaced: true })
+class AppModule extends VuexModule implements AppState {
   riskRequestBody: unknown;
 
   get RiskRequestBody() {
@@ -14,4 +14,4 @@ class App extends VuexModule implements AppState {
   }
 }
 
-export const AppModule = getModule(App);
+export default getModule(AppModule);

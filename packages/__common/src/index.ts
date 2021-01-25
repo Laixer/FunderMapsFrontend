@@ -1,13 +1,13 @@
 /* eslint-disable prettier/prettier */
 
-export * as ConnectedField from "./components/ConnectedField";
-export * as Feedback from "./components/Feedback.vue";
-export * as Form from "./components/Form.vue";
-export * as FormField from "./components/FormField.vue";
-export * as MapBox from "./components/MapBox.vue";
-export * as Option from "./components/Option";
-export * as SvgIcon from "./components/SvgIcon.vue";
-export * as UploadArea from "./components/UploadArea.vue";
+export * from "./components/ConnectedField";
+export * from "./components/Feedback.vue";
+export * from "./components/Form.vue";
+export * from "./components/FormField.vue";
+export * from "./components/MapBox.vue";
+export * from "./components/Option";
+export * from "./components/SvgIcon.vue";
+export * from "./components/UploadArea.vue";
 export * from "./types/Address";
 export * from "./types/AnalysisRisk";
 export * from "./types/EnvironmentDamageCharacteristics";

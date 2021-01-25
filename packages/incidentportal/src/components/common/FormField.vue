@@ -192,7 +192,7 @@ export default class FormField extends Vue {
 
   /**
    * Whether the validation has been applied.
-   *  We cannot know for certain about this. The interaction indicator that triggers the 
+   *  We cannot know for certain about this. The interaction indicator that triggers the
    *  first validation is taken as validation indicator
    */
   get hasBeenValidated(): boolean {
@@ -315,7 +315,7 @@ export default class FormField extends Vue {
   }
 
   /**
-   * The actual field validation is externalised. 
+   * The actual field validation is externalised.
    */
   validate(): void {
     if (!this.novalidate) {
@@ -346,7 +346,7 @@ export default class FormField extends Vue {
 
 <style lang="scss">
 $disabled: adjust-color(
-  $PRIMARY_COLOR,
+  $VENDOR_PRIMARY_COLOR,
   $red: 81,
   $green: 41,
   $blue: -114,
@@ -384,7 +384,7 @@ $disabled: adjust-color(
     }
 
     &:focus {
-      border-color: $PRIMARY_COLOR;
+      border-color: $VENDOR_PRIMARY_COLOR;
     }
   }
 

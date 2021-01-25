@@ -2,7 +2,7 @@
  * Take care of loading an asset
  */
 function asset(path: string): any {
-  return require("@/assets/" + path);
+  return import("~assets/" + path);
 }
 
 /**

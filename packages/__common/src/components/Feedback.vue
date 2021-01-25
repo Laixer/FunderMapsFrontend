@@ -12,11 +12,11 @@
 </template>
 
 <script lang="ts">
-import SvgIcon from "./SvgIcon.vue";
+import { SvgIcon } from "./SvgIcon.vue";
 import { defineComponent, PropType, ref, computed, watch } from "vue";
 
 // Based on https://getbootstrap.com/docs/4.0/components/alerts/#dismissing
-export default defineComponent({
+export const Feedback = defineComponent({
   name: "Feedback",
   components: { SvgIcon },
   props: {

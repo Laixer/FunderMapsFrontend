@@ -27,25 +27,21 @@
 <script lang="ts">
 import Title from "@/components/Title.vue";
 
-import Form from "@/components/common/Form.vue";
-import FormField from "@/components/common/FormField.vue";
+import { Form, FormField } from "@fundermaps/common";
 
 import * as EmailValidator from "email-validator";
 import { computed, ComputedRef, defineComponent, provide, ref, Ref } from "vue";
 import { isValidKey, storeDataKey } from "./Question";
-import { Store, useStore } from "vuex";
-import { State } from "../../store";
+import form from "../../store/modules/form";
 
 export default defineComponent({
   name: "ProfileQuestion",
   components: { Title, Form, FormField },
   setup() {
-    const store: Store<State> = useStore();
-
     // Load the previously stored profile data from the store
-    const firstName: Ref<string | null> = ref(store.state.form.firstName);
-    const lastName: Ref<string | null> = ref(store.state.form.lastName);
-    const email: Ref<string | null> = ref(store.state.form.email);
+    const firstName: Ref<string | null> = ref(form.firstName);
+    const lastName: Ref<string | null> = ref(form.lastName);
+    const email: Ref<string | null> = ref(form.email);
 
     const isFirstNameValid: ComputedRef<boolean> = computed(
       () => (firstName.value && firstName.value.length < 255) || false
@@ -62,9 +58,9 @@ export default defineComponent({
     );
 
     function storeData(): void {
-      store.state.form.dispatch("setFirstname", firstName.value);
-      store.state.form.dispatch("setLastname", lastName.value);
-      store.state.form.dispatch("setEmail", email.value);
+      form.setFirstname(firstName.value);
+      form.setLastname(lastName.value);
+      form.setEmail(email.value);
     }
 
     provide(isValidKey, isValid);

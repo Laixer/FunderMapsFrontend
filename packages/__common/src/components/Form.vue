@@ -11,7 +11,7 @@
 import { defineComponent, provide, ref, watch, nextTick } from "vue";
 import { ConnectedField } from "./ConnectedField";
 
-export default defineComponent({
+export const Form = defineComponent({
   name: "Form",
   props: {
     // Whether the form is busy - meaning the fields are disabled

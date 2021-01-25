@@ -171,7 +171,7 @@ export default class ProgressSteps extends Vue {
         height: 1em;
       }
     }
-    background: $PRIMARY_COLOR;
+    background: $VENDOR_PRIMARY_COLOR;
     color: white;
   }
   &__Future {

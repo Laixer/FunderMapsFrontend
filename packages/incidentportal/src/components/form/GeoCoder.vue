@@ -145,7 +145,7 @@ export default class GeoCoder extends FormField {
 
     &:hover {
       cursor: pointer;
-      background: $PRIMARY_COLOR;
+      background: $VENDOR_PRIMARY_COLOR;
 
       .SvgIcon,
       span {

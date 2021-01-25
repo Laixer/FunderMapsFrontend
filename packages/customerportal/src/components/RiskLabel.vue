@@ -50,8 +50,8 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-$active: adjust-color($PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
-$hover: adjust-color($PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
+$active: adjust-color($VENDOR_PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
+$hover: adjust-color($VENDOR_PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
 .RiskLabel {
   width: 250px;

@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import SvgIcon from "@/components/common/SvgIcon.vue";
+import { SvgIcon } from "@fundermaps/common";
 import { defineComponent } from "vue";
 
 export default defineComponent({

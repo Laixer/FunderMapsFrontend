@@ -66,14 +66,14 @@ export default class CheckboxInput extends FormField {
 
 <style lang="scss">
 $unselected: adjust-color(
-  $PRIMARY_COLOR,
+  $VENDOR_PRIMARY_COLOR,
   $red: 81,
   $green: 41,
   $blue: -114,
   $alpha: -0.7
 );
 $unselectedText: adjust-color(
-  $PRIMARY_COLOR,
+  $VENDOR_PRIMARY_COLOR,
   $red: 81,
   $green: 41,
   $blue: -114
@@ -141,7 +141,7 @@ $unselectedText: adjust-color(
     }
 
     &:hover {
-      border-color: $PRIMARY_COLOR;
+      border-color: $VENDOR_PRIMARY_COLOR;
     }
   }
 
@@ -169,12 +169,12 @@ $unselectedText: adjust-color(
   }
   input:checked + &__Label {
     background-color: rgba(156, 178, 255, 0.1); // TODO: Use color adjust
-    border-color: $PRIMARY_COLOR;
+    border-color: $VENDOR_PRIMARY_COLOR;
     color: #202122;
   }
   input:checked + &__Label &__Checkbox {
-    border-color: $PRIMARY_COLOR;
-    background: $PRIMARY_COLOR;
+    border-color: $VENDOR_PRIMARY_COLOR;
+    background: $VENDOR_PRIMARY_COLOR;
   }
 }
 </style>

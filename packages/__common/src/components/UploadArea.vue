@@ -1,7 +1,7 @@
 <template>
   <div>
     <Feedback v-if="this.feedback.message !== ''" :feedback="feedback" />
-    <vue2Dropzone
+    <!-- <vue2Dropzone
       id="dropzone"
       ref="dropzone"
       :options="options"
@@ -24,23 +24,23 @@
           </span>
         </p>
       </div>
-    </vue2Dropzone>
+    </vue2Dropzone> -->
   </div>
 </template>
 
 <script lang="ts">
 import { image } from "../helpers/assets";
-import vue2Dropzone from "vue2-dropzone";
+// import vue2Dropzone from "vue2-dropzone";
 import "vue2-dropzone/dist/vue2Dropzone.min.css";
-import Feedback from "./Feedback.vue";
+import { Feedback } from "./Feedback.vue";
 import { defineComponent, ref } from "vue";
 
 // TODO: Auth Header...
 // import { authHeader } from '@/services/auth';
-export default defineComponent({
+export const UploadArea = defineComponent({
   name: "UploadArea",
   components: {
-    vue2Dropzone,
+    // vue2Dropzone,
     Feedback
   },
   emits: { handleUploadProgress: null, handleFileRemoved: null, handleFileAdded: null },
@@ -89,7 +89,7 @@ export default defineComponent({
     const handleError = (file: string, message: string, xhr: XMLHttpRequest) => {
       // error
       if (file && dropzone) {
-        dropzone.removeFile(file);
+        dropzone.value.removeFile(file);
       }
 
       feedback.value = {

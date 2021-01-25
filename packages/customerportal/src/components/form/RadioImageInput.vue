@@ -1,11 +1,7 @@
 <template>
   <div class="RadioImageInput" :class="fieldClasses">
     <div class="RadioImageInput__Wrapper">
-      <div
-        v-for="(option, index) in options"
-        class="RadioImageInput__Field"
-        :key="id + ' ' + index"
-      >
+      <div v-for="(option, index) in options" :key="id + ' ' + index" class="RadioImageInput__Field">
         <input
           :id="id + ' ' + index"
           type="radio"
@@ -28,11 +24,9 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { Prop, Component } from 'vue-property-decorator';
-import SvgIcon from '@/components/common/SvgIcon.vue'
-import FormField from '@/components/common/FormField.vue'
+import { Prop, Component } from "vue-property-decorator";
+import { FormField, SvgIcon } from "@fundermaps/common";
 
 @Component({
   components: {
@@ -43,10 +37,10 @@ export default class RadioImageInput extends FormField {
   /**
    * The type of form field
    */
-  @Prop({ default: 'radio' }) readonly type!: string;
+  @Prop({ default: "radio" }) readonly type!: string;
 
   private isChecked(value: string | boolean | number): boolean {
-    return this.value === value.toString() || this.value === value
+    return this.value === value.toString() || this.value === value;
   }
 
   /**
@@ -54,35 +48,19 @@ export default class RadioImageInput extends FormField {
    */
   get fieldClasses(): Record<string, boolean> {
     return {
-      'RadioImageInput--disabled': this.isDisabled,
-      'RadioImageInput--busy': this.isBusy,
-      'RadioImageInput--valid': this.hasBeenValidated ? this.isValid : false,
-      'RadioImageInput--invalid': this.hasBeenValidated ? !this.isValid : false,
-    }
+      "RadioImageInput--disabled": this.isDisabled,
+      "RadioImageInput--busy": this.isBusy,
+      "RadioImageInput--valid": this.hasBeenValidated ? this.isValid : false,
+      "RadioImageInput--invalid": this.hasBeenValidated ? !this.isValid : false
+    };
   }
 }
 </script>
 
 <style lang="scss">
-$unselected: adjust-color(
-  $PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114,
-  $alpha: -0.7
-);
-$unselectedText: adjust-color(
-  $PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114
-);
-$unselectedSvg: adjust-color(
-  $PRIMARY_COLOR,
-  $red: 176,
-  $green: 131,
-  $blue: -15
-);
+$unselected: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$unselectedText: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
+$unselectedSvg: adjust-color($VENDOR_PRIMARY_COLOR, $red: 176, $green: 131, $blue: -15);
 
 .RadioImageInput {
   &__Wrapper {
@@ -131,7 +109,7 @@ $unselectedSvg: adjust-color(
     transition: all 0.3s ease-in-out;
 
     &:hover {
-      border-color: $PRIMARY_COLOR;
+      border-color: $VENDOR_PRIMARY_COLOR;
     }
 
     .SvgIcon:not(.SvgIcon--selected) {
@@ -149,7 +127,7 @@ $unselectedSvg: adjust-color(
       top: -2px;
       right: -2px;
       font-size: 40px;
-      color: $PRIMARY_COLOR;
+      color: $VENDOR_PRIMARY_COLOR;
       opacity: 0;
       transition: all 0.3s ease-in-out;
     }
@@ -159,14 +137,14 @@ $unselectedSvg: adjust-color(
     display: none;
   }
   input[type="radio"]:checked + &__Label {
-    color: $PRIMARY_COLOR;
-    border-color: $PRIMARY_COLOR;
+    color: $VENDOR_PRIMARY_COLOR;
+    border-color: $VENDOR_PRIMARY_COLOR;
 
     .SvgIcon--selected {
       opacity: 1;
     }
     .SvgIcon:not(.SvgIcon--selected) {
-      color: $PRIMARY_COLOR;
+      color: $VENDOR_PRIMARY_COLOR;
     }
   }
 }

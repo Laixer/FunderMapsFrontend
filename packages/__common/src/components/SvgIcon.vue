@@ -1,6 +1,6 @@
 <template>
   <!--  eslint-disable-next-line vue/no-v-html -->
-  <div class="SvgIcon svg-container" v-html="require(`!html-loader!../../assets/icons/${icon}.svg`)"></div>
+  <div class="SvgIcon svg-container" v-html="import(`!html-loader!~assets/icons/${icon}.svg`)"></div>
 </template>
 
 <script lang="ts">
@@ -15,7 +15,7 @@ import { defineComponent } from "vue";
  *
  * TODO: Avoid inline svg. Convert into svg element with all icons in head, and use 'use' for inline.
  */
-export default defineComponent({
+export const SvgIcon = defineComponent({
   name: "SvgIcon",
   props: {
     icon: {

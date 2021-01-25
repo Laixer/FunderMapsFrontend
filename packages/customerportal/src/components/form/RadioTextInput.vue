@@ -1,7 +1,7 @@
 <template>
   <div class="RadioTextInput" :class="fieldClasses">
     <div class="RadioTextInput__Wrapper">
-      <div v-for="(option, index) in options" class="RadioTextInput__Field" :key="id + ' ' + index">
+      <div v-for="(option, index) in options" :key="id + ' ' + index" class="RadioTextInput__Field">
         <input
           :id="id + ' ' + index"
           type="radio"
@@ -22,22 +22,19 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { Prop, Component } from 'vue-property-decorator';
-import FormField from '@/components/common/FormField.vue'
+import { Prop, Component } from "vue-property-decorator";
+import { FormField } from "@fundermaps/common";
 
 @Component
 export default class RadioTextInput extends FormField {
-
   /**
    * The type of form field
    */
-  @Prop({ default: 'radio' }) readonly type!: string;
-
+  @Prop({ default: "radio" }) readonly type!: string;
 
   private isChecked(value: string | boolean | number): boolean {
-    return this.value === value.toString()
+    return this.value === value.toString();
   }
 
   /**
@@ -45,11 +42,11 @@ export default class RadioTextInput extends FormField {
    */
   get fieldClasses(): Record<string, boolean> {
     return {
-      'RadioTextInput--disabled': this.isDisabled,
-      'RadioTextInput--busy': this.isBusy,
-      'RadioTextInput--valid': this.hasBeenValidated ? this.isValid : false,
-      'RadioTextInput--invalid': this.hasBeenValidated ? !this.isValid : false,
-    }
+      "RadioTextInput--disabled": this.isDisabled,
+      "RadioTextInput--busy": this.isBusy,
+      "RadioTextInput--valid": this.hasBeenValidated ? this.isValid : false,
+      "RadioTextInput--invalid": this.hasBeenValidated ? !this.isValid : false
+    };
   }
 }
 </script>
@@ -142,7 +139,7 @@ export default class RadioTextInput extends FormField {
     &:hover {
       filter: none;
 
-      border-color: $PRIMARY_COLOR;
+      border-color: $VENDOR_PRIMARY_COLOR;
     }
   }
 
@@ -152,14 +149,14 @@ export default class RadioTextInput extends FormField {
   input:checked + &__Label {
     filter: none;
     background-color: rgba(156, 178, 255, 0.1); // TODO: Use color adjust
-    border-color: $PRIMARY_COLOR;
+    border-color: $VENDOR_PRIMARY_COLOR;
     color: #202122;
 
     &:before {
-      border-color: $PRIMARY_COLOR;
+      border-color: $VENDOR_PRIMARY_COLOR;
     }
     &:after {
-      background-color: $PRIMARY_COLOR;
+      background-color: $VENDOR_PRIMARY_COLOR;
     }
   }
 }

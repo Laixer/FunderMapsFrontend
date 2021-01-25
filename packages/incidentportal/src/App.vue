@@ -31,7 +31,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  color: $PRIMARY_COLOR;
+  color: $VENDOR_PRIMARY_COLOR;
   background: white;
 
   // width: 1440px;

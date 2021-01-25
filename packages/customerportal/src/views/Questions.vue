@@ -1,7 +1,7 @@
 <template>
   <Page :step="currentStep" :steps="totalSteps" class="Questions">
     <transition name="slide" mode="out-in" appear>
-      <component :is="getComponent" ref="currentQuestionComponent" :busy="busy" @isValid="isValid" />
+      <component :is="component" ref="currentQuestionComponent" :busy="busy" @isValid="isValid" />
     </transition>
 
     <template #footer>
@@ -35,14 +35,14 @@
 <script lang="ts">
 import Page from "@/components/layout/Page.vue";
 import Button from "@/components/Button.vue";
-import SvgIcon from "@/components/common/SvgIcon.vue";
+import { SvgIcon } from "@fundermaps/common";
 
 import ProfileQuestion from "@/components/questions/ProfileQuestion.vue";
 // import AddressQuestion from "@/components/questions/AddressQuestion.vue";
 // import PaymentQuestion from '@/components/questions/PaymentQuestion.vue'
-import QuestionMixin from "@/components/questions/Question.vue";
-import ResultPage from "@/components/questions/ResultPage.vue";
-import { defineComponent, ref } from "vue";
+// import useQuestions from "@/components/questions/Question";
+// import ResultPage from "@/components/questions/ResultPage.vue";
+import { defineComponent, DefineComponent, ref, computed, Ref } from "vue";
 
 export default defineComponent({
   name: "Questions",
@@ -50,73 +50,70 @@ export default defineComponent({
     Page,
     Button,
     SvgIcon,
-    ProfileQuestion,
+    ProfileQuestion
     // AddressQuestion,
-    QuestionMixin,
-    ResultPage
+    // ResultPage
   },
   props: {},
   setup() {
     // TODO: Typing
     // The question component is a reference to the currently loaded dynamic component,
     // which in turn is loaded based on the question index from the route
-    const currentQuestionComponent: any = ref(null);
-
-    return { currentQuestionComponent };
-  },
-  data() {
-    return {
-      questions: {
-        // 1: AddressQuestion,
-        2: ProfileQuestion
-        // 3: PaymentQuestion,
-      } as { [key: number]: typeof QuestionMixin },
-      finalComponent: ResultPage,
-      valid: false,
-      // Indicates the form is being submitted
-      busy: false,
-      currentStep: 1
+    const currentQuestionComponent: Ref<DefineComponent | null> = ref<DefineComponent | null>(null);
+    const questions: { [key: number]: string } = {
+      2: "ProfileQuestion"
     };
-  },
-  computed: {
-    nextButtonText(): string {
-      return this.isLastStep ? "Versturen" : "Volgende";
-    },
-    isLastStep(): boolean {
-      return this.currentStep === this.totalSteps;
-    },
-    isFinal(): boolean {
-      return this.currentStep === this.totalSteps + 1;
-    },
-    totalSteps(): number {
-      return Object.keys(this.questions).length;
-    },
-    component(): any {
-      if (this.isFinal) {
-        return this.finalComponent;
-      }
-      return this.questions[this.currentStep];
-    }
-  },
-  methods: {
-    // Retrieve validation state of current question component
-    isValid(validity: boolean): void {
-      this.valid = validity;
-    },
-    // Handle navigation
-    async handleNavigate(direction: number): Promise<void> {
-      if (direction > 0 && !this.currentQuestionComponent().isValid) return;
-      if (this.currentQuestionComponent) {
-        try {
-          this.currentQuestionComponent().storeData();
-        } catch (e) {
-          console.error(`Error storing form data: ${e.message}`);
-        }
-      }
+    // const finalComponent: { extends: DefineComponent } = {
+    //   extends: ResultPage,
+    //   data() {
+    //     return new AnalysisRisk("da");
+    //   }
+    // };
+    const valid = ref<boolean>(false);
+    const busy = ref<boolean>(false);
+    const currentStep = ref<number>(1);
 
-      this.valid = false;
-      this.currentStep += direction;
-    }
+    const isLastStep = computed((): boolean => true);
+    const nextButtonText = computed((): string => (isLastStep.value ? "Vesturen" : "Volgende"));
+    const totalSteps = computed((): number => Object.keys(questions).length);
+    const isFinal = computed((): boolean => currentStep.value === totalSteps.value);
+    // const component = computed((): any => (isFinal.value ? finalComponent : questions[currentStep.value]));
+    const component = computed((): string => "ProfileQuestion");
+
+    // Retrieve validation state of current question component
+    const isValid = (validity: boolean): void => {
+      valid.value = validity;
+    };
+
+    const handleNavigate = (direction: number): void => {
+      // if (direction > 0 && !currentQuestionComponent.value.isValid) return;
+      // if (currentQuestionComponent) {
+      //   try {
+      //     currentQuestionComponent.storeData();
+      //   } catch (e) {
+      //     console.error(`Error storing form data: ${e.message}`);
+      //   }
+      // }
+
+      valid.value = false;
+      currentStep.value += direction;
+    };
+
+    return {
+      currentQuestionComponent,
+      questions,
+      // finalComponent,
+      valid,
+      busy,
+      currentStep,
+      isLastStep,
+      nextButtonText,
+      totalSteps,
+      isFinal,
+      component,
+      isValid,
+      handleNavigate
+    };
   }
 });
 </script>
