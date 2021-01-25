@@ -5,6 +5,7 @@ const { argv } = require("yargs");
 
 const vendor = argv.vendor ? argv.vendor : "fundermaps";
 const vendorPath = path.relative(".", `../__vendor/src/${vendor}`);
+const packageName = process.VUE_CLI_SERVICE.pkg.name.split("/")[1];
 
 console.log(
   "\x1b[32m \x1b[1m \x1b[5m",
@@ -17,9 +18,7 @@ exports.config = {
     // TODO: Rename to project vendor
     "vendor define": {
       plugin: require("webpack").DefinePlugin,
-      args: [
-        { __VENDOR: JSON.stringify(vendor), __APP: JSON.stringify(process.VUE_CLI_SERVICE.pkg.name.split("/")[1]) }
-      ]
+      args: [{ __VENDOR: JSON.stringify(vendor), __APP: JSON.stringify(packageName) }]
     },
     "vendor copy": {
       plugin: require("copy-webpack-plugin"),
@@ -53,7 +52,7 @@ exports.css = {
           includePaths: [path.resolve(__dirname, vendorPath)]
         },
         additionalData: `
-          @import "~@vendor/${vendor}/style.scss";
+          @import "~@vendor/${vendor}/apps/${packageName}/style.scss";
           @import "~@/style.scss";
         `
       }

@@ -1,30 +1,32 @@
-import Vue from 'vue'
-import VueRouter, { RouteConfig } from 'vue-router'
+import Home from "@/views/Home.vue";
+import { appConfig } from "@fundermaps/vendor";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-Vue.use(VueRouter)
+const routes: Array<RouteRecordRaw> = [
+  {
+    path: "/",
+    name: "Home",
+    meta: {
+      title: appConfig.title
+    },
 
-const routes: Array<RouteConfig> = [
-  {
-    path: '/',
-    name: 'Home',
-    component: () => import('../views/Home.vue')
-  },
-  {
-    path: '/vragen',
-    name: 'Questions',
-    component: () => import('../views/Questions.vue')
-  },
-  {
-    path: '/klaar',
-    name: 'Finish',
-    component: () => import('../views/Finish.vue')
-  },
-]
+    component: Home
+  }
+  // {
+  //   path: '/vragen',
+  //   name: 'Questions',
+  //   component: () => import('../views/Questions.vue')
+  // },
+  // {
+  //   path: '/klaar',
+  //   name: 'Finish',
+  //   component: () => import('../views/Finish.vue')
+  // },
+];
 
-const router = new VueRouter({
-  mode: 'abstract',
-  base: process.env.BASE_URL,
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes
-})
+});
 
-export default router
+export default router;

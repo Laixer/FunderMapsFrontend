@@ -5,27 +5,30 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue } from "vue-class-component";
+import { defineComponent } from "vue";
 
-import Header from "@/components/layout/Header.vue";
-
-@Options({
-  components: {
-    Header
+export default defineComponent({
+  name: "App",
+  watch: {
+    $route(to) {
+      document.title = to.meta.title || "Incidentportal";
+    }
   }
-})
-export default class App extends Vue {}
+});
 </script>
 
 <style lang="scss">
-@import "~@/style.scss";
-
 body {
   @media only screen and (min-width: $BREAKPOINT) {
-    background: url("./assets/Background.jpg");
+    background: $VENDOR_BACKGROUND_IMAGE;
     background-size: cover;
   }
 }
+
+a:-webkit-any-link {
+  text-decoration: none;
+}
+
 #app {
   font-family: system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;

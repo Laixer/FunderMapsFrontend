@@ -1,5 +1,5 @@
 import Home from "@/views/Home.vue";
-import { customerPortalConfig } from "@fundermaps/vendor";
+import { appConfig } from "@fundermaps/vendor";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     meta: {
-      title: customerPortalConfig.title
+      title: appConfig.title
     },
 
     component: Home

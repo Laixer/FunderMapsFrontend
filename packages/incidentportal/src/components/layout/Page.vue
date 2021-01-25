@@ -2,65 +2,62 @@
   <div class="Page">
     <Header :step="step" :steps="steps" />
     <div class="Page__Wrapper">
-      <ProgressSteps v-if="steps" :currentStep="step" :steps="steps" />
+      <ProgressSteps v-if="steps" :current-step="step" :steps="steps" />
 
       <div class="Page__Main" :class="{ 'Page__Main--sidebar': steps > 0 }">
         <div class="Page__Content">
           <slot />
         </div>
-
-        <Footer>
-          <slot name="footer"></slot>
-        </Footer>
       </div>
     </div>
+    <Footer>
+      <slot name="footer"></slot>
+    </Footer>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import ProgressSteps from "@/components/layout/ProgressSteps.vue";
+import Footer from "@/components/layout/Footer.vue";
+import Header from "@/components/layout/Header.vue";
 
-import ProgressSteps from '@/components/layout/ProgressSteps.vue'
-import ProgressBar from '@/components/layout/ProgressBar.vue'
-import Footer from '@/components/layout/Footer.vue'
-import Header from '@/components/layout/Header.vue'
+import { defineComponent } from "vue";
 
-@Component({
-  components: {
-    ProgressSteps, ProgressBar, Footer, Header
+export default defineComponent({
+  name: "Page",
+  components: { ProgressSteps, Footer, Header },
+  props: {
+    // The progress # (step)
+    step: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    // The total number of steps
+    steps: {
+      type: Number,
+      default: 0
+    }
   }
-})
-export default class Page extends Vue {
-  /**
-   * The progress # (step)
-   */
-  @Prop({ default: 0 }) readonly step!: number;
-  /**
-   * The total number of steps
-   */
-  @Prop({ default: 0 }) readonly steps!: number;
-
-}
+});
 </script>
 
 <style lang="scss">
 .Page {
-  margin-top: 80px;
-  margin-bottom: 40px;
-
-  @media only screen and (min-width: $BREAKPOINT) {
-    margin: 0;
-  }
-
   overflow: hidden;
   display: flex;
-  flex-grow: 1;
-  align-items: stretch;
+  flex-grow: 2;
   flex-direction: column;
 
   &__Wrapper {
+    margin-top: 80px;
+    margin-bottom: 60px;
+
+    @media only screen and (min-width: $BREAKPOINT) {
+      margin: 0;
+    }
     display: flex;
-    flex-grow: 1;
+    flex-grow: 2;
     align-items: stretch;
     flex-direction: column;
 
@@ -71,7 +68,7 @@ export default class Page extends Vue {
 
   &__Main,
   &__Content {
-    flex-grow: 1;
+    flex-grow: 2;
     display: flex;
     flex-direction: column;
     max-width: 100%;

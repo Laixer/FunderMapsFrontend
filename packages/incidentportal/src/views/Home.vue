@@ -3,48 +3,46 @@
     <div class="Home__Wrapper">
       <div class="Home--left">
         <Title>
-          <span v-html="vendor.home.title" />
+          <span v-html="text.title" />
         </Title>
         <BodyText :bold="true">
-          <span v-html="vendor.home.subtitle" />
+          <span v-html="text.subtitle" />
         </BodyText>
         <BodyText>
-          <span v-html="vendor.home.content" />
+          <span v-html="text.content" />
         </BodyText>
-        <div>
-          <Button id="navigateBodyButton" @click="handleNavigate">
+        <router-link :to="{ name: 'Home' }">
+          <Button id="navigateFooterButton">
             <span>Melding maken</span>
             <SvgIcon icon="icon_arrow_next" />
           </Button>
-        </div>
+        </router-link>
       </div>
       <div class="Home--right">
-        <img :src="vendor.home.image" width="640" height="585" alt="Logo" />
+        <img class="Home__Image" width="640" height="585" alt="Logo" />
       </div>
     </div>
 
     <template #footer>
-      <Copyright />
-      <Button id="navigateFooterButton" @click="handleNavigate">
-        <span>Melding maken</span>
-        <SvgIcon icon="icon_arrow_next" />
-      </Button>
+      <Copyright company="FunderMaps" />
+      <router-link :to="{ name: 'Home' }">
+        <Button id="navigateFooterButton">
+          <span>Melding maken</span>
+          <SvgIcon icon="icon_arrow_next" />
+        </Button>
+      </router-link>
     </template>
   </Page>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-
 import Page from "@/components/layout/Page.vue";
-import Title from "@/components/Title.vue";
-import BodyText from "@/components/BodyText.vue";
-import Copyright from "@/components/Copyright.vue";
-import Button from "@/components/Button.vue";
-import SvgIcon from "@/components/common/SvgIcon.vue";
-import config from "@vendor/vendor";
+import { SvgIcon, Button, BodyText, Copyright, Title } from "@fundermaps/common";
+import { defineComponent, inject } from "vue";
+import { IncidentPortalConfig } from "@fundermaps/vendor";
 
-@Component({
+export default defineComponent({
+  name: "Home",
   components: {
     Page,
     Button,
@@ -52,28 +50,25 @@ import config from "@vendor/vendor";
     Copyright,
     Title,
     BodyText
-  }
-})
-export default class Home extends Vue {
-  created(): void {
-    this.$store.commit("resetState");
-  }
+  },
+  setup() {
+    const app = inject("app_config") as IncidentPortalConfig;
+    const text = {
+      title: app.home.title,
+      subtitle: app.home.subtitle,
+      content: app.home.content
+    };
 
-  handleNavigate(): void {
-    this.$router.push({
-      name: "Questions",
-      params: {
-        question: "1"
-      }
-    });
+    return { text };
   }
-
-  private vendor = config;
-}
+});
 </script>
 
 <style lang="scss">
 .Home {
+  &__Image {
+    content: $VENDOR_HOME_IMAGE;
+  }
   &__Wrapper {
     padding: 20px 20px;
 

@@ -1,0 +1,211 @@
+import store from "@/store";
+import {
+  EnvironmentDamageCharacteristics,
+  FoundationDamageCause,
+  FoundationDamageCharacteristics,
+  FoundationType
+} from "@fundermaps/common";
+import { vendorConfig } from "@fundermaps/vendor";
+import { Module, Mutation, MutationAction, VuexModule } from "vuex-module-decorators";
+
+export interface FormState {
+  name: null | string;
+  firstName: null | string;
+  lastName: null | string;
+  email: null | string;
+  phoneNumber: null | string;
+  foundationType: null | FoundationType;
+  address: null | string;
+  addressLabel: null | string;
+  addressCoordinates: null | string;
+  addressGeojson: null | JSON;
+  foundationDamageCharacteristics: Array<FoundationDamageCharacteristics>;
+  environmentDamageCharacteristics: Array<EnvironmentDamageCharacteristics>;
+  owner: null | boolean;
+  chainedBuilding: null | boolean;
+  neighborRecovery: null | boolean;
+  foundationDamageCause: null | FoundationDamageCause;
+  documentFile: Array<string>;
+  note: null | string;
+  internalNote: null | string;
+}
+
+@Module({ dynamic: true, store, name: "form", namespaced: true })
+class FormModule extends VuexModule implements FormState {
+  name: string | null = null;
+  firstName: string | null = null;
+  lastName: string | null = null;
+  email: string | null = null;
+  phoneNumber: string | null = null;
+  foundationType: FoundationType | null = null;
+  address: string | null = null;
+  addressLabel: string | null = null;
+  addressCoordinates: string | null = null;
+  addressGeojson: JSON | null = null;
+  foundationDamageCharacteristics: Array<FoundationDamageCharacteristics> = [];
+  environmentDamageCharacteristics: Array<EnvironmentDamageCharacteristics> = [];
+  owner: boolean | null = null;
+  chainedBuilding: boolean | null = null;
+  neighborRecovery: boolean | null = null;
+  foundationDamageCause: FoundationDamageCause | null = null;
+  documentFile: Array<string> = [];
+  note: string | null = null;
+  internalNote: string | null = null;
+
+  /**
+   * Retrieve the indent request body
+   */
+  get incidentRequestBody() {
+    return {
+      Name: `${this.firstName} ${this.lastName}`,
+      ClientId: vendorConfig.client_id,
+      Email: this.email,
+      PhoneNumber: this.phoneNumber,
+      FoundationType: parseInt(this.foundationType?.type + "", 10),
+      Address: this.address,
+      FoundationDamageCharacteristics: this.foundationDamageCharacteristics.flatMap(val => parseInt(val + "", 10)),
+      EnvironmentDamageCharacteristics: this.environmentDamageCharacteristics.flatMap(val => parseInt(val + "", 10)),
+      Owner: this.owner,
+      OhainedBuilding: this.chainedBuilding,
+      NeighborRecovery: this.neighborRecovery,
+      FoundationDamageCause: parseInt(this.foundationDamageCause + "", 10),
+      // TODO: Fix typing
+      DocumentFile: this.documentFile.flatMap((entry: any) => [entry.file]),
+      Note: this.note
+    };
+  }
+
+  @MutationAction({
+    mutate: [
+      "name",
+      "firstName",
+      "lastName",
+      "email",
+      "phoneNumber",
+      "foundationType",
+      "address",
+      "addressLabel",
+      "addressCoordinates",
+      "addressGeojson",
+      "foundationDamageCharacteristics",
+      "environmentDamageCharacteristics",
+      "owner",
+      "chainedBuilding",
+      "neighborRecovery",
+      "foundationDamageCause",
+      "documentFile",
+      "note",
+      "internalNote"
+    ]
+  })
+  async reset() {
+    return {
+      name: null,
+      firstName: null,
+      lastName: null,
+      email: null,
+      phoneNumber: null,
+      foundationType: null,
+      address: null,
+      addressLabel: null,
+      addressCoordinates: null,
+      addressGeojson: null,
+      foundationDamageCharacteristics: [],
+      environmentDamageCharacteristics: [],
+      owner: null,
+      chainedBuilding: null,
+      neighborRecovery: null,
+      foundationDamageCause: null,
+      documentFile: [],
+      note: null,
+      internalNote: null
+    };
+  }
+
+  @Mutation
+  setFirstname(value: string | null) {
+    this.firstName = value;
+  }
+
+  @Mutation
+  setLastname(value: string | null) {
+    this.firstName = value;
+  }
+
+  @Mutation
+  setEmail(value: string | null) {
+    this.email = value;
+  }
+
+  @Mutation
+  setPhoneNumber(value: string | null) {
+    this.phoneNumber = value;
+  }
+
+  @Mutation
+  setFoundationType(value: FoundationType | null) {
+    this.foundationType = value;
+  }
+
+  @Mutation
+  setAddress(value: string | null) {
+    this.address = value;
+  }
+
+  @Mutation
+  setAddressLabel(value: string | null) {
+    this.addressLabel = value;
+  }
+
+  @Mutation
+  setAddressCoordinates(value: string | null) {
+    this.addressCoordinates = value;
+  }
+
+  @Mutation
+  setAddressGeojson(value: JSON | null) {
+    this.addressGeojson = value;
+  }
+
+  @Mutation
+  setFoundationDamageCharacteristics(value: Array<FoundationDamageCharacteristics>) {
+    this.foundationDamageCharacteristics = value;
+  }
+
+  @Mutation
+  setEnvironmentDamageCharacteristics(value: Array<EnvironmentDamageCharacteristics>) {
+    this.environmentDamageCharacteristics = value;
+  }
+
+  @Mutation
+  setOwner(value: boolean | null) {
+    this.owner = value;
+  }
+
+  @Mutation
+  setChainedBuilding(value: boolean | null) {
+    this.chainedBuilding = value;
+  }
+
+  @Mutation
+  setFoundationDamageCause(value: FoundationDamageCause | null) {
+    this.foundationDamageCause = value;
+  }
+
+  @Mutation
+  setDocumentFile(value: Array<string>) {
+    this.documentFile = value;
+  }
+
+  @Mutation
+  setNote(value: Array<string>) {
+    this.documentFile = value;
+  }
+
+  @Mutation
+  setInternalNote(value: string | null) {
+    this.internalNote = value;
+  }
+}
+
+export default getModule(FormModule);

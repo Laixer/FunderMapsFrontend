@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 declare const __VENDOR: string;
+declare const __APP: string;
 
 export type VendorConfig = {
   name: string;
@@ -11,8 +12,13 @@ export type VendorConfig = {
   };
 };
 
-export type CustomerPortalConfig = {
+type AppConfig = {
   title: string;
+};
+
+export type ClientAppConfig = AppConfig;
+
+export interface CustomerPortalConfig extends AppConfig {
   home: {
     title: string;
     subtitle: string;
@@ -22,14 +28,9 @@ export type CustomerPortalConfig = {
   final: {
     content: string;
   };
-};
+}
 
-export type ClientAppConfig = {
-  title: string;
-};
-
-export type IncidentPortalConfig = {
-  title: string;
+export interface IncidentPortalConfig extends AppConfig {
   home: {
     title: string;
     subtitle: string;
@@ -39,9 +40,7 @@ export type IncidentPortalConfig = {
   final: {
     content: string;
   };
-};
+}
 
-export const vendorConfig: VendorConfig = require(`./${__VENDOR}/config/_vendor.json`);
-export const customerPortalConfig: CustomerPortalConfig = require(`./${__VENDOR}/config/customerportal.json`);
-export const clientAppConfig: ClientAppConfig = require(`./${__VENDOR}/config/clientapp.json`);
-export const incidentPortalConfig: IncidentPortalConfig = require(`./${__VENDOR}/config/incidentportal.json`);
+export const vendorConfig: VendorConfig = require(`./${__VENDOR}/vendor.json`);
+export const appConfig = require(`./${__VENDOR}/apps/${__APP}/app.json`);

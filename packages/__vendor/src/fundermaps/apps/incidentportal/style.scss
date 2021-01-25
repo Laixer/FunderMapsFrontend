@@ -1,0 +1,10 @@
+$VENDOR_PRIMARY_COLOR: #2657FF;
+$VENDOR_BACKGROUND_IMAGE: url("~@vendor/fundermaps/apps/incidentportal/assets/background.jpg");
+$VENDOR_HOME_IMAGE: url("~@vendor/fundermaps/apps/incidentportal/assets/home.jpg");
+$VENDOR_LOGO: url("~@vendor/fundermaps/apps/incidentportal/assets/logo.svg");
+
+.Header {
+    &__Logo {
+        height: 50px;
+    }
+}

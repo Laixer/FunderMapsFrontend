@@ -1,5 +1,5 @@
 <template>
-  <Page class="Finish" :step="9" :steps="8">
+  <!-- <Page class="Finish" :step="9" :steps="8">
     <div class="Finish__Wrapper">
       <Title>Advies</Title>
 
@@ -18,29 +18,28 @@
     <template slot="footer">
       <SvgIcon icon="icon_circle_check" />Verzending gelukt
     </template>
-  </Page>
+  </Page> -->
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+// import { Component, Vue } from 'vue-property-decorator'
 
-import Page from '@/components/layout/Page.vue'
-import Title from '@/components/Title.vue'
-import BodyText from '@/components/BodyText.vue'
+// import Page from '@/components/layout/Page.vue'
+// import Title from '@/components/Title.vue'
+// import BodyText from '@/components/BodyText.vue'
 
-import Button from '@/components/Button.vue'
-import SvgIcon from '@/components/common/SvgIcon.vue'
-import vendor from '@/vendor'
+// import Button from '@/components/Button.vue'
+// import SvgIcon from '@/components/common/SvgIcon.vue'
+// import vendor from '@/vendor'
 
-
-@Component({
-  components: {
-    Page, Button, SvgIcon, Title, BodyText
-  }
-})
-export default class Finish extends Vue { 
-    private vendor = vendor
-}
+// @Component({
+//   components: {
+//     Page, Button, SvgIcon, Title, BodyText
+//   }
+// })
+// export default class Finish extends Vue {
+//     private vendor = vendor
+// }
 </script>
 
 <style lang="scss">
@@ -56,7 +55,7 @@ export default class Finish extends Vue {
   }
 
   a {
-    text-decoration: none
+    text-decoration: none;
   }
 
   .Title,

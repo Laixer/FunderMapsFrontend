@@ -5,8 +5,8 @@
     </transition>
 
     <transition-group name="list" tag="ul">
-      <li v-for="step in steps" v-bind:key="step" :class="getClassFor(step)">
-        <template v-if="step < currentStep">
+      <li v-for="currentStep in steps" :key="currentStep" :class="getClassFor(step)">
+        <template v-if="currentStep < step">
           <span>
             <SvgIcon icon="icon_check" />
           </span>
@@ -20,75 +20,63 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import SvgIcon from '@/components/common/SvgIcon.vue'
+import { SvgIcon } from "@fundermaps/common";
+import { defineComponent } from "vue";
 
-@Component({
-  components: {
-    SvgIcon
-  }
-})
-export default class ProgressSteps extends Vue {
-  /**
-   * The progress # (step)
-   */
-  @Prop({ default: 0, required: true }) readonly currentStep!: number;
-  /**
-   * The total number of steps
-   */
-  @Prop({ default: 0, required: true }) readonly steps!: number;
-
-
-  /**
-   * The number of finished steps
-   */
-  get finishedSteps(): number {
-    return Math.max(0, this.currentStep - 1)
-  }
-
-  private getClassFor(step: number): string {
-    if (step < this.currentStep) {
-      return "ProgressSteps__Finished"
+export default defineComponent({
+  name: "ProgressSteps",
+  components: { SvgIcon },
+  props: {
+    // The progress # (step)
+    step: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    // The total number of steps
+    steps: {
+      type: Number,
+      default: 0
     }
-
-    if (step === this.currentStep) {
-      return "ProgressSteps__Current"
+  },
+  computed: {
+    // The number of finished steps
+    finishedSteps(): number {
+      return Math.max(0, this.step - 1);
+    },
+    // The top offset of the step indicator line, in px
+    // Each step takes up 64px. The parent element add 50px due to padding
+    indicatorOffset(): string {
+      return `${this.finishedSteps * 64 + 50}px`;
+    },
+    // The future steps (numbers)
+    futureSteps(): number[] {
+      return this.range(this.steps - Math.min(this.steps, this.step), this.step + 1);
+    },
+    // When the current step is beyond the maximum steps we can take we're done.
+    isDone(): boolean {
+      return this.steps < this.step;
     }
+  },
+  methods: {
+    getClassFor(currentStep: number): string {
+      if (currentStep < this.step) {
+        return "ProgressSteps__Finished";
+      }
 
-    return "ProgressSteps__Future"
-  }
+      if (currentStep === this.step) {
+        return "ProgressSteps__Current";
+      }
 
-  /**
-   * The top offset of the step indicator line, in px
-   *  Each step takes up 64px. The parent element add 50px due to padding
-   */
-  get indicatorOffset(): string {
-    return `${(this.finishedSteps * 64) + 50}px`
+      return "ProgressSteps__Future";
+    },
+    // Generate an array of numbers, with length of size and starting at startAt
+    range(size: number, startAt = 0): number[] {
+      return [...Array(size).keys()].map(i => i + startAt);
+    }
   }
-
-  /**
-   * The future steps (numbers)
-   */
-  get futureSteps(): number[] {
-    return this.range((this.steps - Math.min(this.steps, this.currentStep)), this.currentStep + 1)
-  }
-
-  /**
-   * When the current step is beyond the maximum steps we can take we're done.
-   */
-  get isDone(): boolean {
-    return this.steps < this.currentStep
-  }
-
-  /**
-   * Generate an array of numbers, with length of size and starting at startAt
-   */
-  range(size: number, startAt = 0): number[] {
-    return [...Array(size).keys()].map(i => i + startAt);
-  }
-}
+});
 </script>
-
 
 <style lang="scss">
 .list-enter-active {
