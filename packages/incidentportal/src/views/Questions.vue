@@ -39,6 +39,7 @@ import FoundationDamageCauseQuestion from "@/components/questions/FoundationDama
 import FoundationDamageCharacteristicsQuestion from "@/components/questions/FoundationDamageCharacteristicsQuestion.vue";
 import FoundationTypeQuestion from "@/components/questions/FoundationTypeQuestion.vue";
 import UploadQuestion from "@/components/questions/UploadQuestion.vue";
+import NoteQuestion from "@/components/questions/NoteQuestion.vue";
 import form from "../store/modules/form";
 
 // import PaymentQuestion from '@/components/questions/PaymentQuestion.vue'
@@ -52,6 +53,7 @@ export default defineComponent({
     Page,
     Button,
     SvgIcon,
+    NoteQuestion,
     ProfileQuestion,
     FoundationDamageCauseQuestion,
     AddressCharacteristicsQuestion,
@@ -76,6 +78,7 @@ export default defineComponent({
       "FoundationTypeQuestion",
       "EnvironmentDamageCharacteristicsQuestion",
       "UploadQuestion",
+      "NoteQuestion",
       "ProfileQuestion"
     ];
 

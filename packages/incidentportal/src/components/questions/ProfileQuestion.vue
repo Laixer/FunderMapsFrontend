@@ -35,21 +35,12 @@
         placeholder="+31"
         :valid="isPhoneNumberValid"
       />
-      <TextArea
-        id="toelichting"
-        v-model="note"
-        label="Toelichting"
-        placeholder="Aanvullende informatie of beschrijving
-      opnemen"
-        :valid="isNoteValid"
-        :rows="4"
-      />
     </Form>
   </div>
 </template>
 
 <script lang="ts">
-import { Form, FormField, Title, TextArea } from "@fundermaps/common";
+import { Form, FormField, Title, BodyText } from "@fundermaps/common";
 
 import * as EmailValidator from "email-validator";
 import { computed, ComputedRef, defineComponent, ref, Ref } from "vue";
@@ -58,51 +49,36 @@ import form from "../../store/modules/form";
 export default defineComponent({
   name: "ProfileQuestion",
   components: {
+    BodyText,
     Title,
     Form,
-    FormField,
-    TextArea
+    FormField
   },
   setup() {
-    const address = ref(null);
     // Load the previously stored profile data from the store
     const firstName: Ref<string | null> = ref(form.firstName);
     const lastName: Ref<string | null> = ref(form.lastName);
     const email: Ref<string | null> = ref(form.email);
     const phoneNumber: Ref<string | null> = ref(form.phoneNumber);
-    const note: Ref<string | null> = ref(form.note);
 
     const phoneRegex = /\d+$/;
 
-    const isFirstNameValid: ComputedRef<boolean> = computed(() =>
-      firstName.value ? firstName.value.length < 255 : true
+    const isFirstNameValid: ComputedRef<boolean> = computed(() => !!firstName.value && firstName.value.length < 255);
+    const isLastNameValid: ComputedRef<boolean> = computed(() => !!lastName.value && lastName.value.length < 255);
+    const isEmailValid: ComputedRef<boolean> = computed(
+      () => !!email.value && email.value.length < 255 && EmailValidator.validate(email.value)
     );
 
-    const isLastNameValid: ComputedRef<boolean> = computed(() => (lastName.value ? lastName.value.length < 255 : true));
-    const isEmailValid: ComputedRef<boolean> = computed(() =>
-      email.value ? email.value.length < 255 && EmailValidator.validate(email.value) : true
-    );
-
-    const isPhoneNumberValid: ComputedRef<boolean> = computed(() =>
-      phoneNumber.value
-        ? phoneNumber.value !== null &&
-          phoneNumber.value.length > 0 &&
-          phoneNumber.value.length <= 16 &&
-          phoneRegex.test(phoneNumber.value)
-        : true
-    );
-
-    const isNoteValid: ComputedRef<boolean> = computed(() =>
-      note.value ? note.value.length < 1000 && note.value.length > 0 : true
+    const isPhoneNumberValid: ComputedRef<boolean> = computed(
+      () =>
+        !!phoneNumber.value &&
+        phoneNumber.value.length > 0 &&
+        phoneNumber.value.length <= 16 &&
+        phoneRegex.test(phoneNumber.value)
     );
 
     const isValid: ComputedRef<boolean> = computed(
-      () =>
-        isFirstNameValid.value &&
-        isLastNameValid.value &&
-        isEmailValid.value &&
-        isPhoneNumberValid.value &&
-        isNoteValid.value
+      () => isFirstNameValid.value && isLastNameValid.value && isEmailValid.value && isPhoneNumberValid.value
     );
 
     function onSubmit(): void {
@@ -110,27 +86,20 @@ export default defineComponent({
       form.setLastname(lastName.value);
       form.setEmail(email.value);
       form.setPhoneNumber(phoneNumber.value);
-      form.setNote(note.value);
     }
-
-    // provide(isValidKey, isValid);
-    // provide(storeDataKey, storeData);
 
     return {
       firstName,
       lastName,
       email,
       phoneNumber,
-      note,
       onSubmit,
       isValid,
       isFirstNameValid,
       isLastNameValid,
       isEmailValid,
       isPhoneNumberValid,
-      isNoteValid,
-      phoneRegex,
-      address
+      phoneRegex
     };
   }
 });
