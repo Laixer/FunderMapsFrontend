@@ -4,7 +4,7 @@
     <main>
       <section>
         <div id="dropzone">
-          <form id="document-upload" action="" class="UploadArea dropzone dz-clickable">
+          <form id="upload-area" class="UploadArea dropzone dz-clickable">
             <div class="dz-message align-self-center">
               <img alt="upload" :src="image('upload.svg')" />
               <p class="mb-0 mt-3">
@@ -41,7 +41,7 @@ export default defineComponent({
     let dropzone: Dropzone | null = null;
 
     onMounted(() => {
-      dropzone = new Dropzone("div#dropzone", {
+      dropzone = new Dropzone("#upload-area", {
         paramName: "input",
         addRemoveLinks: true,
         maxFilesize: 100,
@@ -56,12 +56,10 @@ export default defineComponent({
           variant: ""
         };
         emit("handleUploadProgress", "starting");
-        console.log("added");
       });
 
       dropzone.on("removedfile", (file: Dropzone.DropzoneFile) => {
         emit("handleFileRemoved", file);
-        console.log("removed");
       });
 
       dropzone.on("success", (file: string, response: XMLHttpRequestResponseType) => {
@@ -71,12 +69,9 @@ export default defineComponent({
         };
         emit("handleFileAdded", file, response);
         emit("handleUploadProgress", "finished");
-        console.log("success");
       });
 
       dropzone.on("error", (file: Dropzone.DropzoneFile, message: string, xhr: XMLHttpRequest) => {
-        console.log(file, message, xhr);
-
         feedback.value = {
           message: message,
           variant: "danger"
@@ -87,7 +82,6 @@ export default defineComponent({
         }
 
         emit("handleUploadProgress", "finished");
-        console.log("error");
       });
     });
 

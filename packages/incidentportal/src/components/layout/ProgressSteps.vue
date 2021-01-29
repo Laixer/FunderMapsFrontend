@@ -5,14 +5,14 @@
     </transition>
 
     <transition-group name="list" tag="ul">
-      <li v-for="currentStep in steps" :key="currentStep" :class="getClassFor(step)">
-        <template v-if="currentStep < step">
+      <li v-for="_step in steps" :key="_step" :class="getClassFor(_step)">
+        <template v-if="_step < step">
           <span>
             <SvgIcon icon="icon_check" />
           </span>
         </template>
         <template v-else>
-          <span>{{ currentStep }}</span>
+          <span>{{ _step }}</span>
         </template>
       </li>
     </transition-group>
@@ -59,12 +59,12 @@ export default defineComponent({
     }
   },
   methods: {
-    getClassFor(currentStep: number): string {
-      if (currentStep < this.step) {
+    getClassFor(_step: number): string {
+      if (_step < this.step) {
         return "ProgressSteps__Finished";
       }
 
-      if (currentStep === this.step) {
+      if (_step === this.step) {
         return "ProgressSteps__Current";
       }
 

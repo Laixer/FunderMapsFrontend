@@ -68,7 +68,7 @@ export default defineComponent({
         try {
           // Request addresses from API
           const json = await fetch(
-            `https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=type:adres&q=${target.value}`
+            `https://geodata.nationaalgeoregister.nl/locatieserver/v3/suggest?fq=type:adres&q=${target.value}&rows=7`
           ).then(res => {
             if (!res.ok) throw new Error(res.statusText);
             return res.json();
