@@ -29,6 +29,8 @@
 import Page from "@/components/layout/Page.vue";
 import { SvgIcon, Button } from "@fundermaps/common";
 
+import { useRouter } from "vue-router";
+
 import ProfileQuestion from "@/components/questions/ProfileQuestion.vue";
 import AddressCharacteristicsQuestion from "@/components/questions/AddressCharacteristicsQuestion.vue";
 import AddressQuestion from "@/components/questions/AddressQuestion.vue";
@@ -37,6 +39,7 @@ import FoundationDamageCauseQuestion from "@/components/questions/FoundationDama
 import FoundationDamageCharacteristicsQuestion from "@/components/questions/FoundationDamageCharacteristicsQuestion.vue";
 import FoundationTypeQuestion from "@/components/questions/FoundationTypeQuestion.vue";
 import UploadQuestion from "@/components/questions/UploadQuestion.vue";
+import form from "../store/modules/form";
 
 // import PaymentQuestion from '@/components/questions/PaymentQuestion.vue'
 // import useQuestions from "@/components/questions/Question";
@@ -57,31 +60,25 @@ export default defineComponent({
     FoundationDamageCharacteristicsQuestion,
     FoundationTypeQuestion,
     UploadQuestion
-    // ResultPage
   },
   setup(props) {
     // TODO: Typing
     // The question component is a reference to the currently loaded dynamic component,
     // which in turn is loaded based on the question index from the route
     const currentQuestionComponent: Ref<DefineComponent | null> = ref<DefineComponent | null>(null);
+    const router = useRouter();
 
     const questions = [
-      "UploadQuestion",
-      "FoundationTypeQuestion",
-      "FoundationDamageCharacteristicsQuestion",
-      "FoundationDamageCauseQuestion",
-      "EnvironmentDamageCharacteristicsQuestion",
       "AddressQuestion",
-      "ProfileQuestion",
-      "AddressCharacteristicsQuestion"
+      "FoundationDamageCauseQuestion",
+      "FoundationDamageCharacteristicsQuestion",
+      "AddressCharacteristicsQuestion",
+      "FoundationTypeQuestion",
+      "EnvironmentDamageCharacteristicsQuestion",
+      "UploadQuestion",
+      "ProfileQuestion"
     ];
 
-    // const finalComponent: { extends: DefineComponent } = {
-    //   extends: ResultPage,
-    //   data() {
-    //     return new AnalysisRisk("da");
-    //   }
-    // };
     const validated = computed(() => (currentQuestionComponent.value ? currentQuestionComponent.value.isValid : false));
     const busy = ref<boolean>(false);
     const currentStep = ref<number>(1);
@@ -104,22 +101,42 @@ export default defineComponent({
     //   valid.value = validity;
     // };
 
-    const handleNavigate = (direction: number): void => {
+    const handleNavigate = async (direction: number): Promise<void> => {
       if (direction > 0 && !currentQuestionComponent.value?.isValid) return;
+      if (typeof currentQuestionComponent.value?.onSubmit === "function") {
+        currentQuestionComponent.value?.onSubmit();
+      }
+      // TODO: Rewrite? Doesn't seem like the right place for this to be but it will do for now
+      if (isFinal.value && direction > 0) {
+        // TODO: Move to API module
+        const response = await fetch(`${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/submit`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(form.incidentRequestBody) // body data type must match "Content-Type" header
+        });
+
+        // Navigate to last page and pass success state
+        router.push({
+          name: "Finish",
+          params: {
+            success: response.ok.toString()
+          }
+        });
+      }
 
       currentStep.value += direction;
     };
 
     return {
       currentQuestionComponent,
-      // finalComponent,
       validated,
       busy,
       currentStep,
       totalSteps,
       isFinal,
       component,
-      // isValid,
       handleNavigate
     };
   }

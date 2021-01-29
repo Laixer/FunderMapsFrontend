@@ -18,12 +18,15 @@ const routes: Array<RouteRecordRaw> = [
       title: appConfig.title
     },
     component: () => import("../views/Questions.vue")
+  },
+  {
+    path: "/bedankt",
+    name: "Finish",
+    meta: {
+      title: appConfig.title
+    },
+    component: () => import("../views/Finish.vue")
   }
-  // {
-  //   path: '/klaar',
-  //   name: 'Finish',
-  //   component: () => import('../views/Finish.vue')
-  // },
 ];
 
 const router = createRouter({

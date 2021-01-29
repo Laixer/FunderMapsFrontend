@@ -1,45 +1,47 @@
 <template>
-  <!-- <Page class="Finish" :step="9" :steps="8">
+  <Page class="Finish" :step="9" :steps="8">
     <div class="Finish__Wrapper">
       <Title>Advies</Title>
 
       <BodyText :bold="true">Bedankt voor het doorgeven van uw melding.</BodyText>
-      <BodyText><span v-html="vendor.final.content"/></BodyText>
+      <BodyText><span v-html="content"/></BodyText>
       <div>
         <a href="https://www.kcaf.nl/publicaties/stappenplan-funderingsherstel/" target="_blank" alt="stappenplann">
           <Button :line="true">
             <span>Bekijk het stappenplan</span>
-           <SvgIcon icon="icon_externallink" />
-         </Button>
+            <SvgIcon icon="icon_externallink" />
+          </Button>
         </a>
       </div>
     </div>
 
-    <template slot="footer">
-      <SvgIcon icon="icon_circle_check" />Verzending gelukt
-    </template>
-  </Page> -->
+    <template #footer> <SvgIcon icon="icon_circle_check" />Verzending gelukt </template>
+  </Page>
 </template>
 
 <script lang="ts">
-// import { Component, Vue } from 'vue-property-decorator'
+import Page from "@/components/layout/Page.vue";
 
-// import Page from '@/components/layout/Page.vue'
-// import Title from '@/components/Title.vue'
-// import BodyText from '@/components/BodyText.vue'
+import { Title, BodyText, Button, SvgIcon } from "@fundermaps/common";
+import { IncidentPortalConfig } from "@fundermaps/vendor";
+import { defineComponent, inject } from "vue";
 
-// import Button from '@/components/Button.vue'
-// import SvgIcon from '@/components/common/SvgIcon.vue'
-// import vendor from '@/vendor'
+export default defineComponent({
+  name: "Finish",
+  components: {
+    Page,
+    Button,
+    SvgIcon,
+    Title,
+    BodyText
+  },
+  setup() {
+    const app = inject("app_config") as IncidentPortalConfig;
+    const content = app.final.content;
 
-// @Component({
-//   components: {
-//     Page, Button, SvgIcon, Title, BodyText
-//   }
-// })
-// export default class Finish extends Vue {
-//     private vendor = vendor
-// }
+    return { content };
+  }
+});
 </script>
 
 <style lang="scss">

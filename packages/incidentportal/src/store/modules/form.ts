@@ -52,20 +52,19 @@ class FormModule extends VuexModule implements FormState {
    */
   get incidentRequestBody() {
     return {
-      Name: `${this.firstName} ${this.lastName}`,
+      Name: this.firstName ? `${this.firstName} ${this.lastName}` : null,
       ClientId: vendorConfig.client_id,
       Email: this.email,
       PhoneNumber: this.phoneNumber,
-      FoundationType: parseInt(this.foundationType?.type + "", 10),
+      FoundationType: parseInt(this.foundationType + "", 10),
       Address: this.address?.externalId,
       FoundationDamageCharacteristics: this.foundationDamageCharacteristics.flatMap(val => parseInt(val + "", 10)),
       EnvironmentDamageCharacteristics: this.environmentDamageCharacteristics.flatMap(val => parseInt(val + "", 10)),
       Owner: this.owner,
-      OhainedBuilding: this.chainedBuilding,
+      ChainedBuilding: this.chainedBuilding,
       NeighborRecovery: this.neighborRecovery,
       FoundationDamageCause: parseInt(this.foundationDamageCause + "", 10),
-      // TODO: Fix typing
-      DocumentFile: this.documentFile.flatMap((entry: any) => [entry.file]),
+      DocumentFile: this.documentFile.flatMap((entry: any) => [entry.file]), // TODO: Fix typing
       Note: this.note
     };
   }

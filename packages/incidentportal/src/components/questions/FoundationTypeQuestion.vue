@@ -2,7 +2,7 @@
   <div class="FoundationType">
     <Title :center="true">Op welke type fundering is de woning gebouwd?</Title>
 
-    <Form>
+    <Form :on-submit="onSubmit">
       <RadioImageInput id="type" v-model="foundationType" :options="options" :valid="isValid" />
     </Form>
   </div>
