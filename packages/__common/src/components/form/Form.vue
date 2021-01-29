@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { defineComponent, provide, ref, watch, nextTick } from "vue";
-import ConnectedField from "./ConnectedField";
+import ConnectedField from "../ConnectedField";
 
 export default defineComponent({
   name: "Form",
@@ -23,6 +23,12 @@ export default defineComponent({
     autocomplete: {
       type: Boolean,
       default: false
+    },
+    onSubmit: {
+      type: Function,
+      default: () => {
+        return;
+      }
     }
   },
   emits: ["submit", "error"],
@@ -39,42 +45,42 @@ export default defineComponent({
      *
      * Note: every field should have a `validate`, `isValid`, `disable`, `enable` & `resetValidation` method.
      */
-    const registerFormField = provide(
-      "registerFormField",
-      ({ validate, isValid, resetValidation, disable, enable }: ConnectedField) => {
-        fields.value.push({ validate, isValid, resetValidation, disable, enable });
-      }
-    );
+    // const registerFormField = provide(
+    //   "registerFormField",
+    //   ({ validate, isValid, resetValidation, disable, enable }: ConnectedField) => {
+    //     fields.value.push({ validate, isValid, resetValidation, disable, enable });
+    //   }
+    // );
 
-    watch(
-      () => props.busy,
-      busy => {
-        fields.value.forEach(field => {
-          busy ? field.disable() : field.enable();
-        });
-      }
-    );
+    // watch(
+    //   () => props.busy,
+    //   busy => {
+    //     fields.value.forEach(field => {
+    //       busy ? field.disable() : field.enable();
+    //     });
+    //   }
+    // );
 
-    // Run the validation on every registered field
-    const validate = (): void => {
-      fields.value.forEach(field => {
-        field.validate();
-      });
-    };
+    // // Run the validation on every registered field
+    // const validate = (): void => {
+    //   fields.value.forEach(field => {
+    //     field.validate();
+    //   });
+    // };
 
-    // Are all registered fields valid
-    const isValid = (): boolean => {
-      return fields.value.every(field => {
-        return field.isValid;
-      });
-    };
+    // // Are all registered fields valid
+    // const isValid = (): boolean => {
+    //   return fields.value.every(field => {
+    //     return field.isValid;
+    //   });
+    // };
 
-    // Reset the validation mechanism
-    const resetValidation = (): void => {
-      fields.value.forEach(field => {
-        field.resetValidation();
-      });
-    };
+    // // Reset the validation mechanism
+    // const resetValidation = (): void => {
+    //   fields.value.forEach(field => {
+    //     field.resetValidation();
+    //   });
+    // };
 
     // Allow the form to be submitted programmatically
     const submit = (): void => {
@@ -89,27 +95,30 @@ export default defineComponent({
     // Capture the submit event, handle validation, and then either pass on
     // the event on success, or trigger an error event instead.
     const handleSubmit = (e: Event): void => {
+      console.log("on submit form");
       if (props.busy) {
         return;
       }
 
-      validate();
+      props.onSubmit();
 
-      nextTick(() => {
-        if (isValid()) {
-          emit("submit", e);
-        } else {
-          emit("error", e);
-        }
-      });
+      // validate();
+
+      // nextTick(() => {
+      //   if (isValid()) {
+      //     emit("submit", e);
+      //   } else {
+      //     emit("error", e);
+      //   }
+      // });
     };
 
     return {
       btn,
-      registerFormField,
-      validate,
-      isValid,
-      resetValidation,
+      // registerFormField,
+      // validate,
+      // isValid,
+      // resetValidation,
       submit,
       handleSubmit
     };

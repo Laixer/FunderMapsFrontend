@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Feedback v-if="this.feedback.message !== ''" :feedback="feedback" />
+    <Feedback v-if="feedback.message !== ''" :feedback="feedback" />
     <!-- <vue2Dropzone
       id="dropzone"
       ref="dropzone"

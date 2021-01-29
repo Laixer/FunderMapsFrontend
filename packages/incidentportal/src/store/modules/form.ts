@@ -1,12 +1,13 @@
 import store from "@/store";
 import {
+  Address,
   EnvironmentDamageCharacteristics,
   FoundationDamageCause,
   FoundationDamageCharacteristics,
   FoundationType
 } from "@fundermaps/common";
 import { vendorConfig } from "@fundermaps/vendor";
-import { Module, Mutation, MutationAction, VuexModule } from "vuex-module-decorators";
+import { getModule, Module, Mutation, MutationAction, VuexModule } from "vuex-module-decorators";
 
 export interface FormState {
   name: null | string;
@@ -15,10 +16,7 @@ export interface FormState {
   email: null | string;
   phoneNumber: null | string;
   foundationType: null | FoundationType;
-  address: null | string;
-  addressLabel: null | string;
-  addressCoordinates: null | string;
-  addressGeojson: null | JSON;
+  address: null | Address;
   foundationDamageCharacteristics: Array<FoundationDamageCharacteristics>;
   environmentDamageCharacteristics: Array<EnvironmentDamageCharacteristics>;
   owner: null | boolean;
@@ -38,10 +36,7 @@ class FormModule extends VuexModule implements FormState {
   email: string | null = null;
   phoneNumber: string | null = null;
   foundationType: FoundationType | null = null;
-  address: string | null = null;
-  addressLabel: string | null = null;
-  addressCoordinates: string | null = null;
-  addressGeojson: JSON | null = null;
+  address: Address | null = null;
   foundationDamageCharacteristics: Array<FoundationDamageCharacteristics> = [];
   environmentDamageCharacteristics: Array<EnvironmentDamageCharacteristics> = [];
   owner: boolean | null = null;
@@ -62,7 +57,7 @@ class FormModule extends VuexModule implements FormState {
       Email: this.email,
       PhoneNumber: this.phoneNumber,
       FoundationType: parseInt(this.foundationType?.type + "", 10),
-      Address: this.address,
+      Address: this.address?.externalId,
       FoundationDamageCharacteristics: this.foundationDamageCharacteristics.flatMap(val => parseInt(val + "", 10)),
       EnvironmentDamageCharacteristics: this.environmentDamageCharacteristics.flatMap(val => parseInt(val + "", 10)),
       Owner: this.owner,
@@ -84,9 +79,6 @@ class FormModule extends VuexModule implements FormState {
       "phoneNumber",
       "foundationType",
       "address",
-      "addressLabel",
-      "addressCoordinates",
-      "addressGeojson",
       "foundationDamageCharacteristics",
       "environmentDamageCharacteristics",
       "owner",
@@ -107,9 +99,6 @@ class FormModule extends VuexModule implements FormState {
       phoneNumber: null,
       foundationType: null,
       address: null,
-      addressLabel: null,
-      addressCoordinates: null,
-      addressGeojson: null,
       foundationDamageCharacteristics: [],
       environmentDamageCharacteristics: [],
       owner: null,
@@ -129,7 +118,7 @@ class FormModule extends VuexModule implements FormState {
 
   @Mutation
   setLastname(value: string | null) {
-    this.firstName = value;
+    this.lastName = value;
   }
 
   @Mutation
@@ -148,23 +137,8 @@ class FormModule extends VuexModule implements FormState {
   }
 
   @Mutation
-  setAddress(value: string | null) {
+  setAddress(value: Address | null) {
     this.address = value;
-  }
-
-  @Mutation
-  setAddressLabel(value: string | null) {
-    this.addressLabel = value;
-  }
-
-  @Mutation
-  setAddressCoordinates(value: string | null) {
-    this.addressCoordinates = value;
-  }
-
-  @Mutation
-  setAddressGeojson(value: JSON | null) {
-    this.addressGeojson = value;
   }
 
   @Mutation
@@ -188,6 +162,11 @@ class FormModule extends VuexModule implements FormState {
   }
 
   @Mutation
+  setNeighborRecover(value: boolean | null) {
+    this.neighborRecovery = value;
+  }
+
+  @Mutation
   setFoundationDamageCause(value: FoundationDamageCause | null) {
     this.foundationDamageCause = value;
   }
@@ -198,8 +177,8 @@ class FormModule extends VuexModule implements FormState {
   }
 
   @Mutation
-  setNote(value: Array<string>) {
-    this.documentFile = value;
+  setNote(value: string | null) {
+    this.note = value;
   }
 
   @Mutation

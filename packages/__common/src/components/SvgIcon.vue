@@ -75,7 +75,6 @@ export default defineComponent({
       nextTick(setupSvg);
     });
 
-    console.log(process.env);
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const svg = require(`!html-loader!../assets/icons/${__APP}/${props.icon}.svg`);
 

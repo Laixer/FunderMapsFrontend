@@ -1,192 +1,126 @@
 <template>
-  <!-- <Page :step="this.currentStep" :steps="this.totalSteps" class="Questions">
+  <Page :step="currentStep" :steps="totalSteps" class="Questions">
     <transition name="slide" mode="out-in" appear>
-      <component
-        ref="currentQuestionComponent"
-        :is="this.questions[this.currentStep]"
-        :busy="busy"
-        @isValid="isValid"
-      />
+      <component :is="component" ref="currentQuestionComponent" :busy="busy" @isValid="isValid" />
     </transition>
 
-    <template slot="footer">
-      <Button
-        :ghost="true"
-        v-if="this.currentStep > 1"
-        @click="handleNavigate(-1)"
-      >
+    <template #footer>
+      <Button v-if="currentStep > 1" :ghost="true" @click="handleNavigate(-1)">
         <SvgIcon icon="icon_arrow_previous" />
         <span>Vorige</span>
       </Button>
-      <template v-if="!this.isLastStep">
-        <Button :disabled="!this.valid" @click="handleNavigate(1)">
+      <template v-if="!isFinal">
+        <Button :disabled="!validated" @click="handleNavigate(1)">
           <span>Volgende</span>
           <SvgIcon icon="icon_arrow_next" />
         </Button>
       </template>
       <template v-else>
-        <Button
-          :isSubmit="true"
-          :disabled="!this.valid"
-          @click="handleNavigate(1)"
-        >
+        <Button :is-submit="true" :disabled="!validated" @click="handleNavigate(1)">
           <span>Versturen</span>
           <SvgIcon icon="icon_check" />
         </Button>
       </template>
     </template>
-  </Page> -->
+  </Page>
 </template>
 
 <script lang="ts">
-// import { Component, Vue } from 'vue-property-decorator'
+import Page from "@/components/layout/Page.vue";
+import { SvgIcon, Button } from "@fundermaps/common";
 
-// import Page from '@/components/layout/Page.vue'
-// import Button from '@/components/Button.vue'
-// import SvgIcon from '@/components/common/SvgIcon.vue'
+import ProfileQuestion from "@/components/questions/ProfileQuestion.vue";
+import AddressCharacteristicsQuestion from "@/components/questions/AddressCharacteristicsQuestion.vue";
+import AddressQuestion from "@/components/questions/AddressQuestion.vue";
+import EnvironmentDamageCharacteristicsQuestion from "@/components/questions/EnvironmentDamageCharacteristicsQuestion.vue";
 
-// import ProfileQuestion from '@/components/questions/ProfileQuestion.vue'
-// import UploadQuestion from '@/components/questions/UploadQuestion.vue'
-// import AddressQuestion from '@/components/questions/AddressQuestion.vue'
-// import FoundationTypeQuestion from '@/components/questions/FoundationTypeQuestion.vue'
-// import AddressCharacteristicsQuestion from '@/components/questions/AddressCharacteristicsQuestion.vue'
-// import FoundationDamageCharacteristicsQuestion from '@/components/questions/FoundationDamageCharacteristicsQuestion.vue'
-// import EnvironmentDamageCharacteristicsQuestion from '@/components/questions/EnvironmentDamageCharacteristicsQuestion.vue'
-// import FoundationDamageCauseQuestion from '@/components/questions/FoundationDamageCauseQuestion.vue'
-// import QuestionMixin from '@/components/questions/Question'
+// import PaymentQuestion from '@/components/questions/PaymentQuestion.vue'
+// import useQuestions from "@/components/questions/Question";
+// import ResultPage from "@/components/questions/ResultPage.vue";
+import { defineComponent, DefineComponent, ref, computed, Ref, watch } from "vue";
 
-// @Component({
-//   components: {
-//     Page, Button, SvgIcon,
-//     AddressQuestion, FoundationTypeQuestion, AddressCharacteristicsQuestion, FoundationDamageCauseQuestion, FoundationDamageCharacteristicsQuestion, EnvironmentDamageCharacteristicsQuestion, ProfileQuestion
-//   }
-// })
-// export default class Questions extends Vue {
-//   private questions: { [key: number]: typeof QuestionMixin } = {
-//     1: AddressQuestion,
-//     2: FoundationDamageCauseQuestion,
-//     3: FoundationDamageCharacteristicsQuestion,
-//     4: AddressCharacteristicsQuestion,
-//     5: FoundationTypeQuestion,
-//     6: EnvironmentDamageCharacteristicsQuestion,
-//     7: UploadQuestion,
-//     8: ProfileQuestion,
-//   }
+export default defineComponent({
+  name: "Questions",
+  components: {
+    Page,
+    Button,
+    SvgIcon,
+    ProfileQuestion,
+    AddressCharacteristicsQuestion,
+    AddressQuestion,
+    EnvironmentDamageCharacteristicsQuestion
+    // AddressQuestion,
+    // ResultPage
+  },
+  setup(props) {
+    // TODO: Typing
+    // The question component is a reference to the currently loaded dynamic component,
+    // which in turn is loaded based on the question index from the route
+    const currentQuestionComponent: Ref<DefineComponent | null> = ref<DefineComponent | null>(null);
 
-//   private valid = false
+    const questions = [
+      "EnvironmentDamageCharacteristicsQuestion",
+      "AddressQuestion",
+      "ProfileQuestion",
+      "AddressCharacteristicsQuestion"
+    ];
 
-//   /**
-//    * Retrieve validation state of current question component
-//    */
-//   private isValid(validity: boolean): void {
-//     this.valid = validity
-//   }
+    // const finalComponent: { extends: DefineComponent } = {
+    //   extends: ResultPage,
+    //   data() {
+    //     return new AnalysisRisk("da");
+    //   }
+    // };
+    const validated = computed(() => (currentQuestionComponent.value ? currentQuestionComponent.value.isValid : false));
+    const busy = ref<boolean>(false);
+    const currentStep = ref<number>(1);
 
-//   /**
-//    * Indicates the form is being submitted
-//    */
-//   private busy = false
+    const totalSteps = computed((): number => questions.length);
+    const isFinal = computed((): boolean => currentStep.value === totalSteps.value);
 
-//   private currentStep = 1;
+    // const component = computed((): any => (isFinal.value ? finalComponent : questions[currentStep.value]));
+    const component = computed((): string => questions[currentStep.value - 1]);
 
-//   /**
-//    * The current step is based on the question number from the route
-//    */
-//   // get currentStep(): number {
-//   //   return parseInt(this.$route.params.question, 10)
-//   // }
-//   private get nextButtonText() {
-//     return this.isLastStep ? "Versturen" : "Volgende"
-//   }
+    watch(currentQuestionComponent, (newComponent, oldComponent) => {
+      // TODO: Rewrite, this is not type safe
+      if (typeof oldComponent?.onSubmit === "function") {
+        oldComponent?.onSubmit();
+      }
+    });
 
-//   private get isLastStep(): boolean {
-//     return this.currentStep === this.totalSteps
-//   }
-//   /**
-//    * The question component is a reference to the currently loaded dynamic component,
-//    * which in turn is loaded based on the question index from the route
-//    */
-//   private currentQuestionComponent(): QuestionMixin {
-//     return this.$refs.currentQuestionComponent as QuestionMixin
-//   }
+    // // Retrieve validation state of current question component
+    // const isValid = (validity: boolean): void => {
+    //   valid.value = validity;
+    // };
 
-//   get totalSteps(): number {
-//     return Object.keys(this.questions).length
-//   }
+    const handleNavigate = (direction: number): void => {
+      if (direction > 0 && !currentQuestionComponent.value?.isValid) return;
 
-//   /**
-//    * Handle navigation
-//    */
-//   private async handleNavigate(direction: number): Promise<void> {
-//     if (direction > 0 && !this.currentQuestionComponent().isValid) return
-//     if (this.currentQuestionComponent)
-//       try {
-//         this.currentQuestionComponent().storeData()
-//       } catch (e) {
-//         console.error(`Error storing form data: ${e.message}`)
-//       }
+      currentStep.value += direction;
+    };
 
-//     if (this.isLastStep && direction > 0) {
-//       const data = JSON.stringify(this.$store.getters.getIndicentRequestBody)
-//       const response = await fetch(`${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/submit`, {
-//         method: 'POST',
-//         headers: {
-//           'Content-Type': 'application/json'
-//         },
-//         body: data // body data type must match "Content-Type" header
-//       });
-
-//       // Navigate to last page and pass success state
-//       this.$router.push(
-//         {
-//           name: 'Finish',
-//           params: {
-//             success: response.ok.toString()
-//           }
-//         }
-//       )
-
-//     } else {
-
-//       this.valid = false
-//       this.currentStep += direction
-//       // this.$router.push(
-//       //   {
-//       //     name: 'Questions',
-//       //     params: {
-//       //       question: (this.currentStep + direction).toString()
-//       //     }
-//       //   }
-//       // )
-//     }
-//   }
-
-//   // /**
-//   //  * Store the question data in vuex
-//   //  */
-//   // storeData() {
-//   //   const question = this.currentQuestionComponent
-
-//   //   if (question === 'QuestionTwo') {
-//   //     Object
-//   //       .entries(this.questionData['QuestionTwo'])
-//   //       .forEach((entry) => {
-//   //         this.$store.commit('updateState', {
-//   //           prop: entry[0],
-//   //           value: entry[1]
-//   //         })
-//   //       })
-//   //   } else {
-//   //     this.$store.commit('updateState', {
-//   //       prop: question,
-//   //       value: this.questionData[question]
-//   //     })
-//   //   }
-//   // }
-// }
+    return {
+      currentQuestionComponent,
+      // finalComponent,
+      validated,
+      busy,
+      currentStep,
+      totalSteps,
+      isFinal,
+      component,
+      // isValid,
+      handleNavigate
+    };
+  }
+});
 </script>
 
 <style lang="scss">
+#changeLabel {
+  display: flex;
+  align-items: center;
+  color: #606976;
+}
 .slide-enter-active {
   transition: all 0.3s ease;
 }

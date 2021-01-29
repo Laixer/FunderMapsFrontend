@@ -25,9 +25,7 @@
 </template>
 
 <script lang="ts">
-import Title from "@/components/Title.vue";
-
-import { Form, FormField } from "@fundermaps/common";
+import { Form, FormField, Title } from "@fundermaps/common";
 
 import * as EmailValidator from "email-validator";
 import { computed, ComputedRef, defineComponent, provide, ref, Ref } from "vue";

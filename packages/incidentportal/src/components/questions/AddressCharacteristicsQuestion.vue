@@ -1,34 +1,26 @@
 <template>
   <div class="AddressCharacteristics">
-    <Form>
+    <Form :on-submit="onSubmit">
       <div class="AddressCharacteristics--one">
         <Title :center="true">Is het een vrijstaand pand of onderdeel van een (bouw)blok?</Title>
         <RadioImageInput
-          :value="this.chainedBuilding"
           id="vrijstaand"
+          v-model="chainedBuilding"
           :options="vrijstaandOptions"
-          :valid="this.chainedBuilding !== null"
-          @input="updateChainedBuilding"
+          :valid="chainedBuilding !== null"
         />
       </div>
       <div class="AddressCharacteristics--two">
         <Title :center="true">Bent u eigenaar of huurder van de woning?</Title>
-        <RadioImageInput
-          :value="this.owner"
-          id="eigendom"
-          :options="eigendomOptions"
-          :valid="this.owner !== null"
-          @input="updateOwner"
-        />
+        <RadioImageInput id="eigendom" v-model="owner" :options="eigendomOptions" :valid="owner !== null" />
       </div>
       <div class="AddressCharacteristics--three">
         <Title :center="true">Is bij een van uw directe buren funderingsherstel uitgevoerd?</Title>
         <RadioImageInput
-          :value="this.neighborRecovery"
           id="buren"
+          v-model="neighborRecovery"
           :options="burenOptions"
-          :valid="this.neighborRecovery !== null"
-          @input="updateNeighborRecovery"
+          :valid="neighborRecovery !== null"
         />
       </div>
     </Form>
@@ -36,112 +28,84 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
-import QuestionMixin from '@/components/questions/Question'
+import form from "../../store/modules/form";
+import { computed, ComputedRef, defineComponent, Ref, ref } from "vue";
 
+import { Form, Option, Title, RadioImageInput } from "@fundermaps/common";
 
-import Title from '@/components/Title.vue'
-
-import Form from '@/components/common/Form.vue'
-import RadioImageInput from '@/components/form/RadioImageInput.vue'
-
-import { IOption } from '@/components/common/IOption'
-
-@Component({
-  mixins: [QuestionMixin],
+export default defineComponent({
+  name: "AddressCharacteristicsQuestion",
   components: {
-    Title, Form, RadioImageInput
-  }
-})
-export default class AddressCharacteristicsQuestion extends Mixins(QuestionMixin) {
+    Title,
+    Form,
+    RadioImageInput
+  },
+  setup() {
+    const chainedBuilding: Ref<boolean | null> = ref(form.chainedBuilding);
+    const owner: Ref<boolean | null> = ref(form.owner);
+    const neighborRecovery: Ref<boolean | null> = ref(form.neighborRecovery);
 
-  private chainedBuilding: boolean | null = null
-  private owner: boolean | null = null
-  private neighborRecovery: boolean | null = null
-
-  private vrijstaandOptions: Array<IOption> = [
-    {
-      label: 'Vrijstaand',
-      value: false,
-      image: 'options/vrijstaand_vrijstaand'
-    },
-    {
-      label: '(Bouw)blok',
-      value: true,
-      image: 'options/vrijstaand_bouwblok'
-    }
-  ]
-  private eigendomOptions: Array<IOption> = [
-    {
-      label: 'Eigenaar',
-      value: true,
-      image: 'options/eigendom_eigenaar'
-    },
-    {
-      label: 'Huurder',
-      value: false,
-      image: 'options/eigendom_huurder'
-    }
-  ]
-  private burenOptions: Array<IOption> = [
-    {
-      label: 'Ja',
-      value: true,
-      image: 'options/buren_ja'
-    },
-    {
-      label: 'Nee',
-      value: false,
-      image: 'options/buren_nee'
-    }
-  ]
-
-  public get isValid(): boolean {
-    return (this.chainedBuilding !== null
-      && this.owner !== null
-      && this.neighborRecovery !== null
-    )
-  }
-
-  public storeData(): void {
-    this.$store.commit('updateState', [
+    const vrijstaandOptions: Array<Option> = [
       {
-        key: 'chainedBuilding',
-        value: this.chainedBuilding
+        label: "Vrijstaand",
+        value: false,
+        image: "options/vrijstaand_vrijstaand"
       },
       {
-        key: 'owner',
-        value: this.owner
+        label: "(Bouw)blok",
+        value: true,
+        image: "options/vrijstaand_bouwblok"
+      }
+    ];
+
+    const eigendomOptions: Array<Option> = [
+      {
+        label: "Eigenaar",
+        value: true,
+        image: "options/eigendom_eigenaar"
       },
       {
-        key: 'neighborRecovery',
-        value: this.neighborRecovery
+        label: "Huurder",
+        value: false,
+        image: "options/eigendom_huurder"
+      }
+    ];
+
+    const burenOptions: Array<Option> = [
+      {
+        label: "Ja",
+        value: true,
+        image: "options/buren_ja"
       },
-    ])
-  }
+      {
+        label: "Nee",
+        value: false,
+        image: "options/buren_nee"
+      }
+    ];
 
-  /**
-   * Pass on the initial validity status
-   */
-  created(): void {
-    this.chainedBuilding = this.$store.state.chainedBuilding
-    this.owner = this.$store.state.owner
-    this.neighborRecovery = this.$store.state.neighborRecovery
-  }
+    const isValid: ComputedRef<boolean> = computed(
+      () => chainedBuilding.value !== null && owner.value !== null && neighborRecovery.value !== null
+    );
 
-  private updateOwner(val: string) {
-    this.owner = (val === 'true')
-  }
+    function onSubmit(): void {
+      form.setChainedBuilding(chainedBuilding.value);
+      form.setOwner(owner.value);
+      form.setNeighborRecover(neighborRecovery.value);
+    }
 
-  private updateNeighborRecovery(val: string) {
-    this.neighborRecovery = (val === 'true')
+    return {
+      chainedBuilding,
+      owner,
+      neighborRecovery,
+      vrijstaandOptions,
+      eigendomOptions,
+      burenOptions,
+      isValid,
+      onSubmit
+    };
   }
-
-  private updateChainedBuilding(val: string) {
-    this.chainedBuilding = (val === 'true')
-  }
-
-}
+});
 </script>
 
 <style lang="scss">

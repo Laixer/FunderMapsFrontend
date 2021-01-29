@@ -3,6 +3,9 @@
 const path = require("path");
 const { argv } = require("yargs");
 
+// Load our global .env file into process.env
+require("dotenv").config({ path: path.join(`${__dirname}`, "/.env") });
+
 const vendor = argv.vendor ? argv.vendor : "fundermaps";
 const vendorPath = path.relative(".", `../__vendor/src/${vendor}`);
 const packageName = process.VUE_CLI_SERVICE.pkg.name.split("/")[1];

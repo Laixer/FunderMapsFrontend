@@ -1,11 +1,11 @@
 <template>
-  <div
+  <button
     class="Button"
     :class="{ 'Button--submit': isSubmit, 'Button--wide': wide, 'Button--ghost': ghost, 'Button--line': line }"
     @click="handleClick"
   >
     <slot />
-  </div>
+  </button>
 </template>
 
 <script lang="ts">
@@ -52,7 +52,12 @@ export default defineComponent({
 $active: adjust-color($VENDOR_PRIMARY_COLOR, $red: 120, $green: 91, $blue: 0);
 $hover: adjust-color($VENDOR_PRIMARY_COLOR, $red: -7, $green: -19, $blue: -58);
 
+.Button:focus {
+  outline: none;
+}
+
 .Button {
+  border-width: 0px;
   position: relative;
   padding: 15px 27px 16px;
   font-size: 18px;

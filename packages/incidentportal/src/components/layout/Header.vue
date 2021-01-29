@@ -82,6 +82,10 @@ export default defineComponent({
     }
   }
 
+  a {
+    margin: auto;
+  }
+
   @media only screen and (min-width: $BREAKPOINT) {
     position: sticky;
     top: 0;

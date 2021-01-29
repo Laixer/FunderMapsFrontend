@@ -1,20 +1,16 @@
 <template>
   <div class="RadioImageInput" :class="fieldClasses">
     <div class="RadioImageInput__Wrapper">
-      <div
-        v-for="(option, index) in options"
-        class="RadioImageInput__Field"
-        :key="id + ' ' + index"
-      >
+      <div v-for="(option, index) in options" :key="id + ' ' + index" class="RadioImageInput__Field">
         <input
           :id="id + ' ' + index"
+          :value="modelValue"
           type="radio"
           :name="id"
-          :value="option.value"
           :disabled="isDisabled"
           :checked="isChecked(option.value)"
-          @input="handleInput"
           @blur="handleBlur"
+          @input="$emit('update:modelValue', $event.target.value ? option.value : null)"
         />
 
         <label :for="id + ' ' + index" class="RadioImageInput__Label">
@@ -28,61 +24,41 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { Prop, Component } from 'vue-property-decorator';
-import SvgIcon from '@/components/common/SvgIcon.vue'
-import FormField from '@/components/common/FormField.vue'
+import FormField from "./FormField.vue";
+import SvgIcon from "../SvgIcon.vue";
+import { withFormFieldProps } from "../../props/FormFieldProps";
+import { defineComponent } from "vue";
 
-@Component({
-  components: {
-    SvgIcon
-  }
-})
-export default class RadioImageInput extends FormField {
-  /**
-   * The type of form field
-   */
-  @Prop({ default: 'radio' }) readonly type!: string;
-
-  private isChecked(value: string | boolean | number): boolean {
-    return this.value === value.toString() || this.value === value
-  }
-
-  /**
-   * List of css classes
-   */
-  get fieldClasses(): Record<string, boolean> {
-    return {
-      'RadioImageInput--disabled': this.isDisabled,
-      'RadioImageInput--busy': this.isBusy,
-      'RadioImageInput--valid': this.hasBeenValidated ? this.isValid : false,
-      'RadioImageInput--invalid': this.hasBeenValidated ? !this.isValid : false,
+// TODO: Rewrite this component, don't extend formfield
+export default defineComponent({
+  name: "RadioImageInput",
+  components: { SvgIcon },
+  extends: FormField,
+  props: {
+    ...withFormFieldProps(),
+    type: {
+      type: String,
+      default: "radio"
     }
+  },
+  emits: ["update:modelValue"],
+  setup(props) {
+    const isChecked = (value: string | boolean | number): boolean => {
+      return props.modelValue === value.toString() || props.modelValue === value;
+    };
+
+    return {
+      isChecked
+    };
   }
-}
+});
 </script>
 
 <style lang="scss">
-$unselected: adjust-color(
-  $VENDOR_PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114,
-  $alpha: -0.7
-);
-$unselectedText: adjust-color(
-  $VENDOR_PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114
-);
-$unselectedSvg: adjust-color(
-  $VENDOR_PRIMARY_COLOR,
-  $red: 176,
-  $green: 131,
-  $blue: -15
-);
+$unselected: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$unselectedText: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
+$unselectedSvg: adjust-color($VENDOR_PRIMARY_COLOR, $red: 176, $green: 131, $blue: -15);
 
 .RadioImageInput {
   &__Wrapper {

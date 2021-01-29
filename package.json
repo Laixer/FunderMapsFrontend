@@ -20,15 +20,18 @@
     "serve:customerportal": "lerna exec yarn serve --scope=@fundermaps/customerportal --",
     "serve:incidentportal": "lerna exec yarn serve --scope=@fundermaps/incidentportal --",
     "build": "lerna run build",
+    "build:clientapp": "lerna exec yarn build --scope=@fundermaps/clientapp --",
+    "build:customerportal": "lerna exec build serve --scope=@fundermaps/customerportal --",
+    "build:incidentportal": "lerna exec build serve --scope=@fundermaps/incidentportal --",
     "publish": "lerna publish"
   },
   "dependencies": {
     "@fundermaps/common": "0.1.0",
     "@fundermaps/vendor": "0.0.0",
     "mapbox-gl": "^2.0.1",
-    "vuex": "^4.0.0-0",
-    "vue-router": "^4.0.0-0"
-    },
+    "vue-router": "^4.0.0-0",
+    "vuex": "^4.0.0-0"
+  },
   "devDependencies": {
     "@types/mapbox-gl": "^2.0.2",
     "@types/node": "^14.14.16",
@@ -39,17 +42,18 @@
     "concurrently": "^5.3.0",
     "copy-webpack-plugin": "^6.3.2",
     "eslint": "^7.16.0",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^10.1.0",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-vue": "^7.0.0-0",
-    "prettier": "^1.19.1",
-    "lerna": "^3.22.1",
-    "vuejs-datepicker": "^1.6.2",
     "html-loader": "^1.3.2",
-    "typescript": "~3.9.3",
-    "yargs": "^16.2.0",
+    "lerna": "^3.22.1",
+    "node-sass": "^4.12.0",
+    "prettier": "^1.19.1",
+    "sass-loader": "^10.1.0",
+    "dotenv": "^8.2.0",
     "tsconfig-paths-webpack-plugin": "^3.3.0",
-    "vuex-module-decorators": "^1.0.1"
+    "typescript": "~3.9.3",
+    "vuejs-datepicker": "^1.6.2",
+    "vuex-module-decorators": "^1.0.1",
+    "yargs": "^16.2.0"
   }
 }

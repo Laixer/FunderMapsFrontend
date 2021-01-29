@@ -12,7 +12,7 @@
           </span>
         </template>
         <template v-else>
-          <span>{{ step }}</span>
+          <span>{{ currentStep }}</span>
         </template>
       </li>
     </transition-group>

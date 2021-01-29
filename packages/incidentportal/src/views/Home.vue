@@ -11,8 +11,8 @@
         <BodyText>
           <span v-html="text.content" />
         </BodyText>
-        <router-link :to="{ name: 'Home' }">
-          <Button id="navigateFooterButton">
+        <router-link :to="{ name: 'Questions' }">
+          <Button id="navigateBodyButton">
             <span>Melding maken</span>
             <SvgIcon icon="icon_arrow_next" />
           </Button>
@@ -25,7 +25,7 @@
 
     <template #footer>
       <Copyright company="FunderMaps" />
-      <router-link :to="{ name: 'Home' }">
+      <router-link :to="{ name: 'Questions' }">
         <Button id="navigateFooterButton">
           <span>Melding maken</span>
           <SvgIcon icon="icon_arrow_next" />

@@ -73,7 +73,7 @@ export default defineComponent({
     const busy = ref<boolean>(false);
     const currentStep = ref<number>(1);
 
-    const isLastStep = computed((): boolean => true);
+    const isLastStep = computed((): boolean => false);
     const nextButtonText = computed((): string => (isLastStep.value ? "Vesturen" : "Volgende"));
     const totalSteps = computed((): number => Object.keys(questions).length);
     const isFinal = computed((): boolean => currentStep.value === totalSteps.value);

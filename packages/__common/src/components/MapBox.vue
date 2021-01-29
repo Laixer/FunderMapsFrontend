@@ -1,15 +1,16 @@
 <template>
   <div class="jw-map-wrapper">
-    <div ref="container"></div>
+    <div id="container" />
   </div>
 </template>
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 
-import { Map, MapboxOptions } from "mapbox-gl";
+import { Map, MapboxOptions, Marker } from "mapbox-gl";
+import { Address } from "../types/Address";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { defineComponent, ref, onBeforeUnmount, onMounted, inject, SetupContext, PropType, nextTick } from "vue";
+import { defineComponent, onBeforeUnmount, onMounted, inject, SetupContext, PropType, nextTick, watch } from "vue";
 
 /**
  * A Generic MapBox wrapper component
@@ -20,47 +21,79 @@ export default defineComponent({
     options: {
       type: Object as PropType<MapboxOptions>,
       default: {}
+    },
+    address: {
+      type: Object as PropType<Address | null>,
+      default: null,
+      required: false
     }
   },
   emits: ["load"],
   setup(props, { emit }: SetupContext) {
-    const vendorStyle = inject<{ mapboxPrimaryColor: string }>("vendor_style", { mapboxPrimaryColor: "#2657FF" });
+    const { mapboxPrimaryColor } = inject<{ mapboxPrimaryColor: string }>("vendor_style", {
+      mapboxPrimaryColor: "#2657FF"
+    });
 
-    const token = ref<string>(process.env.VUE_APP_MAPBOX_TOKEN!);
-    const mapStyle = ref<string>(process.env.VUE_APP_MAPBOX_STYLE!);
+    const token = process.env.VUE_APP_MAPBOX_TOKEN;
+    const mapStyle = process.env.VUE_APP_MAPBOX_STYLE;
 
-    const map = ref<Map>(
-      new Map({
-        ...props.options,
-        accessToken: token.value,
-        style: mapStyle.value
-      })
+    let map: Map | null = null;
+
+    let addressMarker: Marker | null = null;
+
+    const moveToAddress = () => {
+      if (props.address && map) {
+        const { Long, Lat } = props.address.coordinates;
+        addressMarker?.remove();
+        addressMarker = new Marker().setLngLat([Long, Lat]).addTo(map);
+
+        map.flyTo({
+          center: [Long, Lat],
+          zoom: 18
+        });
+      }
+    };
+
+    watch(
+      () => props.address,
+      () => {
+        moveToAddress();
+      }
     );
 
     onBeforeUnmount(async () => {
       await nextTick(() => {
-        map.value.remove();
+        map?.remove();
       });
     });
 
     onMounted(() => {
-      map.value.on("load", () => {
-        map.value.addSource("address", {
-          type: "geojson"
+      map = new Map({
+        ...props.options,
+        container: "container",
+        accessToken: token,
+        style: mapStyle
+      });
+
+      map.once("load", () => {
+        map?.addSource("address", {
+          type: "geojson",
+          data: ""
         });
 
-        map.value.addLayer({
+        map?.addLayer({
           id: "address",
           type: "fill",
           source: "address",
           layout: {},
           paint: {
-            "fill-color": vendorStyle.mapboxPrimaryColor,
+            "fill-color": mapboxPrimaryColor,
             "fill-opacity": 0.8
           }
         });
 
-        emit("load", { map });
+        emit("load", map);
+        moveToAddress();
       });
     });
 

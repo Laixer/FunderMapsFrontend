@@ -1,7 +1,7 @@
 <template>
   <div class="CheckboxInput" :class="fieldClasses">
     <div class="CheckboxInput__Wrapper">
-      <div v-for="(option, index) in options" class="CheckboxInput__Field" :key="id + ' ' + index">
+      <div v-for="(option, index) in options" :key="id + ' ' + index" class="CheckboxInput__Field">
         <input
           :id="id + ' ' + index"
           type="checkbox"
@@ -9,7 +9,14 @@
           :value="option.value"
           :disabled="isDisabled"
           :checked="isChecked(option.value)"
-          @input="handleInput"
+          @input="
+            $emit(
+              'update:modelValue',
+              modelValue.includes(option.value)
+                ? modelValue.filter(value => value !== option.value)
+                : [...modelValue, option.value]
+            )
+          "
           @blur="handleBlur"
         />
 
@@ -25,59 +32,47 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { Prop, Component } from 'vue-property-decorator';
-import FormField from '@/components/common/FormField.vue'
-import SvgIcon from '@/components/common/SvgIcon.vue'
+import SvgIcon from "../SvgIcon.vue";
+import FormField from "./FormField.vue";
+import { withFormFieldProps } from "../../props/FormFieldProps";
+import { useFormField } from "../../props/useFormField";
 
-@Component({
-  components: {
-    SvgIcon
+import { defineComponent, SetupContext, computed } from "vue";
+
+export default defineComponent({
+  name: "CheckboxInput",
+  components: { SvgIcon },
+  props: {
+    ...withFormFieldProps()
+  },
+  emits: ["update:modelValue"],
+  setup(props, context: SetupContext) {
+    const { isDisabled, isBusy, hasBeenValidated, isValid } = useFormField(props, context);
+
+    // Whether the value is checked
+    const isChecked = (value: string | boolean | number): boolean => {
+      console.log(props.modelValue);
+      return (props.modelValue as Array<string | boolean | number>).includes(value);
+    };
+
+    const fieldClasses = computed(() => {
+      return {
+        "CheckboxInput--disabled": isDisabled,
+        "CheckboxInput--busy": isBusy,
+        "CheckboxInput--valid": hasBeenValidated ? isValid : false,
+        "CheckboxInput--invalid": hasBeenValidated ? !isValid : false
+      };
+    });
+
+    return { isChecked, fieldClasses };
   }
-})
-export default class CheckboxInput extends FormField {
-
-  /**
-   * The type of form field
-   */
-  @Prop({ default: 'checkbox' }) readonly type!: string;
-
-  /**
-   * List of css classes
-   */
-  get fieldClasses(): Record<string, boolean> {
-    return {
-      'CheckboxInput--disabled': this.isDisabled,
-      'CheckboxInput--busy': this.isBusy,
-      'CheckboxInput--valid': this.hasBeenValidated ? this.isValid : false,
-      'CheckboxInput--invalid': this.hasBeenValidated ? !this.isValid : false,
-    }
-  }
-
-  /**
-   * Whether the value is checked
-   */
-  isChecked(value: number | string | boolean): boolean {
-    return Array.isArray(this.value) && this.value.includes(value + '')
-  }
-}
+});
 </script>
 
 <style lang="scss">
-$unselected: adjust-color(
-  $VENDOR_PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114,
-  $alpha: -0.7
-);
-$unselectedText: adjust-color(
-  $VENDOR_PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114
-);
+$unselected: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$unselectedText: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
 
 .CheckboxInput {
   &__Wrapper {

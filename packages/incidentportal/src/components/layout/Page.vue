@@ -2,7 +2,7 @@
   <div class="Page">
     <Header :step="step" :steps="steps" />
     <div class="Page__Wrapper">
-      <ProgressSteps v-if="steps" :current-step="step" :steps="steps" />
+      <ProgressSteps v-if="steps" :step="step" :steps="steps" />
 
       <div class="Page__Main" :class="{ 'Page__Main--sidebar': steps > 0 }">
         <div class="Page__Content">

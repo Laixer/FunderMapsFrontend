@@ -1,110 +1,87 @@
 <template>
   <div class="EnvironmentDamageCharacteristics">
-    <Title
-      :center="true"
-      subtitle="Meerdere opties mogelijk"
-    >Herkent u minstens één van de volgende punten in de omgeving van de woning?</Title>
-
+    <Title :center="true" subtitle="Meerdere opties mogelijk"
+      >Herkent u minstens één van de volgende punten in de omgeving van de woning?</Title
+    >
     <Form>
-      <CheckboxInput
-        :value="value"
-        id="omgeving"
-        :options="options"
-        :valid="isValid"
-        @input="handleInput"
-      />
+      <CheckboxInput id="omgeving" v-model="value" :options="options" :valid="isValid" />
     </Form>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
-import QuestionMixin from '@/components/questions/Question'
+import { CheckboxInput, Title, Form, Option, EnvironmentDamageCharacteristics } from "@fundermaps/common";
+import form from "../../store/modules/form";
 
-import Title from '@/components/Title.vue'
+import { computed, ComputedRef, defineComponent, Ref, ref } from "vue";
 
-import Form from '@/components/common/Form.vue'
-import CheckboxInput from '@/components/form/CheckboxInput.vue'
-
-import { IOption } from '@/components/common/IOption'
-import EnvironmentDamageCharacteristics from '@/types/EnvironmentDamageCharacteristics'
-
-@Component({
-  mixins: [QuestionMixin],
+export default defineComponent({
+  name: "EnvironmentDamageCharacteristicsQuestion",
   components: {
-    Title, Form, CheckboxInput
+    Title,
+    Form,
+    CheckboxInput
+  },
+  setup() {
+    const value: Ref<Array<EnvironmentDamageCharacteristics>> = ref(form.environmentDamageCharacteristics);
+    const { Type } = EnvironmentDamageCharacteristics;
+    const options: Array<Option> = [
+      {
+        label: "Er is sprake van bodemdaling tuin/erf",
+        value: Type.Subsidence
+      },
+      {
+        label: "Andere panden in de buurt met funderingsproblemen",
+        value: Type.FoundationDamageNearby
+      },
+      {
+        label: "Verzakkende rioolaansluitingen",
+        value: Type.SaggingSewerConnection
+      },
+      {
+        label: "Toenemende verkeersdrukte in de straat",
+        value: Type.IncreasingTraffic
+      },
+      {
+        label: "Verzakkende kabels en leidingen",
+        value: Type.SaggingCablesPipes
+      },
+      {
+        label: "De straat is onlangs opgehoogd",
+        value: Type.Elevation
+      },
+      {
+        label: "Wateroverlast (water op straat)",
+        value: Type.Flooding
+      },
+
+      {
+        label: "Er zijn bouwactiviteiten in de omgeving gaande (geweest)",
+        value: Type.ConstructionNearby
+      },
+      {
+        label: "Water onderlast (droge bodem)",
+        value: Type.LowGroundWater
+      },
+      {
+        label: "Er staan grote bomen dicht bij (< 10 m) mijn woning",
+        value: Type.VegetationNearby
+      },
+      {
+        label: "Lekke riolering",
+        value: Type.SewageLeakage
+      }
+    ];
+
+    const isValid: ComputedRef<boolean> = computed(() => value.value.length > 0);
+
+    function onSubmit(): void {
+      form.setEnvironmentDamageCharacteristics(value.value);
+    }
+
+    return { value, options };
   }
-})
-export default class EnvironmentDamageCharacteristicsQuestion extends Mixins(QuestionMixin) {
-  private value: Array<EnvironmentDamageCharacteristics> = []
-
-  private options: Array<IOption> = [
-    {
-      label: 'Er is sprake van bodemdaling tuin/erf',
-      value: EnvironmentDamageCharacteristics.Subsidence
-    },
-    {
-      label: 'Andere panden in de buurt met funderingsproblemen',
-      value: EnvironmentDamageCharacteristics.FoundationDamageNearby
-    },
-    {
-      label: 'Verzakkende rioolaansluitingen',
-      value: EnvironmentDamageCharacteristics.SaggingSewerConnection
-    },
-    {
-      label: 'Toenemende verkeersdrukte in de straat',
-      value: EnvironmentDamageCharacteristics.IncreasingTraffic
-    },
-    {
-      label: 'Verzakkende kabels en leidingen',
-      value: EnvironmentDamageCharacteristics.SaggingCablesPipes
-    },
-    {
-      label: 'De straat is onlangs opgehoogd',
-      value: EnvironmentDamageCharacteristics.Elevation
-    },
-    {
-      label: 'Wateroverlast (water op straat)',
-      value: EnvironmentDamageCharacteristics.Flooding
-    },
-
-    {
-      label: 'Er zijn bouwactiviteiten in de omgeving gaande (geweest)',
-      value: EnvironmentDamageCharacteristics.ConstructionNearby
-    },
-    {
-      label: 'Water onderlast (droge bodem)',
-      value: EnvironmentDamageCharacteristics.LowGroundWater
-    },
-    {
-      label: 'Er staan grote bomen dicht bij (< 10 m) mijn woning',
-      value: EnvironmentDamageCharacteristics.VegetationNearby
-    },
-    {
-      label: 'Lekke riolering',
-      value: EnvironmentDamageCharacteristics.SewageLeakage
-    },
-  ]
-
-  created(): void {
-    this.value = this.$store.state.environmentDamageCharacteristics
-  }
-
-  public get isValid(): boolean {
-    return this.value.length > 0
-  }
-
-  public storeData(): void {
-    this.$store.commit('updateState', [{
-      key: 'environmentDamageCharacteristics',
-      value: this.value
-    }])
-  }
-
-  private handleInput(value: Array<EnvironmentDamageCharacteristics>): void {
-    this.value = value
-  }
-}
+});
 </script>
 
 <style lang="scss">

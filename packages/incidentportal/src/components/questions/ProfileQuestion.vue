@@ -7,192 +7,133 @@
       text="Uw persoonsgegevens worden vertrouwelijk behandeld en niet gedeeld met derden."
     />
 
-    <Form :busy="busy">
+    <Form :busy="busy" :on-submit="onSubmit">
       <div class="Form__Row">
         <FormField
           id="voornaam"
-          :value="this.firstName"
+          v-model="firstName"
           label="Voornaam"
           autocomplete="given-name"
-          :valid="firstnameValid"
-          @input="updateFirstname"
+          :valid="isFirstNameValid"
         />
         <FormField
           id="achternaam"
-          :value="this.lastName"
+          v-model="lastName"
           label="Achternaam"
           autocomplete="family-name"
-          :valid="lastnameValid"
-          @input="updateLastname"
+          :valid="isLastNameValid"
         />
       </div>
-      <FormField
-        id="email"
-        :value="this.email"
-        label="E-mail"
-        type="email"
-        autocomplete="email"
-        :valid="emailValid"
-        @input="updateEmail"
-      />
+      <FormField id="email" v-model="email" label="E-mail" type="email" autocomplete="email" :valid="isEmailValid" />
       <FormField
         id="telefoon"
-        :value="this.phoneNumber"
+        v-model="phoneNumber"
         label="Telefoonnummer"
         type="tel"
-        :pattern="this.phoneRegex"
+        :pattern="phoneRegex"
         autocomplete="tel"
         placeholder="+31"
-        :valid="phoneNumberValid"
-        @input="updatePhonenumber"
+        :valid="isPhoneNumberValid"
       />
       <TextArea
         id="toelichting"
-        :value="this.note"
+        v-model="note"
         label="Toelichting"
-        placeholder="Aanvullende informatie of beschrijving opnemen"
-        :valid="noteValid"
+        placeholder="Aanvullende informatie of beschrijving
+      opnemen"
+        :valid="isNoteValid"
         :rows="4"
-        @input="updateNote"
       />
     </Form>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Mixins } from "vue-property-decorator";
-import QuestionMixin from "@/components/questions/Question";
-
-import Page from "@/components/layout/Page.vue";
-import Title from "@/components/Title.vue";
-import Button from "@/components/Button.vue";
-import SvgIcon from "@/components/common/SvgIcon.vue";
-
-import Form from "@/components/common/Form.vue";
-import FormField from "@/components/common/FormField.vue";
-import TextArea from "@/components/form/TextArea.vue";
-import BodyText from "@/components/BodyText.vue";
+import { Form, FormField, Title, TextArea } from "@fundermaps/common";
 
 import * as EmailValidator from "email-validator";
+import { computed, ComputedRef, defineComponent, ref, Ref } from "vue";
+import form from "../../store/modules/form";
 
-@Component({
-  mixins: [QuestionMixin],
+export default defineComponent({
+  name: "ProfileQuestion",
   components: {
-    Page,
-    Button,
     Title,
-    SvgIcon,
     Form,
     FormField,
-    TextArea,
-    BodyText
-  }
-})
-export default class ProfileQuestion extends Mixins(QuestionMixin) {
-  private firstName: string | null = null;
-  private lastName: string | null = null;
-  private email: string | null = null;
-  private phoneNumber: string | null = null;
-  private note: string | null = null;
+    TextArea
+  },
+  setup() {
+    const address = ref(null);
+    // Load the previously stored profile data from the store
+    const firstName: Ref<string | null> = ref(form.firstName);
+    const lastName: Ref<string | null> = ref(form.lastName);
+    const email: Ref<string | null> = ref(form.email);
+    const phoneNumber: Ref<string | null> = ref(form.phoneNumber);
+    const note: Ref<string | null> = ref(form.note);
 
-  private get firstnameValid(): boolean | null {
-    return this.firstName !== null && this.firstName.length < 255 && this.firstName.length > 0;
-  }
+    const phoneRegex = /\d+$/;
 
-  private get lastnameValid(): boolean {
-    return this.lastName !== null && this.lastName.length < 255 && this.lastName.length > 0;
-  }
-
-  private get emailValid(): boolean {
-    return (
-      this.email !== null && this.email.length < 255 && this.email.length > 0 && EmailValidator.validate(this.email)
+    const isFirstNameValid: ComputedRef<boolean> = computed(() =>
+      firstName.value ? firstName.value.length < 255 : true
     );
-  }
 
-  private phoneRegex = /\d+/;
-  private get phoneNumberValid(): boolean {
-    return (
-      this.phoneNumber !== null &&
-      this.phoneNumber.length > 0 &&
-      this.phoneNumber.length <= 16 &&
-      this.phoneRegex.test(this.phoneNumber)
+    const isLastNameValid: ComputedRef<boolean> = computed(() => (lastName.value ? lastName.value.length < 255 : true));
+    const isEmailValid: ComputedRef<boolean> = computed(() =>
+      email.value ? email.value.length < 255 && EmailValidator.validate(email.value) : true
     );
-  }
 
-  private get noteValid(): boolean {
-    return this.note !== null && this.note.length < 1000 && this.note.length > 0;
-  }
+    const isPhoneNumberValid: ComputedRef<boolean> = computed(() =>
+      phoneNumber.value
+        ? phoneNumber.value !== null &&
+          phoneNumber.value.length > 0 &&
+          phoneNumber.value.length <= 16 &&
+          phoneRegex.test(phoneNumber.value)
+        : true
+    );
 
-  public get isValid(): boolean {
-    const body = this.$store.getters.getIndicentRequestBody;
+    const isNoteValid: ComputedRef<boolean> = computed(() =>
+      note.value ? note.value.length < 1000 && note.value.length > 0 : true
+    );
 
-    if (!body) {
-      return false;
+    const isValid: ComputedRef<boolean> = computed(
+      () =>
+        isFirstNameValid.value &&
+        isLastNameValid.value &&
+        isEmailValid.value &&
+        isPhoneNumberValid.value &&
+        isNoteValid.value
+    );
+
+    function onSubmit(): void {
+      form.setFirstname(firstName.value);
+      form.setLastname(lastName.value);
+      form.setEmail(email.value);
+      form.setPhoneNumber(phoneNumber.value);
+      form.setNote(note.value);
     }
 
-    return !!(body.Address && body.ClientId && this.emailValid);
-  }
+    // provide(isValidKey, isValid);
+    // provide(storeDataKey, storeData);
 
-  /**
-   * Load the previously stored profile data from the store
-   */
-  created(): void {
-    this.firstName = this.$store.state.firstName;
-    this.lastName = this.$store.state.lastName;
-    this.email = this.$store.state.email;
-    this.phoneNumber = this.$store.state.phoneNumber;
-    this.note = this.$store.state.note;
+    return {
+      firstName,
+      lastName,
+      email,
+      phoneNumber,
+      note,
+      onSubmit,
+      isValid,
+      isFirstNameValid,
+      isLastNameValid,
+      isEmailValid,
+      isPhoneNumberValid,
+      isNoteValid,
+      phoneRegex,
+      address
+    };
   }
-
-  public storeData(): void {
-    this.$store.commit("updateState", [
-      {
-        key: "firstName",
-        value: this.firstName
-      },
-      {
-        key: "lastName",
-        value: this.lastName
-      },
-      {
-        key: "email",
-        value: this.email
-      },
-      {
-        key: "phoneNumber",
-        value: this.phoneNumber
-      },
-      {
-        key: "note",
-        value: this.note
-      },
-      {
-        key: "name",
-        value: this.firstName ? `${this.firstName}${this.lastName ? ` ${this.lastName}` : ""} ` : null
-      }
-    ]);
-  }
-
-  private updateFirstname(value: string): void {
-    this.firstName = value;
-  }
-
-  private updateLastname(value: string): void {
-    this.lastName = value;
-  }
-
-  private updateEmail(value: string): void {
-    this.email = value;
-  }
-
-  private updatePhonenumber(value: string): void {
-    this.phoneNumber = value;
-  }
-
-  private updateNote(value: string): void {
-    this.note = value;
-  }
-}
+});
 </script>
 
 <style lang="scss">
