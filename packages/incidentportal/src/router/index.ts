@@ -9,12 +9,14 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: appConfig.title
     },
-
     component: Home
   },
   {
     path: "/vragen",
     name: "Questions",
+    meta: {
+      title: appConfig.title
+    },
     component: () => import("../views/Questions.vue")
   }
   // {

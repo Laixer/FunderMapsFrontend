@@ -47,7 +47,7 @@ export default defineComponent({
         addressMarker?.remove();
         addressMarker = new Marker().setLngLat([Long, Lat]).addTo(map);
 
-        map.flyTo({
+        map.jumpTo({
           center: [Long, Lat],
           zoom: 18
         });
@@ -109,6 +109,11 @@ export default defineComponent({
 .mapboxgl-map {
   height: 100%;
   width: 100%;
+}
+
+.mapboxgl-canvas {
+  outline: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); /* mobile webkit */
 }
 
 .mapboxgl-control-container {

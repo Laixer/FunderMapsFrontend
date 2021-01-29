@@ -1,93 +1,71 @@
 <template>
   <div class="FoundationDamageCharacteristics">
-    <Title
-      :center="true"
-      subtitle="Meerdere opties mogelijk"
-    >Herkent u minstens één van de volgende punten aan de woning?</Title>
+    <Title :center="true" subtitle="Meerdere opties mogelijk"
+      >Herkent u minstens één van de volgende punten aan de woning?</Title
+    >
 
     <Form>
-      <CheckboxInput
-        :value="value"
-        id="woning"
-        :options="options"
-        :valid="isValid"
-        @input="handleInput"
-      />
+      <CheckboxInput id="woning" v-model="value" :options="options" :valid="isValid" />
     </Form>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
-import QuestionMixin from '@/components/questions/Question'
+import { CheckboxInput, Title, Form, Option, FoundationDamageCharacteristics } from "@fundermaps/common";
+import form from "../../store/modules/form";
 
-import Title from '@/components/Title.vue'
+import { computed, ComputedRef, defineComponent, Ref, ref } from "vue";
 
-import Form from '@/components/common/Form.vue'
-import CheckboxInput from '@/components/form/CheckboxInput.vue'
-
-import { IOption } from '@/components/common/IOption'
-import FoundationDamageCharacteristics from '@/types/FoundationDamageCharacteristics'
-
-@Component({
-  mixins: [QuestionMixin],
+export default defineComponent({
+  name: "EnvironmentDamageCharacteristicsQuestion",
   components: {
-    Title, Form, CheckboxInput
-  }
-})
-export default class FoundationDamageCharacteristicsQuestion extends Mixins(QuestionMixin) {
-  private value: Array<FoundationDamageCharacteristics> = []
+    Title,
+    Form,
+    CheckboxInput
+  },
+  setup() {
+    const value: Ref<Array<FoundationDamageCharacteristics>> = ref(form.foundationDamageCharacteristics);
+    const { Type } = FoundationDamageCharacteristics;
+    const options: Array<Option> = [
+      {
+        label: "Klemmende ramen en/of deuren",
+        value: Type.JammingDoorWindow
+      },
+      {
+        label: "De woning ligt hoger dan trottoir/weg",
+        value: Type.ThresholdAboveSubsurface
+      },
+      {
+        label: "Scheur(en) in de muur en/of gevel(s)",
+        value: Type.Crack
+      },
+      {
+        label: "De woning ligt lager dan trottoir/weg",
+        value: Type.ThresholdBelowSubsurface
+      },
+      {
+        label: "De woning staat wat scheef",
+        value: Type.Skewed
+      },
+      {
+        label: "Scheve vloeren/muren in de woning",
+        value: Type.CrookedFloorWall
+      },
+      {
+        label: "Hoog water in de kruipruimte",
+        value: Type.CrawlspaceFlooding
+      }
+    ];
 
-  private options: Array<IOption> = [
-    {
-      label: 'Klemmende ramen en/of deuren',
-      value: FoundationDamageCharacteristics.JammingDoorWindow
-    },
-    {
-      label: 'De woning ligt hoger dan trottoir/weg',
-      value: FoundationDamageCharacteristics.ThresholdAboveSubsurface
-    },
-    {
-      label: 'Scheur(en) in de muur en/of gevel(s)',
-      value: FoundationDamageCharacteristics.Crack
-    },
-    {
-      label: 'De woning ligt lager dan trottoir/weg',
-      value: FoundationDamageCharacteristics.ThresholdBelowSubsurface
-    },
-    {
-      label: 'De woning staat wat scheef',
-      value: FoundationDamageCharacteristics.Skewed
-    },
-    {
-      label: 'Scheve vloeren/muren in de woning',
-      value: FoundationDamageCharacteristics.CrookedFloorWall
-    },
-    {
-      label: 'Hoog water in de kruipruimte',
-      value: FoundationDamageCharacteristics.CrawlspaceFlooding
+    const isValid: ComputedRef<boolean> = computed(() => value.value.length > 0);
+
+    function onSubmit(): void {
+      form.setFoundationDamageCharacteristics(value.value);
     }
-  ]
 
-  created(): void {
-    this.value = this.$store.state.foundationDamageCharacteristics
+    return { value, options, onSubmit, isValid };
   }
-
-  public get isValid(): boolean {
-    return this.value.length > 0
-  }
-
-  public storeData(): void {
-    this.$store.commit('updateState', [{
-      key: 'foundationDamageCharacteristics',
-      value: this.value
-    }])
-  }
-
-  private handleInput(value: Array<FoundationDamageCharacteristics>): void {
-    this.value = value
-  }
-}
+});
 </script>
 
 <style lang="scss">

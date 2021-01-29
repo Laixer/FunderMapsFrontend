@@ -47,16 +47,15 @@ export default defineComponent({
       return "";
     });
 
-    const classList = computed(
-      (): Record<string, boolean> => {
-        const v = `Feedback--${variant.value}`;
-        return {
-          "Feedback--has-icon": icon.value !== "",
-          "Feedback--fade": fade.value,
-          v: true
-        };
-      }
-    );
+    const classList = computed(() => {
+      const classes: any = {
+        "Feedback--has-icon": icon.value !== "",
+        "Feedback--fade": fade.value
+      };
+      const _variant = `Feedback--${variant.value}`;
+      classes[_variant] = true;
+      return classes;
+    });
 
     // Set the bound values based on the feedback input
     const processFeedback = (feedback: { message: string; variant: string; show: boolean }) => {

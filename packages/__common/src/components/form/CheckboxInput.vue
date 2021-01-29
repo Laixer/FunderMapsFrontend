@@ -34,11 +34,10 @@
 
 <script lang="ts">
 import SvgIcon from "../SvgIcon.vue";
-import FormField from "./FormField.vue";
 import { withFormFieldProps } from "../../props/FormFieldProps";
 import { useFormField } from "../../props/useFormField";
 
-import { defineComponent, SetupContext, computed } from "vue";
+import { defineComponent, SetupContext, computed, ComputedRef } from "vue";
 
 export default defineComponent({
   name: "CheckboxInput",
@@ -52,16 +51,15 @@ export default defineComponent({
 
     // Whether the value is checked
     const isChecked = (value: string | boolean | number): boolean => {
-      console.log(props.modelValue);
       return (props.modelValue as Array<string | boolean | number>).includes(value);
     };
 
-    const fieldClasses = computed(() => {
+    const fieldClasses: ComputedRef<Record<string, boolean>> = computed(() => {
       return {
-        "CheckboxInput--disabled": isDisabled,
-        "CheckboxInput--busy": isBusy,
-        "CheckboxInput--valid": hasBeenValidated ? isValid : false,
-        "CheckboxInput--invalid": hasBeenValidated ? !isValid : false
+        "CheckboxInput--disabled": isDisabled.value,
+        "CheckboxInput--busy": isBusy.value,
+        "CheckboxInput--valid": hasBeenValidated.value ? !!isValid.value : false,
+        "CheckboxInput--invalid": hasBeenValidated.value ? !!isValid.value : false
       };
     });
 

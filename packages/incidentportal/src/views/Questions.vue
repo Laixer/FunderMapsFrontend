@@ -33,6 +33,10 @@ import ProfileQuestion from "@/components/questions/ProfileQuestion.vue";
 import AddressCharacteristicsQuestion from "@/components/questions/AddressCharacteristicsQuestion.vue";
 import AddressQuestion from "@/components/questions/AddressQuestion.vue";
 import EnvironmentDamageCharacteristicsQuestion from "@/components/questions/EnvironmentDamageCharacteristicsQuestion.vue";
+import FoundationDamageCauseQuestion from "@/components/questions/FoundationDamageCauseQuestion.vue";
+import FoundationDamageCharacteristicsQuestion from "@/components/questions/FoundationDamageCharacteristicsQuestion.vue";
+import FoundationTypeQuestion from "@/components/questions/FoundationTypeQuestion.vue";
+import UploadQuestion from "@/components/questions/UploadQuestion.vue";
 
 // import PaymentQuestion from '@/components/questions/PaymentQuestion.vue'
 // import useQuestions from "@/components/questions/Question";
@@ -46,10 +50,13 @@ export default defineComponent({
     Button,
     SvgIcon,
     ProfileQuestion,
+    FoundationDamageCauseQuestion,
     AddressCharacteristicsQuestion,
     AddressQuestion,
-    EnvironmentDamageCharacteristicsQuestion
-    // AddressQuestion,
+    EnvironmentDamageCharacteristicsQuestion,
+    FoundationDamageCharacteristicsQuestion,
+    FoundationTypeQuestion,
+    UploadQuestion
     // ResultPage
   },
   setup(props) {
@@ -59,6 +66,10 @@ export default defineComponent({
     const currentQuestionComponent: Ref<DefineComponent | null> = ref<DefineComponent | null>(null);
 
     const questions = [
+      "UploadQuestion",
+      "FoundationTypeQuestion",
+      "FoundationDamageCharacteristicsQuestion",
+      "FoundationDamageCauseQuestion",
       "EnvironmentDamageCharacteristicsQuestion",
       "AddressQuestion",
       "ProfileQuestion",

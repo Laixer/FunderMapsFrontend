@@ -1,116 +1,99 @@
 <template>
   <div>
     <Feedback v-if="feedback.message !== ''" :feedback="feedback" />
-    <!-- <vue2Dropzone
-      id="dropzone"
-      ref="dropzone"
-      :options="options"
-      use-custom-slot
-      class="UploadArea d-flex justify-content-center"
-      @vdropzone-sending="addHeaderBeforeSending"
-      @vdropzone-success="handleSuccess"
-      @vdropzone-error="handleError"
-      @vdropzone-removed-file="handleRemoved"
-    >
-      <div class="align-self-center">
-        <img alt="upload" :src="image('upload.svg')" />
-        <p class="mb-0 mt-3">
-          <strong>Slepen en neerzetten voor upload</strong>
-          <br />
-          <span>
-            of
-            <span>bladeren</span>
-            om een bestand te kiezen
-          </span>
-        </p>
-      </div>
-    </vue2Dropzone> -->
+    <main>
+      <section>
+        <div id="dropzone">
+          <form id="document-upload" action="" class="UploadArea dropzone dz-clickable">
+            <div class="dz-message align-self-center">
+              <img alt="upload" :src="image('upload.svg')" />
+              <p class="mb-0 mt-3">
+                <strong>Sleep hier bestanden om te uploaden.</strong>
+                <br />
+                <span> of <span>bladeren</span> om een bestand te kiezen</span>
+              </p>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
   </div>
 </template>
 
 <script lang="ts">
 import { image } from "../helpers/assets";
-// import vue2Dropzone from "vue2-dropzone";
-import "vue2-dropzone/dist/vue2Dropzone.min.css";
+import Dropzone from "dropzone";
+import "dropzone/dist/min/basic.min.css";
+import "dropzone/dist/min/dropzone.min.css";
 import Feedback from "./Feedback.vue";
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, onMounted } from "vue";
 
 // TODO: Auth Header...
 // import { authHeader } from '@/services/auth';
 export default defineComponent({
   name: "UploadArea",
   components: {
-    // vue2Dropzone,
     Feedback
   },
   emits: { handleUploadProgress: null, handleFileRemoved: null, handleFileAdded: null },
   setup(_, { emit }) {
     const feedback = ref<{ message: string; variant: string }>({ message: "", variant: "" });
-    const options = ref<{
-      paramName: string;
-      addRemoveLinks: boolean;
-      maxFilesize: number;
-      acceptedFiles: string;
-      url: string;
-    }>({
-      paramName: "input",
-      addRemoveLinks: true,
-      maxFilesize: 100,
-      acceptedFiles: "application/pdf, image/png, image/jpeg, image/gif, image/bmp, image/tiff, image/webp, text/plain",
-      url: `${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/upload-document`.replace(/([^:]\/)\/+/g, "$1") // TODO: Move to API
+    let dropzone: Dropzone | null = null;
+
+    onMounted(() => {
+      dropzone = new Dropzone("div#dropzone", {
+        paramName: "input",
+        addRemoveLinks: true,
+        maxFilesize: 100,
+        acceptedFiles:
+          "application/pdf, image/png, image/jpeg, image/gif, image/bmp, image/tiff, image/webp, text/plain",
+        url: `${process.env.VUE_APP_API_BASE_URL}/api/incident-portal/upload-document`.replace(/([^:]\/)\/+/g, "$1") // TODO: Move to API
+      });
+
+      dropzone.on("addedfile", () => {
+        feedback.value = {
+          message: "",
+          variant: ""
+        };
+        emit("handleUploadProgress", "starting");
+        console.log("added");
+      });
+
+      dropzone.on("removedfile", (file: Dropzone.DropzoneFile) => {
+        emit("handleFileRemoved", file);
+        console.log("removed");
+      });
+
+      dropzone.on("success", (file: string, response: XMLHttpRequestResponseType) => {
+        feedback.value = {
+          message: "",
+          variant: ""
+        };
+        emit("handleFileAdded", file, response);
+        emit("handleUploadProgress", "finished");
+        console.log("success");
+      });
+
+      dropzone.on("error", (file: Dropzone.DropzoneFile, message: string, xhr: XMLHttpRequest) => {
+        console.log(file, message, xhr);
+
+        feedback.value = {
+          message: message,
+          variant: "danger"
+        };
+
+        if (file && dropzone) {
+          dropzone?.removeFile(file);
+        }
+
+        emit("handleUploadProgress", "finished");
+        console.log("error");
+      });
     });
-
-    const dropzone = ref<any>(null);
-
-    // Add the Authorization header when the upload process starts
-    const addHeaderBeforeSending = (file: string, xhr: XMLHttpRequest): void => {
-      feedback.value = {
-        message: "",
-        variant: ""
-      };
-      // if (xhr.setRequestHeader) {
-      //   // let header = authHeader() // TODO: Auth Header
-      //   // const header = {}
-      //   // xhr.setRequestHeader('Authorization', header.Authorization);
-      // }
-      emit("handleUploadProgress", "starting");
-    };
-
-    // Start the creation of a new report once the upload has finished with success
-    const handleSuccess = (file: string, response: unknown) => {
-      feedback.value = {
-        message: "",
-        variant: ""
-      };
-      emit("handleFileAdded", file, response);
-      emit("handleUploadProgress", "finished");
-    };
-
-    const handleError = (file: string, message: string, xhr: XMLHttpRequest) => {
-      // error
-      if (file && dropzone) {
-        dropzone.value.removeFile(file);
-      }
-
-      feedback.value = {
-        message: message,
-        variant: "danger"
-      };
-      emit("handleUploadProgress", "finished");
-    };
-
-    const handleRemoved = (file: string, error: string, xhr: XMLHttpRequest) => {
-      emit("handleFileRemoved", file, error, xhr);
-    };
 
     return {
       feedback,
-      options,
-      image,
-      addHeaderBeforeSending,
-      handleSuccess,
-      handleError,
-      handleRemoved
+      image
     };
   }
 });
@@ -142,6 +125,7 @@ export default defineComponent({
       cursor: pointer;
     }
   }
+
   // DropZone styling
   .dz-message {
     align-self: center;

@@ -1,7 +1,7 @@
 <template>
   <div class="Address">
     <div class="MapBox__Wrapper">
-      <MapBox :access-token="token" :address="address" :map-style="style" />
+      <MapBox :access-token="token" :address="address" :map-style="style" :options="{ interactive: false }" />
     </div>
     <div class="Address__Wrapper">
       <Title>Melding maken voor het adres:</Title>

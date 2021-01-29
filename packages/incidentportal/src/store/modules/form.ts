@@ -23,7 +23,7 @@ export interface FormState {
   chainedBuilding: null | boolean;
   neighborRecovery: null | boolean;
   foundationDamageCause: null | FoundationDamageCause;
-  documentFile: Array<string>;
+  documentFile: Array<{ uuid: string; file: string }>;
   note: null | string;
   internalNote: null | string;
 }
@@ -43,7 +43,7 @@ class FormModule extends VuexModule implements FormState {
   chainedBuilding: boolean | null = null;
   neighborRecovery: boolean | null = null;
   foundationDamageCause: FoundationDamageCause | null = null;
-  documentFile: Array<string> = [];
+  documentFile: Array<{ uuid: string; file: string }> = [];
   note: string | null = null;
   internalNote: string | null = null;
 
@@ -172,7 +172,7 @@ class FormModule extends VuexModule implements FormState {
   }
 
   @Mutation
-  setDocumentFile(value: Array<string>) {
+  setDocumentFile(value: Array<{ uuid: string; file: string }>) {
     this.documentFile = value;
   }
 

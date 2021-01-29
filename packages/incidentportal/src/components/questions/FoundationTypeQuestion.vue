@@ -3,86 +3,64 @@
     <Title :center="true">Op welke type fundering is de woning gebouwd?</Title>
 
     <Form>
-      <RadioImageInput
-        :value="value"
-        id="type"
-        :options="options"
-        :valid="isValid"
-        @input="handleInput"
-      />
+      <RadioImageInput id="type" v-model="foundationType" :options="options" :valid="isValid" />
     </Form>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
-import QuestionMixin from '@/components/questions/Question'
+import form from "../../store/modules/form";
+import { computed, ComputedRef, defineComponent, Ref, ref } from "vue";
 
-import Title from '@/components/Title.vue'
+import { Form, Option, Title, RadioImageInput, FoundationType } from "@fundermaps/common";
 
-import Form from '@/components/common/Form.vue'
-import RadioImageInput from '@/components/form/RadioImageInput.vue'
-
-import { IOption } from '@/components/common/IOption'
-import FoundationType from '@/types/FoundationType'
-
-@Component({
-  mixins: [QuestionMixin],
+export default defineComponent({
+  name: "AddressCharacteristicsQuestion",
   components: {
-    Title, Form, RadioImageInput
-  }
-})
-export default class FoundationTypeQuestion extends Mixins(QuestionMixin) {
-  private value: FoundationType | null = null
+    Title,
+    Form,
+    RadioImageInput
+  },
+  setup() {
+    const foundationType: Ref<FoundationType | null> = ref(form.foundationType);
+    const { Type } = FoundationType;
 
-  public get isValid(): boolean {
-    return this.value !== null
-  }
+    const options: Array<Option> = [
+      {
+        label: "Houten palen",
+        value: Type.Wood,
+        image: "options/type_hout"
+      },
+      {
+        label: "Ondiep op staal",
+        value: Type.SteelPile,
+        image: "options/type_staal"
+      },
+      {
+        label: "Betonnen palen",
+        value: Type.Concrete,
+        image: "options/type_beton"
+      },
+      {
+        label: "Weet ik niet",
+        value: Type.Unknown,
+        image: "options/type_onbekend"
+      }
+    ];
+    const isValid: ComputedRef<boolean> = computed(() => foundationType.value !== null);
 
-  public storeData(): void {
-    this.$store.commit('updateState', [{
-      key: 'foundationType',
-      value: this.value
-    }])
-  }
-
-  created(): void {
-    this.value = this.$store.state.foundationType
-  }
-
-  /**
-   * The form field options
-   */
-  private options: Array<IOption> = [
-    {
-      label: 'Houten palen',
-      value: FoundationType.Wood,
-      image: 'options/type_hout'
-    },
-    {
-      label: 'Ondiep op staal',
-      value: FoundationType.SteelPile,
-      image: 'options/type_staal'
-    },
-    {
-      label: 'Betonnen palen',
-      value: FoundationType.Concrete,
-      image: 'options/type_beton'
-    },
-    {
-      label: 'Weet ik niet',
-      value: FoundationType.Unknown,
-      image: 'options/type_onbekend'
+    function onSubmit(): void {
+      form.setFoundationType(foundationType.value);
     }
-  ]
 
-  /**
-   * Pass on the input event
-   */
-  private handleInput(value: FoundationType) {
-    this.value = value
+    return {
+      foundationType,
+      options,
+      isValid,
+      onSubmit
+    };
   }
-}
+});
 </script>
 
 <style lang="scss">

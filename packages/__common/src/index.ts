@@ -8,6 +8,7 @@ import form from "./components/form/Form.vue";
 import formField from "./components/form/FormField.vue";
 import geoCoder from "./components/form/GeoCoder.vue";
 import radioImageInput from "./components/form/RadioImageInput.vue";
+import radioTextInput from "./components/form/RadioTextInput.vue";
 import textArea from "./components/form/TextArea.vue";
 import mapBox from "./components/MapBox.vue";
 import svgIcon from "./components/SvgIcon.vue";
@@ -29,6 +30,7 @@ export const UploadArea = uploadArea;
 export const TextArea = textArea;
 export const GeoCoder = geoCoder;
 export const RadioImageInput = radioImageInput;
+export const RadioTextInput = radioTextInput;
 export const CheckboxInput = checkboxInput;
 
 export const withFormFieldProps = _withFormFieldProps;

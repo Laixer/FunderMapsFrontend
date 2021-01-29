@@ -1,11 +1,7 @@
 <template>
   <div class="RadioTextInput" :class="fieldClasses">
     <div class="RadioTextInput__Wrapper">
-      <div
-        v-for="(option, index) in options"
-        class="RadioTextInput__Field"
-        :key="id + ' ' + index"
-      >
+      <div v-for="(option, index) in options" :key="id + ' ' + index" class="RadioTextInput__Field">
         <input
           :id="id + ' ' + index"
           type="radio"
@@ -13,7 +9,7 @@
           :value="option.value"
           :disabled="isDisabled"
           :checked="isChecked(option.value)"
-          @input="handleInput"
+          @input="$emit('update:modelValue', $event.target.value ? option.value : null)"
           @blur="handleBlur"
         />
 
@@ -26,52 +22,45 @@
   </div>
 </template>
 
-
 <script lang="ts">
-import { Prop, Component } from 'vue-property-decorator';
-import FormField from '@/components/common/FormField.vue'
+import { withFormFieldProps } from "../../props/FormFieldProps";
+import { useFormField } from "../../props/useFormField";
+import { defineComponent, SetupContext, computed, ComputedRef } from "vue";
 
-@Component
-export default class RadioTextInput extends FormField {
+export default defineComponent({
+  name: "RadioTextInput",
+  props: {
+    ...withFormFieldProps()
+  },
+  emits: ["update:modelValue"],
+  setup(props, context: SetupContext) {
+    const { isDisabled, isBusy, hasBeenValidated, isValid } = useFormField(props, context);
 
-  /**
-   * The type of form field
-   */
-  @Prop({ default: 'radio' }) readonly type!: string;
+    const isChecked = (value: string | boolean | number): boolean => {
+      return props.modelValue === value.toString() || props.modelValue === value;
+    };
 
+    // List of css classes
+    const fieldClasses: ComputedRef<Record<string, boolean>> = computed(() => {
+      return {
+        "RadioTextInput--disabled": isDisabled.value,
+        "RadioTextInput--busy": isBusy.value,
+        "RadioTextInput--valid": hasBeenValidated.value ? !!isValid.value : false,
+        "RadioTextInput--invalid": hasBeenValidated.value ? !!isValid.value : false
+      };
+    });
 
-  private isChecked(value: string | boolean | number): boolean {
-    return this.value === value.toString()
-  }
-
-  /**
-   * List of css classes
-   */
-  get fieldClasses(): Record<string, boolean> {
     return {
-      'RadioTextInput--disabled': this.isDisabled,
-      'RadioTextInput--busy': this.isBusy,
-      'RadioTextInput--valid': this.hasBeenValidated ? this.isValid : false,
-      'RadioTextInput--invalid': this.hasBeenValidated ? !this.isValid : false,
-    }
+      isChecked,
+      fieldClasses
+    };
   }
-}
+});
 </script>
 
 <style lang="scss">
-$unselected: adjust-color(
-  $VENDOR_PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114,
-  $alpha: -0.7
-);
-$unselectedText: adjust-color(
-  $VENDOR_PRIMARY_COLOR,
-  $red: 81,
-  $green: 41,
-  $blue: -114
-);
+$unselected: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114, $alpha: -0.7);
+$unselectedText: adjust-color($VENDOR_PRIMARY_COLOR, $red: 81, $green: 41, $blue: -114);
 .RadioTextInput {
   &__Wrapper {
     display: flex;

@@ -25,16 +25,15 @@
 </template>
 
 <script lang="ts">
-import FormField from "./FormField.vue";
 import SvgIcon from "../SvgIcon.vue";
 import { withFormFieldProps } from "../../props/FormFieldProps";
-import { defineComponent } from "vue";
+import { defineComponent, SetupContext, computed, ComputedRef } from "vue";
+import { useFormField } from "../../props/useFormField";
 
 // TODO: Rewrite this component, don't extend formfield
 export default defineComponent({
   name: "RadioImageInput",
   components: { SvgIcon },
-  extends: FormField,
   props: {
     ...withFormFieldProps(),
     type: {
@@ -43,13 +42,26 @@ export default defineComponent({
     }
   },
   emits: ["update:modelValue"],
-  setup(props) {
+  setup(props, context: SetupContext) {
+    const { isDisabled, isBusy, hasBeenValidated, isValid } = useFormField(props, context);
+
     const isChecked = (value: string | boolean | number): boolean => {
       return props.modelValue === value.toString() || props.modelValue === value;
     };
 
+    // List of css classes
+    const fieldClasses: ComputedRef<Record<string, boolean>> = computed(() => {
+      return {
+        "RadioImageInput--disabled": isDisabled.value,
+        "RadioImageInput--busy": isBusy.value,
+        "RadioImageInput--valid": hasBeenValidated.value ? !!isValid.value : false,
+        "RadioImageInput--invalid": hasBeenValidated.value ? !!isValid.value : false
+      };
+    });
+
     return {
-      isChecked
+      isChecked,
+      fieldClasses
     };
   }
 });

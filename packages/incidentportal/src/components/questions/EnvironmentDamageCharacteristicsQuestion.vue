@@ -3,7 +3,7 @@
     <Title :center="true" subtitle="Meerdere opties mogelijk"
       >Herkent u minstens één van de volgende punten in de omgeving van de woning?</Title
     >
-    <Form>
+    <Form :on-submit="onSubmit">
       <CheckboxInput id="omgeving" v-model="value" :options="options" :valid="isValid" />
     </Form>
   </div>
@@ -79,7 +79,7 @@ export default defineComponent({
       form.setEnvironmentDamageCharacteristics(value.value);
     }
 
-    return { value, options };
+    return { value, options, onSubmit, isValid };
   }
 });
 </script>

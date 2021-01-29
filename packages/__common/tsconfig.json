@@ -1,6 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
+    "noImplicitAny": false,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
@@ -11,6 +12,10 @@
         "../__vendor/src/*"
       ]
     },
+    "typeRoots": [ // TODO: Remove when vue2-dropzone is refactored out
+      "./src/typings",
+      "./node_modules/@types/"
+    ]
   },
   "include": [
     "src/**/*.ts",

@@ -1,19 +1,13 @@
 <template>
   <div class="Upload__Wrapper">
-    <Title
-      :center="true"
-      subtitle="(onderzoeksrapporten, archiefstukken, tekeningen of foto's)"
-    >Heeft u informatie beschikbaar?</Title>
+    <Title :center="true" subtitle="(onderzoeksrapporten, archiefstukken, tekeningen of foto's)"
+      >Heeft u informatie beschikbaar?</Title
+    >
 
     <BodyText :center="true" :italic="true" text="U kunt deze stap ook overslaan." />
 
-
-    <Form>
-      <UploadArea
-        @handleFileAdded="handleAddedFile"
-        @handleFileRemoved="handleRemovedFile"
-        @progress="handleUploadProgress"
-      />
+    <Form :on-submmit="onSubmit">
+      <UploadArea @handleFileAdded="handleAddedFile" @handleFileRemoved="handleRemovedFile" />
 
       <!-- <FormField label="Implement upload" id="upload" :valid="valid" @validate="handleValidation" /> -->
     </Form>
@@ -21,63 +15,40 @@
 </template>
 
 <script lang="ts">
-import { Component, Mixins } from 'vue-property-decorator'
-import QuestionMixin from '@/components/questions/Question'
+import { Title, Form, BodyText, UploadArea } from "@fundermaps/common";
+import { defineComponent, Ref, ref, computed, ComputedRef } from "vue";
+import form from "../../store/modules/form";
 
-import Page from '@/components/layout/Page.vue'
-import Title from '@/components/Title.vue'
-import Button from '@/components/Button.vue'
-import SvgIcon from '@/components/common/SvgIcon.vue'
-
-import Form from '@/components/common/Form.vue'
-import FormField from '@/components/common/FormField.vue'
-import BodyText from '@/components/BodyText.vue'
-
-import UploadArea from '@/components/common/UploadArea.vue'
-
-@Component({
-  mixins: [QuestionMixin],
+export default defineComponent({
+  name: "UploadQuestion",
   components: {
-    Page, Button, Title, SvgIcon,
-    Form, FormField, UploadArea,
+    Title,
+    Form,
+    UploadArea,
     BodyText
-  }
-})
-export default class UploadQuestion extends Mixins(QuestionMixin) {
-  private value: Array<{ uuid: string, file: string }> = [];
+  },
+  setup() {
+    const files: Ref<Array<{ uuid: string; file: string }>> = ref(form.documentFile);
 
-  public get isValid(): boolean {
-    return true
-  }
+    const isValid: ComputedRef<boolean> = computed(() => true);
 
-  created(): void {
-    this.value = this.$store.state.documentFile
-  }
+    function onSubmit(): void {
+      form.setDocumentFile(files.value);
+    }
 
-  public storeData(): void {
-    this.$store.commit('updateState', [
-      {
-        key: 'documentFile',
-        value: this.value
-      },
-    ])
-  }
+    const handleAddedFile = (file: any, response: any) => {
+      files.value.push({ uuid: file.upload.uuid as string, file: response.name });
+    };
 
-  private handleAddedFile(file: any, response: any) {
-    this.value.push({ uuid: file.upload.uuid as string, file: response.name })
-  }
+    const handleRemovedFile = (file: any, error: any, xhr: any) => {
+      files.value = files.value.filter(entry => {
+        entry.uuid !== file.upload.uuid;
+      });
+    };
 
-  private handleRemovedFile(file: any, error: any, xhr: any) {
-    this.value = this.value.filter((entry) => {
-      entry.uuid !== file.upload.uuid
-    })
+    return { files, isValid, onSubmit, handleAddedFile, handleRemovedFile };
   }
-
-  private handleUploadProgress(status: string) {
-    this.busy = status !== 'finished'
-  }
-
-}
+});
 </script>
 
 <style lang="scss">
