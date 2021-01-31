@@ -3,6 +3,8 @@
 declare const __VENDOR: string;
 declare const __APP: string;
 
+// TODO: Remove all traces of client_id. We have decided to deploy a backend application
+//       per vendor. Therefore some config like 'client_id' will be moved to the server-side.
 export type VendorConfig = {
   name: string;
   title: string;
