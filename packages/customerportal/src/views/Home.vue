@@ -3,13 +3,13 @@
     <div class="Home__Wrapper">
       <div class="Home--left">
         <Title>
-          <span v-html="text.title" />
+          <span v-html="title" />
         </Title>
         <BodyText :bold="true">
-          <span v-html="text.subtitle" />
+          <span v-html="subtitle" />
         </BodyText>
         <BodyText>
-          <span v-html="text.content" />
+          <span v-html="content" />
         </BodyText>
         <!-- <router-link :to="{ name: 'Questions' }">
           <Button id="navigateBodyButton">
@@ -38,7 +38,7 @@
 <script lang="ts">
 import Page from "@/components/layout/Page.vue";
 import { /*SvgIcon, Button,*/ BodyText, Copyright, Title } from "@fundermaps/common";
-import { defineComponent, inject } from "vue";
+import { defineComponent } from "vue";
 import { CustomerPortalConfig } from "@fundermaps/vendor";
 
 export default defineComponent({
@@ -52,14 +52,11 @@ export default defineComponent({
     BodyText
   },
   setup() {
-    const app = inject("app_config") as CustomerPortalConfig;
-    const text = {
-      title: app.home.title,
-      subtitle: app.home.subtitle,
-      content: app.home.content
+    return {
+      title: CustomerPortalConfig.home.title,
+      subtitle: CustomerPortalConfig.home.subtitle,
+      content: CustomerPortalConfig.home.content
     };
-
-    return { text };
   }
 });
 </script>

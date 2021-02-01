@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-
 declare const __VENDOR: string;
-declare const __APP: string;
 
 // TODO: Remove all traces of client_id. We have decided to deploy a backend application
 //       per vendor. Therefore some config like 'client_id' will be moved to the server-side.
@@ -14,35 +12,19 @@ export type VendorConfig = {
   };
 };
 
-type AppConfig = {
-  title: string;
+export enum Package {
+  CustomerPortal,
+  IncidentPortal,
+  ClientApp
+}
+
+export type AppConfig<Package> = {
+  appTitle: string;
+  [key: string]: any;
 };
 
-export type ClientAppConfig = AppConfig;
+export const CustomerPortalConfig: AppConfig<Package.CustomerPortal> = require("./config/CustomerPortal").default;
+export const ClientAppConfig: AppConfig<Package.ClientApp> = require("./config/ClientApp").default;
+export const IncidentPortalConfig: AppConfig<Package.IncidentPortal> = require("./config/IncidentPortal").default;
 
-export interface CustomerPortalConfig extends AppConfig {
-  home: {
-    title: string;
-    subtitle: string;
-    content: string;
-    image: string;
-  };
-  final: {
-    content: string;
-  };
-}
-
-export interface IncidentPortalConfig extends AppConfig {
-  home: {
-    title: string;
-    subtitle: string;
-    content: string;
-    image: string;
-  };
-  final: {
-    content: string;
-  };
-}
-
-export const vendorConfig: VendorConfig = require(`./${__VENDOR}/vendor.json`);
-export const appConfig = require(`./${__VENDOR}/apps/${__APP}/app.json`);
+export const vendorConfig: VendorConfig = require(`./vendors/${__VENDOR}/vendor.json`);

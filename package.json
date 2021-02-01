@@ -19,7 +19,7 @@
     "serve:clientapp": "lerna exec yarn serve --scope=@fundermaps/clientapp --",
     "serve:customerportal": "lerna exec yarn serve --scope=@fundermaps/customerportal --",
     "serve:incidentportal": "lerna exec yarn serve --scope=@fundermaps/incidentportal --",
-    "build": "lerna run build",
+    "build": "lerna run build --",
     "build:clientapp": "lerna exec yarn build --scope=@fundermaps/clientapp --",
     "build:customerportal": "lerna exec yarn build --scope=@fundermaps/customerportal --",
     "build:incidentportal": "lerna exec yarn build --scope=@fundermaps/incidentportal --",

@@ -8,7 +8,7 @@
         "src/*"
       ],
       "@vendor/*": [
-        "../__vendor/src/*"
+        "../__vendor/src/vendors/*"
       ]
     },
   },

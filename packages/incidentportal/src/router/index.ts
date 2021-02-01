@@ -1,5 +1,5 @@
 import Home from "@/views/Home.vue";
-import { appConfig } from "@fundermaps/vendor";
+import { IncidentPortalConfig } from "@fundermaps/vendor";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     meta: {
-      title: appConfig.title
+      title: IncidentPortalConfig.title
     },
     component: Home
   },
@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/vragen",
     name: "Questions",
     meta: {
-      title: appConfig.title
+      title: IncidentPortalConfig.title
     },
     component: () => import("../views/Questions.vue")
   },
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/bedankt",
     name: "Finish",
     meta: {
-      title: appConfig.title
+      title: IncidentPortalConfig.title
     },
     component: () => import("../views/Finish.vue")
   }

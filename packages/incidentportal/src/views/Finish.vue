@@ -24,7 +24,7 @@ import Page from "@/components/layout/Page.vue";
 
 import { Title, BodyText, Button, SvgIcon } from "@fundermaps/common";
 import { IncidentPortalConfig } from "@fundermaps/vendor";
-import { defineComponent, inject } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "Finish",
@@ -36,10 +36,7 @@ export default defineComponent({
     BodyText
   },
   setup() {
-    const app = inject("app_config") as IncidentPortalConfig;
-    const content = app.final.content;
-
-    return { content };
+    return { content: IncidentPortalConfig.final.content };
   }
 });
 </script>

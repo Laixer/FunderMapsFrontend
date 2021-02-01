@@ -1,0 +1,37 @@
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+name: Node.js CI
+
+on:
+  push:
+    branches: '*'
+  pull_request:
+    branches: '*'
+
+env:
+  VUE_APP_MAPBOX_TOKEN: 'pk.eyJ1IjoibGFpeGVyIiwiYSI6ImNraThwMWxieDA3eXkycm85OW5hbWM3aTUifQ.Ld_05yoDaHynP5VvMMLvxA'
+  VUE_APP_MAPBOX_STYLE: 'mapbox://styles/laixer/cki8ptjuc2fhc19msgt0mzc8j'
+  VUE_APP_API_BASE_URL: 'https://staging.fundermaps.com'
+  VUE_APP_MVT_BASE_URL: 'https://fundermaps-development.ams3.digitaloceanspaces.com/dist/'
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        vendor:
+          - fundermaps
+          - veenweidefryslan
+          - kcaf
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+    - run: yarn
+    - run: yarn bootstrap
+    - run: yarn build --vendor=${{ matrix.vendor }}

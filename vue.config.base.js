@@ -2,13 +2,15 @@
 
 const path = require("path");
 const { argv } = require("yargs");
+const fs = require("fs");
 
 // Load our global .env file into process.env
 require("dotenv").config({ path: path.join(`${__dirname}`, "/.env") });
 
 const vendor = argv.vendor ? argv.vendor : "fundermaps";
-const vendorPath = path.relative(".", `../__vendor/src/${vendor}`);
+const vendorPath = path.relative(".", `../__vendor/src/vendors/${vendor}`);
 const packageName = process.VUE_CLI_SERVICE.pkg.name.split("/")[1];
+const supportedVendor = fs.existsSync(path.join(vendorPath, "apps", packageName));
 
 console.log(
   "\x1b[32m \x1b[1m \x1b[5m",
@@ -55,8 +57,9 @@ exports.css = {
           includePaths: [path.resolve(__dirname, vendorPath)]
         },
         additionalData: `
-          @import "~@vendor/${vendor}/apps/${packageName}/style.scss";
           @import "~@/style.scss";
+          @import "~@/default_vendor.scss";
+          ${supportedVendor ? `@import "~@vendor/${vendor}/apps/${packageName}/style.scss";` : ""}
         `
       }
     }
