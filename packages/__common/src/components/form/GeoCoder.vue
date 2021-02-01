@@ -22,6 +22,7 @@
           v-for="suggestion in suggestions"
           :key="suggestion.id"
           class="Suggestion"
+          :title="suggestion.weergavenaam"
           @click="handleSelect(suggestion)"
         >
           <SvgIcon icon="icon_location" class="Suggestion__Icon" />
@@ -40,7 +41,7 @@ import SvgIcon from "../SvgIcon.vue";
 import { Address } from "../../types/Address";
 import { withFormFieldProps } from "../../props/FormFieldProps";
 import { useFormField } from "../../props/useFormField";
-import { defineComponent, ref, Ref, PropType, SetupContext, computed, readonly } from "vue";
+import { defineComponent, ref, Ref, PropType, SetupContext, computed } from "vue";
 
 export default defineComponent({
   name: "GeoCoder",
@@ -175,12 +176,16 @@ export default defineComponent({
     display: block;
     position: relative;
     padding: 13px 15px 14px 50px;
-    width: 100%;
 
     span {
+      display: inline-block;
       font-size: 14px;
       line-height: 19px;
       color: #202122;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .SvgIcon {

@@ -94,7 +94,6 @@ export default defineComponent({
   display: flex;
   justify-content: space-between;
   flex-direction: column-reverse;
-  max-width: 100%;
   height: 100%;
 
   @media only screen and (min-width: $BREAKPOINT) {
@@ -106,10 +105,13 @@ export default defineComponent({
     flex-direction: column;
     max-width: 100%;
     justify-content: flex-start;
-    padding: 25px 20px;
+    padding: 25px 50px;
+    width: 100%;
 
     @media only screen and (min-width: $BREAKPOINT) {
-      padding: 50px 80px;
+      padding: 50px 50px;
+      width: 40%;
+      min-width: 500px;
     }
 
     .Title,
@@ -122,15 +124,12 @@ export default defineComponent({
   }
   .MapBox__Wrapper {
     position: relative;
-
-    max-width: 100%;
-    width: 100%;
-    min-height: 285px;
-    height: calc(100vh - 406px);
+    display: flex;
+    flex: 1;
 
     @media only screen and (min-width: $BREAKPOINT) {
       height: auto;
-      width: calc(100% - 503px);
+      width: 40%;
     }
   }
 }
