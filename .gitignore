@@ -3,3 +3,4 @@ packages/*/lib
 .idea
 *.log
 .env
+dist
