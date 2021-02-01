@@ -95,7 +95,6 @@ export default defineComponent({
     // Capture the submit event, handle validation, and then either pass on
     // the event on success, or trigger an error event instead.
     const handleSubmit = (e: Event): void => {
-      console.log("on submit form");
       if (props.busy) {
         return;
       }

@@ -6,7 +6,7 @@ let _config = null;
 try {
   _config = require(`../vendors/${__VENDOR}/apps/customerportal/app.json`);
 } catch (e) {
-  console.log(
+  console.warn(
     `Tried to load unsupported vendor (${__VENDOR}) for this application (customerportal). App config will be default.`
   );
 }
