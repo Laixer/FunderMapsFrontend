@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     meta: {
-      title: CustomerPortalConfig.title
+      title: CustomerPortalConfig.appTitle
     },
 
     component: Home

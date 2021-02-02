@@ -7,7 +7,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     meta: {
-      title: IncidentPortalConfig.title
+      title: IncidentPortalConfig.appTitle
     },
     component: Home
   },
@@ -15,7 +15,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/vragen",
     name: "Questions",
     meta: {
-      title: IncidentPortalConfig.title
+      title: IncidentPortalConfig.appTitle
     },
     component: () => import("../views/Questions.vue")
   },
@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/bedankt",
     name: "Finish",
     meta: {
-      title: IncidentPortalConfig.title
+      title: IncidentPortalConfig.appTitle
     },
     component: () => import("../views/Finish.vue")
   }
