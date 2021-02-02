@@ -19,12 +19,24 @@ export default defineComponent({
 
 <style lang="scss">
 body {
-  @media only screen and (min-width: $BREAKPOINT) {
-    background: $VENDOR_BACKGROUND_IMAGE;
-    background-size: cover;
-  }
+  position: relative;
+  z-index: 1;
 }
 
+body::before {
+  @media only screen and (min-width: $BREAKPOINT) {
+    content: "";
+    background: $VENDOR_BACKGROUND_IMAGE;
+    background-size: cover;
+    opacity: 0.6;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    filter: blur(5px);
+  }
+}
 a:-webkit-any-link {
   text-decoration: none;
 }
