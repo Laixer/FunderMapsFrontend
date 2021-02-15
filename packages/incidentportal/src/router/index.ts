@@ -25,6 +25,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: IncidentPortalConfig.appTitle
     },
+    props: true,
     component: () => import("../views/Finish.vue")
   }
 ];

@@ -1,5 +1,5 @@
 <template>
-  <Page class="Finish" :step="9" :steps="8">
+  <Page v-if="success === 'true'" class="Finish" :step="9" :steps="8">
     <div class="Finish__Wrapper">
       <Title>Advies</Title>
 
@@ -15,7 +15,19 @@
       </div>
     </div>
 
-    <template #footer> <SvgIcon icon="icon_circle_check" />Verzending gelukt </template>
+    <template #footer><SvgIcon icon="icon_circle_check" />Verzending gelukt </template>
+  </Page>
+  <Page v-else class="Finish" :step="9" :steps="8">
+    <div class="Finish__Wrapper">
+      <Title>Melding is niet verzonden!</Title>
+
+      <BodyText :bold="false">
+        <p>Er is iets mis gegaan tijdens het versturen van uw melding.</p>
+        <p>Neem contact op met uw beheerder of probeer het later opnieuw.</p>
+      </BodyText>
+    </div>
+
+    <template #footer><SvgIcon style="color: red;" icon="icon_error" />Verzending mislukt </template>
   </Page>
 </template>
 
@@ -34,6 +46,12 @@ export default defineComponent({
     SvgIcon,
     Title,
     BodyText
+  },
+  props: {
+    success: {
+      type: String,
+      default: "false"
+    }
   },
   setup() {
     return { content: IncidentPortalConfig.final.content };
