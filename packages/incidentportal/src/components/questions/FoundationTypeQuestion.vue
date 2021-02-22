@@ -33,7 +33,7 @@ export default defineComponent({
       },
       {
         label: "Ondiep op staal",
-        value: Type.SteelPile,
+        value: Type.NoPile,
         image: "options/type_staal"
       },
       {
