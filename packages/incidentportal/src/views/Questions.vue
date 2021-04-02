@@ -105,10 +105,14 @@ export default defineComponent({
     // };
 
     const handleNavigate = async (direction: number): Promise<void> => {
-      if (direction > 0 && !currentQuestionComponent.value?.isValid) return;
+      if (direction > 0 && !currentQuestionComponent.value?.isValid) {
+        return;
+      }
+
       if (typeof currentQuestionComponent.value?.onSubmit === "function") {
         currentQuestionComponent.value?.onSubmit();
       }
+
       // TODO: Rewrite? Doesn't seem like the right place for this to be but it will do for now
       if (isFinal.value && direction > 0) {
         // TODO: Move to API module

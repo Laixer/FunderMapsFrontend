@@ -43,11 +43,11 @@ export default defineComponent({
       },
       {
         label: "Weet ik niet",
-        value: Type.Unknown,
+        value: null,
         image: "options/type_onbekend"
       }
     ];
-    const isValid: ComputedRef<boolean> = computed(() => foundationType.value !== null);
+    const isValid: ComputedRef<boolean> = computed(() => true);
 
     function onSubmit(): void {
       form.setFoundationType(foundationType.value);

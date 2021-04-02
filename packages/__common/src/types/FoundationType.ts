@@ -12,33 +12,24 @@ export class FoundationType {
       case FoundationType.Type.Concrete:
         return "Betonnen paalfundering";
       case FoundationType.Type.NoPile:
-        return "Niet onderheid";
       case FoundationType.Type.NoPileBearingFloor:
-        return "Niet onderheid";
       case FoundationType.Type.NoPileConcreteFloor:
-        return "Niet onderheid";
       case FoundationType.Type.NoPileMasonry:
-        return "Niet onderheid";
       case FoundationType.Type.NoPileSlit:
-        return "Niet onderheid";
       case FoundationType.Type.NoPileStrips:
         return "Niet onderheid";
       case FoundationType.Type.Other:
         return "Anders";
       case FoundationType.Type.SteelPile:
         return "Stalen paalfundering";
-      case FoundationType.Type.Unknown:
-        return "Onbekend";
       case FoundationType.Type.WeightedPile:
         return "Verzwaarde betonpuntpaal";
       case FoundationType.Type.Wood:
-        return "Houten paalfundering";
       case FoundationType.Type.WoodAmsterdam:
+      case FoundationType.Type.WoodRotterdam:
         return "Houten paalfundering";
       case FoundationType.Type.WoodCharger:
         return "Houten paalfundering met betonoplanger";
-      case FoundationType.Type.WoodRotterdam:
-        return "Houten paalfundering";
       default:
         return "Onbekend";
     }
@@ -135,11 +126,6 @@ export namespace FoundationType {
     /// <summary>
     /// Other.
     /// </summary>
-    Other,
-
-    /// <summary>
-    /// Unknown.
-    /// </summary>
-    Unknown
+    Other
   }
 }

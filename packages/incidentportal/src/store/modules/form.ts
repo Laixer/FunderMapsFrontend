@@ -56,7 +56,7 @@ class FormModule extends VuexModule implements FormState {
       ClientId: vendorConfig.client_id,
       Email: this.email,
       PhoneNumber: this.phoneNumber,
-      FoundationType: parseInt(this.foundationType + "", 10),
+      FoundationType: this.foundationType ? parseInt(this.foundationType + "", 10) : null,
       Address: this.address?.externalId,
       FoundationDamageCharacteristics: this.foundationDamageCharacteristics.flatMap(val => parseInt(val + "", 10)),
       EnvironmentDamageCharacteristics: this.environmentDamageCharacteristics.flatMap(val => parseInt(val + "", 10)),

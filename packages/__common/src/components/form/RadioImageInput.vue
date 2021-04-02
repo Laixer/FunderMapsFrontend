@@ -45,8 +45,8 @@ export default defineComponent({
   setup(props, context: SetupContext) {
     const { isDisabled, isBusy, hasBeenValidated, isValid } = useFormField(props, context);
 
-    const isChecked = (value: string | boolean | number): boolean => {
-      return props.modelValue === value.toString() || props.modelValue === value;
+    const isChecked = (value: string | boolean | number | null): boolean => {
+      return (value !== null && props.modelValue === value.toString()) || props.modelValue === value;
     };
 
     // List of css classes
