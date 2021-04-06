@@ -46,11 +46,6 @@ export namespace FoundationDamageCause {
     BioInfection,
 
     /// <summary>
-    /// Unknown.
-    /// </summary>
-    Unknown,
-
-    /// <summary>
     /// Fungus infection.
     /// </summary>
     FungusInfection,

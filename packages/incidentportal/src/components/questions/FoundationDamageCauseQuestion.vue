@@ -66,11 +66,11 @@ export default defineComponent({
       },
       {
         label: "Weet ik niet",
-        value: Type.Unknown
+        value: null
       }
     ];
 
-    const isValid: ComputedRef<boolean> = computed(() => value.value !== null);
+    const isValid: ComputedRef<boolean> = computed(() => true);
 
     function onSubmit(): void {
       form.setFoundationDamageCause(value.value);
