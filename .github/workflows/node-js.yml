@@ -26,6 +26,7 @@ jobs:
           - fundermaps
           - veenweidefryslan
           - kcaf
+          - regiodeal
 
     steps:
     - uses: actions/checkout@v2
