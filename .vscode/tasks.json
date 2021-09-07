@@ -1,0 +1,39 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "install",
+			"command": "yarn",
+			"type": "process",
+			"problemMatcher": [],
+		},
+		{
+			"label": "bootstrap",
+			"command": "yarn",
+			"type": "process",
+			"args": [
+				"bootstrap"
+			],
+			"problemMatcher": [],
+			"dependsOn": [
+				"install"
+			]
+		},
+		{
+			"label": "build",
+			"command": "yarn",
+			"type": "process",
+			"args": [
+				"build"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"dependsOn": [
+				"bootstrap"
+			]
+		}
+	]
+}
