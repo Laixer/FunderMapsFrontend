@@ -88,6 +88,6 @@ export namespace FoundationDamageCause {
     /// <summary>
     /// Foundation was partially recovered.
     /// </summary>
-    PartialFoundationRecovery = 16,
+    PartialFoundationRecovery = 16
   }
 }
