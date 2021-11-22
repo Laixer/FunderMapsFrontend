@@ -13,81 +13,81 @@ export namespace FoundationDamageCause {
     /// <summary>
     /// Drainage.
     /// </summary>
-    Drainage,
+    Drainage = 0,
 
     /// <summary>
     /// Construction flaw.
     /// </summary>
-    ConstructionFlaw,
+    ConstructionFlaw = 1,
 
     /// <summary>
     /// Drystand.
     /// </summary>
-    Drystand,
+    Drystand = 2,
 
     /// <summary>
     /// Overcharge.
     /// </summary>
-    Overcharge,
+    Overcharge = 3,
 
     /// <summary>
     /// Overcharge and negative cling.
     /// </summary>
-    OverchargeNegativeCling,
+    OverchargeNegativeCling = 4,
 
     /// <summary>
     /// Negative cling.
     /// </summary>
-    NegativeCling,
+    NegativeCling = 5,
 
     /// <summary>
     /// Bio infection.
     /// </summary>
-    BioInfection,
+    BioInfection = 6,
 
     /// <summary>
     /// Fungus infection.
     /// </summary>
-    FungusInfection,
+    FungusInfection = 8,
 
     /// <summary>
     /// Bio and fungus infection.
     /// </summary>
-    BioFungusInfection,
+    BioFungusInfection = 9,
 
     /// <summary>
     /// Foundation flaw.
     /// </summary>
-    FoundationFlaw,
+    FoundationFlaw = 10,
 
     /// <summary>
     /// Construnction heave.
     /// </summary>
-    ConstructionHeave,
+    ConstructionHeave = 11,
 
     /// <summary>
     /// Subsidence.
     /// </summary>
-    Subsidence,
+    Subsidence = 12,
 
     /// <summary>
     /// Vegetation.
     /// </summary>
-    Vegetation,
+    Vegetation = 13,
 
     /// <summary>
     /// Gas.
     /// </summary>
-    Gas,
+    Gas = 14,
 
     /// <summary>
     /// Vibrations.
     /// </summary>
-    Vibrations,
+    Vibrations = 15,
 
     /// <summary>
     /// Foundation was partially recovered.
     /// </summary>
-    PartialFoundationRecovery
+    PartialFoundationRecovery = 16,
   }
 }
