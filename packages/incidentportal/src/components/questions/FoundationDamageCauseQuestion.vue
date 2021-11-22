@@ -65,6 +65,10 @@ export default defineComponent({
         value: Type.FoundationFlaw
       },
       {
+        label: "Japanse duizendknoop",
+        value: Type.JapanseKnotweed
+      },
+      {
         label: "Weet ik niet",
         value: null
       }
