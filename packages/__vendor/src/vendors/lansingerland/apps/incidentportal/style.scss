@@ -1,0 +1,10 @@
+$VENDOR_PRIMARY_COLOR: #BA0C2F;
+$VENDOR_BACKGROUND_IMAGE: url("~@vendor/lansingerland/apps/incidentportal/assets/background.jpg");
+$VENDOR_HOME_IMAGE: url("~@vendor/lansingerland/apps/incidentportal/assets/home.png");
+$VENDOR_LOGO: url("~@vendor/lansingerland/apps/incidentportal/assets/logo.png");
+
+.Header {
+    &__Logo {
+        height: 80px;
+    }
+}
