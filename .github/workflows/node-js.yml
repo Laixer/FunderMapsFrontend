@@ -28,6 +28,7 @@ jobs:
           - kcaf
           - regiodeal
           - lansingerland
+          - schiedam
 
     steps:
     - uses: actions/checkout@v2

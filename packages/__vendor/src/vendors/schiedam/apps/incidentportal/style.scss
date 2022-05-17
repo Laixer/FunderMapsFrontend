@@ -1,0 +1,10 @@
+$VENDOR_PRIMARY_COLOR: #D5194C;
+$VENDOR_BACKGROUND_IMAGE: url("~@vendor/schiedam/apps/incidentportal/assets/background.jpg");
+$VENDOR_HOME_IMAGE: url("~@vendor/schiedam/apps/incidentportal/assets/home.png");
+$VENDOR_LOGO: url("~@vendor/schiedam/apps/incidentportal/assets/logo.png");
+
+.Header {
+    &__Logo {
+        height: 80px;
+    }
+}

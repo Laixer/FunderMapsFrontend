@@ -1,0 +1,11 @@
+{
+  "appTitle": "Funderingsloket",
+  "home": {
+    "title": "Een melding maken",
+    "subtitle": "Een groot aantal woningen in Schiedam is gebouwd op houten palen in de grond of direct op de ondergrond (een fundering op staal). Omdat de fundering in de grond onder de woning is aangebracht, is deze bijna nooit te zien.",
+    "content": "<p>Bij het Funderingsloket van de Gemeente Schiedam kunt u melding maken van funderingsschade aan uw pand en informatie over mogelijke schade opvragen. Een funderingsdeskundige bekijkt uw melding op afstand en voorziet u van een reactie. Met uw gegevens wordt zorgvuldig omgegaan.</p><p>Meer informatie vindt u op de website van het <a href='https://schiedam.servicepuntwoningverbetering.nl/fundering'>Servicepunt Woningverbetering</a>.</p>"
+  },
+  "final": {
+    "content": "<p>Wij nemen contact met u op om u van een persoonlijk advies te voorzien. Uw gegevens blijven strikt vertrouwelijk en worden niet buiten het KCAF gedeeld.</p><p>In ons stappenplan voor funderingsherstel leggen wij duidelijk uit welke stappen u alvast kunt nemen en voor welke stappen professionele hulp noodzakelijk is om grip te krijgen op funderingsproblemen.</p>"
+  }
+}
